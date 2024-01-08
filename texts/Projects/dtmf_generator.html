@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DTMF generator &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Projects/dtmf_generator';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Frequency estimation for low frequencies" href="frequency_estimator.html" />
+    <link rel="prev" title="Digital synthesizer" href="digital_synth.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Projects/dtmf_generator.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DTMF generator</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-a-standard-dtmf-matrix-keyboard">Reading a standard DTMF matrix keyboard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-wave-lookup-table">Sine wave lookup table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-dtmf-tones-using-pwm-atmel-app-note-avr314">Generate DTMF tones using PWM (Atmel app. note AVR314)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-filter-and-amplification">Output filter and amplification</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-audio-quality-dtmf-generation">Improved audio quality DTMF generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-digital-values-using-8-bit-dac">Convert the digital values using 8-bit DAC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-source-code-example">Complete source code example</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="dtmf-generator">
+<h1>DTMF generator<a class="headerlink" href="#dtmf-generator" title="Link to this heading">#</a></h1>
+<p>The following table provides the frequencies in the DTMF standard:</p>
+<table class="table">
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p>1209 Hz</p></td>
+<td><p>1336 Hz</p></td>
+<td><p>1477 Hz</p></td>
+<td><p>1633 Hz</p></td>
+</tr>
+<tr class="row-even"><td><p>697 Hz</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-odd"><td><p>770 Hz</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-even"><td><p>852 Hz</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+<td><p>C</p></td>
+</tr>
+<tr class="row-odd"><td><p>941 Hz</p></td>
+<td><p>*</p></td>
+<td><p>0</p></td>
+<td><p>#</p></td>
+<td><p>D</p></td>
+</tr>
+</tbody>
+</table>
+<div class="math notranslate nohighlight">
+\[f(t) = A_a \sin(\omega_a t) + A_b \sin(\omega_b t)\]</div>
+<p>We also have in the standard that:</p>
+<div class="math notranslate nohighlight">
+\[\frac{A_b}{A_a} = K\]</div>
+<p>Where <span class="math notranslate nohighlight">\(0.7 &lt; K &lt; 0.9\)</span>.</p>
+<section id="reading-a-standard-dtmf-matrix-keyboard">
+<h2>Reading a standard DTMF matrix keyboard<a class="headerlink" href="#reading-a-standard-dtmf-matrix-keyboard" title="Link to this heading">#</a></h2>
+</section>
+<section id="sine-wave-lookup-table">
+<h2>Sine wave lookup table<a class="headerlink" href="#sine-wave-lookup-table" title="Link to this heading">#</a></h2>
+<p>In order to efficiently determine the values of the sine function at each iteration a look up table is used. The fundamental sampling time used to step through the elements in this table sets the low limit on the output frequency. By skipping every other element in the table the frequency will be double, every third element will yield a frequency of three times the fundamental, and so on. This property can be exploited in order to generate a multitude of frequencies using a single lookup table, and a single sampling rate.</p>
+<p>The DTMF standard consists of 8 frequencies, and thus we need 8 skipping values for our lookup table</p>
+</section>
+<section id="generate-dtmf-tones-using-pwm-atmel-app-note-avr314">
+<h2>Generate DTMF tones using PWM (Atmel app. note AVR314)<a class="headerlink" href="#generate-dtmf-tones-using-pwm-atmel-app-note-avr314" title="Link to this heading">#</a></h2>
+<p>The step with can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[X_{sw} = f \frac{N_c}{f_s}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(f\)</span> is the frequency we would like to generate, <span class="math notranslate nohighlight">\(N_c\)</span> is the number of samples in the lookup table, and <span class="math notranslate nohighlight">\(f_s\)</span> is the sampling frequency, which in this implementation will correspond to the PWM frequency <span class="math notranslate nohighlight">\(f_{sw}\)</span>.</p>
+<p>If we are using one of the Atmeta328p 8 bit timers in symmetric PWM mode (up-down counting) it will use <span class="math notranslate nohighlight">\(510\)</span> clock cycles to finish one counting period. Thus the sampling frequency will be given by:</p>
+<div class="math notranslate nohighlight">
+\[f_s = \frac{510}{N_c}\]</div>
+<p>Thus the step with is given by:</p>
+<div class="math notranslate nohighlight">
+\[X_{sw} = f \frac{N_c}{f_s} = f \frac{N_c \cdot 510}{f_{clk}}\]</div>
+<p>E.g. for a frequency of 1633 Hz, and a timer clock frequency of 2 MHz we have:</p>
+<div class="math notranslate nohighlight">
+\[X_{sw} = f \frac{N_c \cdot 510}{f_{clk}} = 1633 \cdot \frac{128 \cdot 510}{2 \cdot 10^{6}} \approx 53\]</div>
+<p>For the lower frequency of 697 we get:</p>
+<div class="math notranslate nohighlight">
+\[X_{sw} = f \frac{N_c \cdot 510}{f_{clk}} = 697 \cdot \frac{128 \cdot 510}{2 \cdot 10^{6}} \approx 23\]</div>
+<p>The Arduino UNO uses a clock frequency of 16 Mhz, and the timer prescaler is divide by 1, 8, 64, 256 or 1024. The only viable options are 1, or 8, but ideally we should have something in between. Alternatively the length of the lookup table can be adjusted. Furthermore the <span class="math notranslate nohighlight">\(X_{sw}\)</span> values turns out to be fractions in reality, thus the accuracy can be increased by multiplying them by some value which allows us to keep some more bits (i.e. we use a fixed point representation).</p>
+<p>The lookup table is selected to have 128 elements, and a maximum amplitude of 127. The reasoning for the maximum amplitude is that it will only use 7 bits, and thus there will be room for the sum of two waveforms in a 8 bit register.</p>
+<p>The two lookup table indexes are given by:</p>
+<div class="math notranslate nohighlight">
+\[X_{a,k} = X_{a,k-1} + X_{sw,a}\]</div>
+<div class="math notranslate nohighlight">
+\[X_{b,k} = X_{b,k-1} + X_{sw,b}\]</div>
+<p>Furthermore in accordance with the DTMF standard we need the amplitude of the <em>b</em> waveform to be less than the <em>a</em> waveform. The factor <span class="math notranslate nohighlight">\(K = \frac{3}{4}\)</span>. The output compare value for the PWM timer is thus given by:</p>
+<div class="math notranslate nohighlight">
+\[COMP(X) = LUT(X_{a,k-1} + X_{sw,a}) + \frac{3}{4} LUT(X_{b,k-1} + X_{sw,b})\]</div>
+<div class="math notranslate nohighlight">
+\[X_{a,k} = \frac{1}{8} \left( X_{a-ext,k-1} + f_a \frac{8 N_c \cdot 510}{f_{clk}} \right)\]</div>
+<div class="math notranslate nohighlight">
+\[X_{b,k} = \frac{1}{8} \left( X_{b-ext,k-1} + f_b \frac{8 N_c \cdot 510}{f_{clk}} \right)\]</div>
+<p>The fraction of <span class="math notranslate nohighlight">\(\frac{3}{4}\)</span> can be computed efficiently by bit shift and subtraction. Shifting two places to the left is the same as division by 4:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">comp_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_a</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<section id="output-filter-and-amplification">
+<h3>Output filter and amplification<a class="headerlink" href="#output-filter-and-amplification" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="improved-audio-quality-dtmf-generation">
+<h2>Improved audio quality DTMF generation<a class="headerlink" href="#improved-audio-quality-dtmf-generation" title="Link to this heading">#</a></h2>
+</section>
+<section id="convert-the-digital-values-using-8-bit-dac">
+<h2>Convert the digital values using 8-bit DAC<a class="headerlink" href="#convert-the-digital-values-using-8-bit-dac" title="Link to this heading">#</a></h2>
+<p>The PWM method for digital to analog conversion has some issues. For one, unlike PCM, it is a non linear process.</p>
+</section>
+<section id="complete-source-code-example">
+<h2>Complete source code example<a class="headerlink" href="#complete-source-code-example" title="Link to this heading">#</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="c1">// 128 element sine wave LUT</span>
+<span class="linenos">  4</span><span class="c1">// Max amplitude is 127 (0x7f)</span>
+<span class="linenos">  5</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sine_wave_lut</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">  6</span><span class="w">  </span><span class="mh">0x40</span><span class="p">,</span><span class="mh">0x43</span><span class="p">,</span><span class="mh">0x46</span><span class="p">,</span><span class="mh">0x49</span><span class="p">,</span><span class="mh">0x4c</span><span class="p">,</span><span class="mh">0x4f</span><span class="p">,</span><span class="mh">0x52</span><span class="p">,</span><span class="mh">0x55</span><span class="p">,</span>
+<span class="linenos">  7</span><span class="w">  </span><span class="mh">0x58</span><span class="p">,</span><span class="mh">0x5b</span><span class="p">,</span><span class="mh">0x5d</span><span class="p">,</span><span class="mh">0x60</span><span class="p">,</span><span class="mh">0x63</span><span class="p">,</span><span class="mh">0x65</span><span class="p">,</span><span class="mh">0x68</span><span class="p">,</span><span class="mh">0x6a</span><span class="p">,</span>
+<span class="linenos">  8</span><span class="w">  </span><span class="mh">0x6c</span><span class="p">,</span><span class="mh">0x6f</span><span class="p">,</span><span class="mh">0x71</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span><span class="mh">0x74</span><span class="p">,</span><span class="mh">0x76</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x79</span><span class="p">,</span>
+<span class="linenos">  9</span><span class="w">  </span><span class="mh">0x7a</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span>
+<span class="linenos"> 10</span><span class="w">  </span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span>
+<span class="linenos"> 11</span><span class="w">  </span><span class="mh">0x7a</span><span class="p">,</span><span class="mh">0x79</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x76</span><span class="p">,</span><span class="mh">0x74</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span><span class="mh">0x71</span><span class="p">,</span><span class="mh">0x6f</span><span class="p">,</span>
+<span class="linenos"> 12</span><span class="w">  </span><span class="mh">0x6c</span><span class="p">,</span><span class="mh">0x6a</span><span class="p">,</span><span class="mh">0x68</span><span class="p">,</span><span class="mh">0x65</span><span class="p">,</span><span class="mh">0x63</span><span class="p">,</span><span class="mh">0x60</span><span class="p">,</span><span class="mh">0x5d</span><span class="p">,</span><span class="mh">0x5b</span><span class="p">,</span>
+<span class="linenos"> 13</span><span class="w">  </span><span class="mh">0x58</span><span class="p">,</span><span class="mh">0x55</span><span class="p">,</span><span class="mh">0x52</span><span class="p">,</span><span class="mh">0x4f</span><span class="p">,</span><span class="mh">0x4c</span><span class="p">,</span><span class="mh">0x49</span><span class="p">,</span><span class="mh">0x46</span><span class="p">,</span><span class="mh">0x43</span><span class="p">,</span>
+<span class="linenos"> 14</span><span class="w">  </span><span class="mh">0x40</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0x39</span><span class="p">,</span><span class="mh">0x36</span><span class="p">,</span><span class="mh">0x33</span><span class="p">,</span><span class="mh">0x30</span><span class="p">,</span><span class="mh">0x2d</span><span class="p">,</span><span class="mh">0x2a</span><span class="p">,</span>
+<span class="linenos"> 15</span><span class="w">  </span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x24</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x1f</span><span class="p">,</span><span class="mh">0x1c</span><span class="p">,</span><span class="mh">0x1a</span><span class="p">,</span><span class="mh">0x17</span><span class="p">,</span><span class="mh">0x15</span><span class="p">,</span>
+<span class="linenos"> 16</span><span class="w">  </span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0xe</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span><span class="mh">0xb</span><span class="p">,</span><span class="mh">0x9</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x6</span><span class="p">,</span>
+<span class="linenos"> 17</span><span class="w">  </span><span class="mh">0x5</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span>
+<span class="linenos"> 18</span><span class="w">  </span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span>
+<span class="linenos"> 19</span><span class="w">  </span><span class="mh">0x5</span><span class="p">,</span><span class="mh">0x6</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x9</span><span class="p">,</span><span class="mh">0xb</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span><span class="mh">0xe</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span>
+<span class="linenos"> 20</span><span class="w">  </span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x15</span><span class="p">,</span><span class="mh">0x17</span><span class="p">,</span><span class="mh">0x1a</span><span class="p">,</span><span class="mh">0x1c</span><span class="p">,</span><span class="mh">0x1f</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x24</span><span class="p">,</span>
+<span class="linenos"> 21</span><span class="w">  </span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x2a</span><span class="p">,</span><span class="mh">0x2d</span><span class="p">,</span><span class="mh">0x30</span><span class="p">,</span><span class="mh">0x33</span><span class="p">,</span><span class="mh">0x36</span><span class="p">,</span><span class="mh">0x39</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span>
+<span class="linenos"> 22</span><span class="p">};</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="c1">// 256 element sine wave LUT</span>
+<span class="linenos"> 25</span><span class="c1">// Max amplitude is 127 (0x7f)</span>
+<span class="linenos"> 26</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">sine_wave_lut256</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 27</span><span class="w">  </span><span class="mh">0x40</span><span class="p">,</span><span class="mh">0x41</span><span class="p">,</span><span class="mh">0x43</span><span class="p">,</span><span class="mh">0x44</span><span class="p">,</span><span class="mh">0x46</span><span class="p">,</span><span class="mh">0x47</span><span class="p">,</span><span class="mh">0x49</span><span class="p">,</span><span class="mh">0x4a</span><span class="p">,</span>
+<span class="linenos"> 28</span><span class="w">  </span><span class="mh">0x4c</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">,</span><span class="mh">0x4f</span><span class="p">,</span><span class="mh">0x50</span><span class="p">,</span><span class="mh">0x52</span><span class="p">,</span><span class="mh">0x53</span><span class="p">,</span><span class="mh">0x55</span><span class="p">,</span><span class="mh">0x56</span><span class="p">,</span>
+<span class="linenos"> 29</span><span class="w">  </span><span class="mh">0x58</span><span class="p">,</span><span class="mh">0x59</span><span class="p">,</span><span class="mh">0x5b</span><span class="p">,</span><span class="mh">0x5c</span><span class="p">,</span><span class="mh">0x5d</span><span class="p">,</span><span class="mh">0x5f</span><span class="p">,</span><span class="mh">0x60</span><span class="p">,</span><span class="mh">0x61</span><span class="p">,</span>
+<span class="linenos"> 30</span><span class="w">  </span><span class="mh">0x63</span><span class="p">,</span><span class="mh">0x64</span><span class="p">,</span><span class="mh">0x65</span><span class="p">,</span><span class="mh">0x67</span><span class="p">,</span><span class="mh">0x68</span><span class="p">,</span><span class="mh">0x69</span><span class="p">,</span><span class="mh">0x6a</span><span class="p">,</span><span class="mh">0x6b</span><span class="p">,</span>
+<span class="linenos"> 31</span><span class="w">  </span><span class="mh">0x6c</span><span class="p">,</span><span class="mh">0x6d</span><span class="p">,</span><span class="mh">0x6f</span><span class="p">,</span><span class="mh">0x70</span><span class="p">,</span><span class="mh">0x71</span><span class="p">,</span><span class="mh">0x72</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span>
+<span class="linenos"> 32</span><span class="w">  </span><span class="mh">0x74</span><span class="p">,</span><span class="mh">0x75</span><span class="p">,</span><span class="mh">0x76</span><span class="p">,</span><span class="mh">0x77</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x79</span><span class="p">,</span><span class="mh">0x7a</span><span class="p">,</span>
+<span class="linenos"> 33</span><span class="w">  </span><span class="mh">0x7a</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span>
+<span class="linenos"> 34</span><span class="w">  </span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span>
+<span class="linenos"> 35</span><span class="w">  </span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7f</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7e</span><span class="p">,</span>
+<span class="linenos"> 36</span><span class="w">  </span><span class="mh">0x7e</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7d</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7c</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span><span class="mh">0x7b</span><span class="p">,</span>
+<span class="linenos"> 37</span><span class="w">  </span><span class="mh">0x7a</span><span class="p">,</span><span class="mh">0x7a</span><span class="p">,</span><span class="mh">0x79</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x78</span><span class="p">,</span><span class="mh">0x77</span><span class="p">,</span><span class="mh">0x76</span><span class="p">,</span><span class="mh">0x75</span><span class="p">,</span>
+<span class="linenos"> 38</span><span class="w">  </span><span class="mh">0x74</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span><span class="mh">0x73</span><span class="p">,</span><span class="mh">0x72</span><span class="p">,</span><span class="mh">0x71</span><span class="p">,</span><span class="mh">0x70</span><span class="p">,</span><span class="mh">0x6f</span><span class="p">,</span><span class="mh">0x6d</span><span class="p">,</span>
+<span class="linenos"> 39</span><span class="w">  </span><span class="mh">0x6c</span><span class="p">,</span><span class="mh">0x6b</span><span class="p">,</span><span class="mh">0x6a</span><span class="p">,</span><span class="mh">0x69</span><span class="p">,</span><span class="mh">0x68</span><span class="p">,</span><span class="mh">0x67</span><span class="p">,</span><span class="mh">0x65</span><span class="p">,</span><span class="mh">0x64</span><span class="p">,</span>
+<span class="linenos"> 40</span><span class="w">  </span><span class="mh">0x63</span><span class="p">,</span><span class="mh">0x61</span><span class="p">,</span><span class="mh">0x60</span><span class="p">,</span><span class="mh">0x5f</span><span class="p">,</span><span class="mh">0x5d</span><span class="p">,</span><span class="mh">0x5c</span><span class="p">,</span><span class="mh">0x5b</span><span class="p">,</span><span class="mh">0x59</span><span class="p">,</span>
+<span class="linenos"> 41</span><span class="w">  </span><span class="mh">0x58</span><span class="p">,</span><span class="mh">0x56</span><span class="p">,</span><span class="mh">0x55</span><span class="p">,</span><span class="mh">0x53</span><span class="p">,</span><span class="mh">0x52</span><span class="p">,</span><span class="mh">0x50</span><span class="p">,</span><span class="mh">0x4f</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">,</span>
+<span class="linenos"> 42</span><span class="w">  </span><span class="mh">0x4c</span><span class="p">,</span><span class="mh">0x4a</span><span class="p">,</span><span class="mh">0x49</span><span class="p">,</span><span class="mh">0x47</span><span class="p">,</span><span class="mh">0x46</span><span class="p">,</span><span class="mh">0x44</span><span class="p">,</span><span class="mh">0x43</span><span class="p">,</span><span class="mh">0x41</span><span class="p">,</span>
+<span class="linenos"> 43</span><span class="w">  </span><span class="mh">0x40</span><span class="p">,</span><span class="mh">0x3e</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0x3b</span><span class="p">,</span><span class="mh">0x39</span><span class="p">,</span><span class="mh">0x38</span><span class="p">,</span><span class="mh">0x36</span><span class="p">,</span><span class="mh">0x35</span><span class="p">,</span>
+<span class="linenos"> 44</span><span class="w">  </span><span class="mh">0x33</span><span class="p">,</span><span class="mh">0x32</span><span class="p">,</span><span class="mh">0x30</span><span class="p">,</span><span class="mh">0x2f</span><span class="p">,</span><span class="mh">0x2d</span><span class="p">,</span><span class="mh">0x2c</span><span class="p">,</span><span class="mh">0x2a</span><span class="p">,</span><span class="mh">0x29</span><span class="p">,</span>
+<span class="linenos"> 45</span><span class="w">  </span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x26</span><span class="p">,</span><span class="mh">0x24</span><span class="p">,</span><span class="mh">0x23</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x20</span><span class="p">,</span><span class="mh">0x1f</span><span class="p">,</span><span class="mh">0x1e</span><span class="p">,</span>
+<span class="linenos"> 46</span><span class="w">  </span><span class="mh">0x1c</span><span class="p">,</span><span class="mh">0x1b</span><span class="p">,</span><span class="mh">0x1a</span><span class="p">,</span><span class="mh">0x18</span><span class="p">,</span><span class="mh">0x17</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x15</span><span class="p">,</span><span class="mh">0x14</span><span class="p">,</span>
+<span class="linenos"> 47</span><span class="w">  </span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x12</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0xf</span><span class="p">,</span><span class="mh">0xe</span><span class="p">,</span><span class="mh">0xd</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span>
+<span class="linenos"> 48</span><span class="w">  </span><span class="mh">0xb</span><span class="p">,</span><span class="mh">0xa</span><span class="p">,</span><span class="mh">0x9</span><span class="p">,</span><span class="mh">0x8</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x6</span><span class="p">,</span><span class="mh">0x5</span><span class="p">,</span>
+<span class="linenos"> 49</span><span class="w">  </span><span class="mh">0x5</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span>
+<span class="linenos"> 50</span><span class="w">  </span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span>
+<span class="linenos"> 51</span><span class="w">  </span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x0</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x1</span><span class="p">,</span>
+<span class="linenos"> 52</span><span class="w">  </span><span class="mh">0x1</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x2</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x3</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span><span class="mh">0x4</span><span class="p">,</span>
+<span class="linenos"> 53</span><span class="w">  </span><span class="mh">0x5</span><span class="p">,</span><span class="mh">0x5</span><span class="p">,</span><span class="mh">0x6</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x7</span><span class="p">,</span><span class="mh">0x8</span><span class="p">,</span><span class="mh">0x9</span><span class="p">,</span><span class="mh">0xa</span><span class="p">,</span>
+<span class="linenos"> 54</span><span class="w">  </span><span class="mh">0xb</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span><span class="mh">0xc</span><span class="p">,</span><span class="mh">0xd</span><span class="p">,</span><span class="mh">0xe</span><span class="p">,</span><span class="mh">0xf</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0x12</span><span class="p">,</span>
+<span class="linenos"> 55</span><span class="w">  </span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x14</span><span class="p">,</span><span class="mh">0x15</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x17</span><span class="p">,</span><span class="mh">0x18</span><span class="p">,</span><span class="mh">0x1a</span><span class="p">,</span><span class="mh">0x1b</span><span class="p">,</span>
+<span class="linenos"> 56</span><span class="w">  </span><span class="mh">0x1c</span><span class="p">,</span><span class="mh">0x1e</span><span class="p">,</span><span class="mh">0x1f</span><span class="p">,</span><span class="mh">0x20</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x23</span><span class="p">,</span><span class="mh">0x24</span><span class="p">,</span><span class="mh">0x26</span><span class="p">,</span>
+<span class="linenos"> 57</span><span class="w">  </span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x29</span><span class="p">,</span><span class="mh">0x2a</span><span class="p">,</span><span class="mh">0x2c</span><span class="p">,</span><span class="mh">0x2d</span><span class="p">,</span><span class="mh">0x2f</span><span class="p">,</span><span class="mh">0x30</span><span class="p">,</span><span class="mh">0x32</span><span class="p">,</span>
+<span class="linenos"> 58</span><span class="w">  </span><span class="mh">0x33</span><span class="p">,</span><span class="mh">0x35</span><span class="p">,</span><span class="mh">0x36</span><span class="p">,</span><span class="mh">0x38</span><span class="p">,</span><span class="mh">0x39</span><span class="p">,</span><span class="mh">0x3b</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0x3e</span><span class="p">,</span>
+<span class="linenos"> 59</span><span class="p">};</span>
+<span class="linenos"> 60</span>
+<span class="linenos"> 61</span>
+<span class="linenos"> 62</span><span class="cm">/**</span>
+<span class="linenos"> 63</span><span class="cm"> * @brief </span>
+<span class="linenos"> 64</span><span class="cm"> *</span>
+<span class="linenos"> 65</span><span class="cm"> * Step values for the index in to the sine wave LUT, </span>
+<span class="linenos"> 66</span><span class="cm"> * a higher step value correspons to a higher frequency</span>
+<span class="linenos"> 67</span><span class="cm"> * For a 256 element table, and a timer clock of 16 MHz</span>
+<span class="linenos"> 68</span><span class="cm"> * </span>
+<span class="linenos"> 69</span><span class="cm"> * 1209 Hz</span>
+<span class="linenos"> 70</span><span class="cm"> * 1336 Hz</span>
+<span class="linenos"> 71</span><span class="cm"> * 1477 Hz</span>
+<span class="linenos"> 72</span><span class="cm"> * 1633 Hz </span>
+<span class="linenos"> 73</span><span class="cm"> */</span>
+<span class="linenos"> 74</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">high_freq_xsw</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">79</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">107</span><span class="p">};</span>
+<span class="linenos"> 75</span>
+<span class="linenos"> 76</span><span class="cm">/**</span>
+<span class="linenos"> 77</span><span class="cm"> * @brief</span>
+<span class="linenos"> 78</span><span class="cm"> * </span>
+<span class="linenos"> 79</span><span class="cm"> * 697 Hz</span>
+<span class="linenos"> 80</span><span class="cm"> * 770 Hz</span>
+<span class="linenos"> 81</span><span class="cm"> * 852 Hz</span>
+<span class="linenos"> 82</span><span class="cm"> * 941 Hz</span>
+<span class="linenos"> 83</span><span class="cm"> */</span>
+<span class="linenos"> 84</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">low_freq_xsw</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="mi">61</span><span class="p">};</span>
+<span class="linenos"> 85</span>
+<span class="linenos"> 86</span>
+<span class="linenos"> 87</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">row_pins</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">};</span>
+<span class="linenos"> 88</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">col_pins</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">A3</span><span class="p">,</span><span class="w"> </span><span class="n">A2</span><span class="p">,</span><span class="w"> </span><span class="n">A1</span><span class="p">,</span><span class="w"> </span><span class="n">A0</span><span class="p">};</span>
+<span class="linenos"> 89</span>
+<span class="linenos"> 90</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">audio_pwm_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="linenos"> 91</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">test_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">13</span><span class="p">;</span>
+<span class="linenos"> 92</span>
+<span class="linenos"> 93</span><span class="cp">#define DAC_PORT PORTD</span>
+<span class="linenos"> 94</span><span class="cp">#define DAC_PIN PIND</span>
+<span class="linenos"> 95</span><span class="cp">#define DAC_DDR DDRD</span>
+<span class="linenos"> 96</span>
+<span class="linenos"> 97</span><span class="kt">void</span><span class="w"> </span><span class="nf">vt100_MoveCursor</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">col</span><span class="p">)</span>
+<span class="linenos"> 98</span><span class="p">{</span>
+<span class="linenos"> 99</span>
+<span class="linenos">100</span><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="linenos">101</span><span class="w">	</span><span class="cm">/* ESC [ Pl ; Pc H */</span>
+<span class="linenos">102</span><span class="w">	</span><span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\x1B</span><span class="s">[%d;%dH&quot;</span><span class="p">,</span><span class="n">line</span><span class="p">,</span><span class="n">col</span><span class="p">);</span>
+<span class="linenos">103</span>
+<span class="linenos">104</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<span class="linenos">105</span><span class="p">}</span>
+<span class="linenos">106</span>
+<span class="linenos">107</span><span class="kt">void</span><span class="w"> </span><span class="nf">vt100_SetAttribute</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">attr</span><span class="p">)</span>
+<span class="linenos">108</span><span class="p">{</span>
+<span class="linenos">109</span><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+<span class="linenos">110</span><span class="w">	</span><span class="cm">/* ESC [ Ps m */</span>
+<span class="linenos">111</span><span class="w">	</span><span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\x1B</span><span class="s">[%dm&quot;</span><span class="p">,</span><span class="n">attr</span><span class="p">);</span>
+<span class="linenos">112</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+<span class="linenos">113</span><span class="p">}</span>
+<span class="linenos">114</span>
+<span class="linenos">115</span><span class="kt">void</span><span class="w"> </span><span class="nf">vt100_ClearScreen</span><span class="p">()</span>
+<span class="linenos">116</span><span class="p">{</span>
+<span class="linenos">117</span><span class="w">	</span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\x1B</span><span class="s">[2J&quot;</span><span class="p">);</span>
+<span class="linenos">118</span><span class="p">}</span>
+<span class="linenos">119</span>
+<span class="linenos">120</span><span class="kt">void</span><span class="w"> </span><span class="nf">vt100_SetCursorMode</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">mode</span><span class="p">)</span>
+<span class="linenos">121</span><span class="p">{</span>
+<span class="linenos">122</span><span class="w">	</span><span class="k">if</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+<span class="linenos">123</span><span class="w">		</span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\x1B</span><span class="s">[?25h&quot;</span><span class="p">);</span>
+<span class="linenos">124</span><span class="w">	</span><span class="k">else</span>
+<span class="linenos">125</span><span class="w">		</span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\x1B</span><span class="s">[?25l&quot;</span><span class="p">);</span>
+<span class="linenos">126</span><span class="p">}</span>
+<span class="linenos">127</span>
+<span class="linenos">128</span><span class="cm">/**</span>
+<span class="linenos">129</span><span class="cm"> * @brief </span>
+<span class="linenos">130</span><span class="cm"> *</span>
+<span class="linenos">131</span><span class="cm"> * NOTE: This function require a VT100 compatible serial monitor to work.</span>
+<span class="linenos">132</span><span class="cm"> * It will look funny in a simple serial monitor such as the one built in to PlatformIO.</span>
+<span class="linenos">133</span><span class="cm"> * </span>
+<span class="linenos">134</span><span class="cm"> * ---------</span>
+<span class="linenos">135</span><span class="cm"> * |x|x|x|x|</span>
+<span class="linenos">136</span><span class="cm"> * |x|x|x|x|</span>
+<span class="linenos">137</span><span class="cm"> * |x|x|x|x|</span>
+<span class="linenos">138</span><span class="cm"> * |x|x|x|x|</span>
+<span class="linenos">139</span><span class="cm"> * --------- </span>
+<span class="linenos">140</span><span class="cm"> */</span>
+<span class="linenos">141</span><span class="kt">void</span><span class="w"> </span><span class="nf">vt100_DrawKeypad</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">switch_states</span><span class="p">){</span>
+<span class="linenos">142</span>
+<span class="linenos">143</span><span class="w">	</span><span class="c1">//Serial.print(&quot;\x1B(0&quot;);	/* Switch to graphic character set. */</span>
+<span class="linenos">144</span>
+<span class="linenos">145</span>
+<span class="linenos">146</span><span class="w">  </span><span class="n">vt100_ClearScreen</span><span class="p">();</span>
+<span class="linenos">147</span><span class="w">  </span><span class="n">vt100_MoveCursor</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos">148</span>
+<span class="linenos">149</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="linenos">150</span>
+<span class="linenos">151</span><span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="mi">0</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">i</span><span class="p">)){</span>
+<span class="linenos">152</span><span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span>
+<span class="linenos">153</span><span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">);</span>
+<span class="linenos">154</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+<span class="linenos">155</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">156</span><span class="w">    </span><span class="k">else</span><span class="p">{</span>
+<span class="linenos">157</span>
+<span class="linenos">158</span><span class="w">      </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+<span class="linenos">159</span><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="o">%</span><span class="mi">2</span><span class="p">){</span>
+<span class="linenos">160</span>
+<span class="linenos">161</span><span class="w">          </span><span class="c1">// j = 1, 3, 5, or 7. i = 1, 2, 3, or 4.</span>
+<span class="linenos">162</span><span class="w">          </span><span class="k">if</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">((</span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">j</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))))</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// TODO: This works, but maybe it could have been solved in a more clever way </span>
+<span class="linenos">163</span><span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+<span class="linenos">164</span><span class="w">          </span><span class="k">else</span>
+<span class="linenos">165</span><span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">);</span>
+<span class="linenos">166</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">167</span><span class="w">        </span><span class="k">else</span>
+<span class="linenos">168</span><span class="w">          </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;|&quot;</span><span class="p">);</span>
+<span class="linenos">169</span>
+<span class="linenos">170</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">171</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+<span class="linenos">172</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">173</span><span class="w"> </span>
+<span class="linenos">174</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">175</span>
+<span class="linenos">176</span><span class="p">}</span>
+<span class="linenos">177</span>
+<span class="linenos">178</span>
+<span class="linenos">179</span><span class="kt">uint16_t</span><span class="w"> </span><span class="nf">scan_16_keys_keypad</span><span class="p">(){</span>
+<span class="linenos">180</span>
+<span class="linenos">181</span><span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">switch_states</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="c1">//0b1000000000000000;</span>
+<span class="linenos">182</span>
+<span class="linenos">183</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="linenos">184</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">row_pins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="linenos">185</span>
+<span class="linenos">186</span><span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+<span class="linenos">187</span><span class="w">      </span><span class="n">switch_states</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">col_pins</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">));</span>
+<span class="linenos">188</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">189</span>
+<span class="linenos">190</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">row_pins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="linenos">191</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">192</span>
+<span class="linenos">193</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">switch_states</span><span class="p">;</span>
+<span class="linenos">194</span>
+<span class="linenos">195</span><span class="p">}</span>
+<span class="linenos">196</span>
+<span class="linenos">197</span><span class="kt">void</span><span class="w"> </span><span class="nf">switch_debounce</span><span class="p">(){</span>
+<span class="linenos">198</span>
+<span class="linenos">199</span><span class="p">}</span>
+<span class="linenos">200</span>
+<span class="linenos">201</span>
+<span class="linenos">202</span><span class="kt">void</span><span class="w"> </span><span class="nf">timer2_setup_dtmf_pwm</span><span class="p">(){</span>
+<span class="linenos">203</span><span class="w">  </span><span class="n">TCCR2A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">204</span><span class="w">  </span><span class="n">TCCR2B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">205</span>
+<span class="linenos">206</span><span class="w">  </span><span class="n">TCCR2A</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM2A1</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM2A0</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM20</span><span class="p">);</span>
+<span class="linenos">207</span>
+<span class="linenos">208</span><span class="w">  </span><span class="c1">//TCCR2B &amp;= ~((1 &lt;&lt; CS22) | (1 &lt;&lt; CS21));</span>
+<span class="linenos">209</span><span class="w">  </span><span class="n">TCCR2B</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS20</span><span class="p">);</span>
+<span class="linenos">210</span>
+<span class="linenos">211</span><span class="w">  </span><span class="n">TIMSK2</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">TOIE2</span><span class="p">);</span>
+<span class="linenos">212</span>
+<span class="linenos">213</span><span class="p">}</span>
+<span class="linenos">214</span>
+<span class="linenos">215</span><span class="kt">void</span><span class="w"> </span><span class="nf">set_dtmf_tone_output</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">key</span><span class="p">){</span>
+<span class="linenos">216</span>
+<span class="linenos">217</span><span class="p">}</span>
+<span class="linenos">218</span>
+<span class="linenos">219</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">220</span>
+<span class="linenos">221</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="linenos">222</span><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">row_pins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">223</span>
+<span class="linenos">224</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="linenos">225</span><span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">col_pins</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">INPUT_PULLUP</span><span class="p">);</span>
+<span class="linenos">226</span>
+<span class="linenos">227</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">audio_pwm_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">228</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">test_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">229</span>
+<span class="linenos">230</span><span class="w">  </span><span class="n">DAC_DDR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set all pins in DAC port as outputs</span>
+<span class="linenos">231</span>
+<span class="linenos">232</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span><span class="w"> </span><span class="c1">// Serial port usage might conflict with the DAC</span>
+<span class="linenos">233</span>
+<span class="linenos">234</span><span class="w">  </span><span class="n">timer2_setup_dtmf_pwm</span><span class="p">();</span>
+<span class="linenos">235</span><span class="p">}</span>
+<span class="linenos">236</span>
+<span class="linenos">237</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">xlut_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">238</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">xlut_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">239</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">xlut_a_ext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">240</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">xlut_b_ext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">241</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">xsw_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">242</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">xsw_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">243</span>
+<span class="linenos">244</span><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">switch_state_index</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">switch_states</span><span class="p">){</span>
+<span class="linenos">245</span>
+<span class="linenos">246</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">247</span>
+<span class="linenos">248</span><span class="w">  </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">switch_states</span><span class="p">)</span>
+<span class="linenos">249</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">250</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
+<span class="linenos">251</span><span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">252</span><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="linenos">253</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span>
+<span class="linenos">254</span><span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">255</span><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="linenos">256</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span>
+<span class="linenos">257</span><span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="linenos">258</span><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="linenos">259</span><span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="mi">8</span><span class="p">:</span>
+<span class="linenos">260</span><span class="w">    </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="linenos">261</span><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="linenos">262</span><span class="w">  </span><span class="k">default</span><span class="o">:</span>
+<span class="linenos">263</span><span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="linenos">264</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">265</span>
+<span class="linenos">266</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">index</span><span class="p">;</span>
+<span class="linenos">267</span><span class="p">}</span>
+<span class="linenos">268</span>
+<span class="linenos">269</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">270</span>
+<span class="linenos">271</span><span class="w">  </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">switch_states</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scan_16_keys_keypad</span><span class="p">();</span>
+<span class="linenos">272</span>
+<span class="linenos">273</span><span class="w">  </span><span class="c1">//static uint8_t lut_index = 0;</span>
+<span class="linenos">274</span><span class="w">  </span><span class="c1">//static uint8_t lut_index2 = 0;</span>
+<span class="linenos">275</span><span class="w">  </span><span class="c1">//DAC_PORT = (sine_wave_lut[lut_index] &gt;&gt; 1) + (sine_wave_lut[lut_index2] &gt;&gt; 1);</span>
+<span class="linenos">276</span>
+<span class="linenos">277</span><span class="w">  </span><span class="c1">//lut_index+=1;</span>
+<span class="linenos">278</span><span class="w">  </span><span class="c1">//lut_index2 += 2;</span>
+<span class="linenos">279</span>
+<span class="linenos">280</span><span class="w">  </span><span class="c1">//vt100_DrawKeypad(switch_states);</span>
+<span class="linenos">281</span><span class="w">  </span><span class="c1">//Serial.println(switch_states, BIN);</span>
+<span class="linenos">282</span><span class="w">  </span><span class="c1">//delay(1);</span>
+<span class="linenos">283</span><span class="w">  </span><span class="c1">//delayMicroseconds(6);</span>
+<span class="linenos">284</span>
+<span class="linenos">285</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x000f</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="linenos">286</span><span class="w">    </span><span class="n">xsw_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low_freq_xsw</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">287</span>
+<span class="linenos">288</span><span class="w">    </span><span class="n">xsw_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_freq_xsw</span><span class="p">[</span><span class="n">switch_state_index</span><span class="p">(</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x000f</span><span class="p">)];</span>
+<span class="linenos">289</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">290</span><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x00f0</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="linenos">291</span><span class="w">    </span><span class="n">xsw_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low_freq_xsw</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="linenos">292</span>
+<span class="linenos">293</span><span class="w">    </span><span class="n">xsw_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_freq_xsw</span><span class="p">[</span><span class="n">switch_state_index</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x000f</span><span class="p">)];</span>
+<span class="linenos">294</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">295</span><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x0f00</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="linenos">296</span><span class="w">    </span><span class="n">xsw_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low_freq_xsw</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="linenos">297</span>
+<span class="linenos">298</span><span class="w">    </span><span class="n">xsw_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_freq_xsw</span><span class="p">[</span><span class="n">switch_state_index</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x000f</span><span class="p">)];</span>
+<span class="linenos">299</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">300</span><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0xf000</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="linenos">301</span><span class="w">    </span><span class="n">xsw_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">low_freq_xsw</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w">  </span>
+<span class="linenos">302</span>
+<span class="linenos">303</span><span class="w">    </span><span class="n">xsw_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">high_freq_xsw</span><span class="p">[</span><span class="n">switch_state_index</span><span class="p">((</span><span class="n">switch_states</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x000f</span><span class="p">)];</span>
+<span class="linenos">304</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">305</span>
+<span class="linenos">306</span>
+<span class="linenos">307</span><span class="w">  </span><span class="c1">// 1, 16, 32, 64</span>
+<span class="linenos">308</span>
+<span class="linenos">309</span><span class="w">  </span><span class="c1">// 2, 32</span>
+<span class="linenos">310</span>
+<span class="linenos">311</span><span class="w">  </span><span class="c1">//xsw_a = high_freq_xsw[0];</span>
+<span class="linenos">312</span><span class="w">  </span><span class="c1">//if(switch_states )</span>
+<span class="linenos">313</span>
+<span class="linenos">314</span><span class="c1">//  if((switch_states &amp; 1) != 0){</span>
+<span class="linenos">315</span><span class="c1">//    xsw_a = high_freq_xsw[0];  </span>
+<span class="linenos">316</span><span class="c1">//    xsw_b = low_freq_xsw[0];</span>
+<span class="linenos">317</span><span class="c1">//  }</span>
+<span class="linenos">318</span><span class="c1">//  else if(((switch_states &gt;&gt; 1) &amp; 1) != 0){</span>
+<span class="linenos">319</span><span class="c1">//</span>
+<span class="linenos">320</span><span class="c1">//    xsw_a = high_freq_xsw[1];  </span>
+<span class="linenos">321</span><span class="c1">//    xsw_b = low_freq_xsw[0];</span>
+<span class="linenos">322</span><span class="c1">//  }</span>
+<span class="linenos">323</span><span class="c1">//  else{</span>
+<span class="linenos">324</span><span class="c1">//    xsw_a = high_freq_xsw[2];</span>
+<span class="linenos">325</span><span class="c1">//    xsw_b = low_freq_xsw[0];</span>
+<span class="linenos">326</span><span class="c1">//  }</span>
+<span class="linenos">327</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+<span class="linenos">328</span><span class="p">}</span>
+<span class="linenos">329</span>
+<span class="linenos">330</span>
+<span class="linenos">331</span><span class="n">ISR</span><span class="p">(</span><span class="n">TIMER2_OVF_vect</span><span class="p">){</span>
+<span class="linenos">332</span>
+<span class="linenos">333</span><span class="w">  </span><span class="c1">//digitalWrite(test_pin, !digitalRead(test_pin));</span>
+<span class="linenos">334</span>
+<span class="linenos">335</span><span class="w">  </span><span class="n">xlut_a_ext</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">xsw_a</span><span class="p">;</span>
+<span class="linenos">336</span><span class="w">  </span><span class="n">xlut_b_ext</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">xsw_b</span><span class="p">;</span>
+<span class="linenos">337</span>
+<span class="linenos">338</span><span class="w">  </span><span class="c1">// Bit shift right 3 times (&gt;&gt; 3) is divide by 8</span>
+<span class="linenos">339</span><span class="w">  </span><span class="c1">// 0x7f is 127 decimal, and used to strip away the bits above.</span>
+<span class="linenos">340</span><span class="w">  </span><span class="n">xlut_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(((</span><span class="n">xlut_a_ext</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="mh">0x007F</span><span class="p">));</span>
+<span class="linenos">341</span><span class="w">  </span><span class="n">xlut_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(((</span><span class="n">xlut_b_ext</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="p">(</span><span class="mh">0x007F</span><span class="p">));</span>
+<span class="linenos">342</span>
+<span class="linenos">343</span><span class="w">  </span><span class="n">DAC_PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_a</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<span class="linenos">344</span><span class="w">  </span><span class="n">OCR2A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_a</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">sine_wave_lut256</span><span class="p">[</span><span class="n">xlut_b</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<span class="linenos">345</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="digital_synth.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Digital synthesizer</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="frequency_estimator.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Frequency estimation for low frequencies</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-a-standard-dtmf-matrix-keyboard">Reading a standard DTMF matrix keyboard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-wave-lookup-table">Sine wave lookup table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-dtmf-tones-using-pwm-atmel-app-note-avr314">Generate DTMF tones using PWM (Atmel app. note AVR314)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-filter-and-amplification">Output filter and amplification</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#improved-audio-quality-dtmf-generation">Improved audio quality DTMF generation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-the-digital-values-using-8-bit-dac">Convert the digital values using 8-bit DAC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-source-code-example">Complete source code example</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

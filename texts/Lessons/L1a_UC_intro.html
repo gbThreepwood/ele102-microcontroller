@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>What is a Microcontroller &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L1a_UC_intro';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Arduino Introduction" href="L1b_Arduino_intro.html" />
+    <link rel="prev" title="Software and hardware preparations" href="software_hardware_preparations.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Lessons/L1a_UC_intro.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>What is a Microcontroller</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-systems">Embedded Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-system-characteristics">Embedded System Characteristics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#future">Future</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microcontroller-uc-microprocessor-integrated-circuit-ic">Microcontroller (UC), Microprocessor, Integrated Circuit (IC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microprocessor-processing-structure">Microprocessor Processing Structure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino">Arduino</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fun-fact-about-arduino">Fun fact about Arduino:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming-languages">Programming languages</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <span class="target" id="l1-uc-intro"></span><section id="what-is-a-microcontroller">
+<h1>What is a Microcontroller<a class="headerlink" href="#what-is-a-microcontroller" title="Link to this heading">#</a></h1>
+<p>We will start this course by exploring the questions of what a microcontroller is, and what it means to be developing software for a embedded system.</p>
+<p>Simply put a microcontroller is a small computer on a single integrated circuit (a chip), containing a processor core, memory, and programmable input/output peripherals <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<ul class="simple">
+<li><p>Tiny, self­contained computers in an IC</p></li>
+<li><p>Requires few external components to maintain the core functionality</p></li>
+<li><p>Often contain additional peripherals</p></li>
+<li><p>Different packages available</p></li>
+<li><p>Vast array of performance categories available</p></li>
+</ul>
+<p>A microcontroller alone is generally not a finished product. Microcontrollers are used at the core of so called <em>embedded systems</em> to facilitate control of the system. A embedded system can be used in almost unlimited number of applications, from your microwave oven, to the <em>Perseverance Rover</em> on Mars.</p>
+<p>Not only is a microcontroller alone pretty useless, it is also typically not able to operate unless it has at least a few external components. It is not that it would be impossible to incorporate everything inside the chip, but this would lead to a dramatic reduction in the flexibility of the controller to be adapted to different applications. Of the most prominent examples of required external circuitry a regulated power supply should be mentioned.</p>
+<p>A quick google search for the keyword <em>microcontroller</em> reveals some of the many integrated circuits, and some common experimentation board for microcontrollers:</p>
+<figure class="align-center">
+<img alt="Google search for microcontroller" src="../../_images/microcontrollerFail.png" />
+</figure>
+<section id="embedded-systems">
+<h2>Embedded Systems<a class="headerlink" href="#embedded-systems" title="Link to this heading">#</a></h2>
+<p><strong>Definition 1:</strong> Information processing systems embedded into enclosing products such as cars, telecommunication or fabrication equipment. – Main reason for buying is notinformation processing.  <em>[Peter Marwedel, T. U. Dortmund]</em></p>
+<p><strong>Definition 2:</strong> Embedded software is software integrated with physical processes.  The technical problem is managing time and concurrency in computational systems.  <em>[Edward A. Lee,  U. C. Berkeley]</em></p>
+<p>The first definition draws a wider boundary for the embedded systems category whereas the second definition states that integration with physical processes is required for a system to be considered as embedded.  We can argue for example, whether the cellular phones are embedded systems or not.  If we were asking this question in 1990s, then the answer would more likely to be “yes”.  Early cellular phones were 100% phones mostly dealing with challenges of receiving and transmitting audio signals in real-time.  Most of the today’s cellular phones however, are equipped with several additional features, so that sometimes less than 10% of the price paid goes into the phone functionality.  The remaining 90% buys a color screen, a camera, an Internet browser, an audio/video player, and more.  A $499 cellular phone sold today is an embedded system according to the first definition.  According to the second definition, it is only 10% embedded system where the remaining 90% can be categorized as a miniaturized PC. The second definition is a more precise categorization of embedded systems as they are seen from the electrical engineering perspective.  <strong>Within the scope of this course, an embedded system is a device that answers the design challenges related to one or more of the characteristics</strong> listed in the following section.  It is not really important how many of these design challenges we must deal with while working on a project.  The hardware and software development methods discussed in this course are all helpful design techniques whether we call the end product an embedded system or not.</p>
+</section>
+<section id="embedded-system-characteristics">
+<h2>Embedded System Characteristics<a class="headerlink" href="#embedded-system-characteristics" title="Link to this heading">#</a></h2>
+<p>Common examples of embedded systems include processors used in manufacturing equipment, transportation vehicles, telecommunication equipment, and consumer electronics.  Following are the characteristics of these systems:<a class="footnote-reference brackets" href="#f3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+<ol class="arabic simple">
+<li><p><strong>Interaction with the physical processes:</strong>  Sensors acquiring information about processes and actuators (or actors) controlling those processes are the connections between the most common embedded systems and the outside physical world.  Signal conditioning, data acquisition, driver electronics and transducers are important parts of these systems.</p></li>
+<li><p><strong>Real-time constraints:</strong>  Failure to complete system tasks within a specified time frame may result in harm to the user or degradation of system performance.  Such failures may be life-threatening in transportation vehicles.  This is a consequence of the embedded systems’ interaction with the physical world. Performance of a PC is not critical while editing a document or browsing Internet.  A user can spend 100 seconds waiting in front of a PC where it may take only 5 seconds to complete the same task in ideal operating conditions.  An embedded system controlling a process on the other hand, must execute the specified computations with the required frequency and precision.  We can find average performance of a PC satisfactory even if it appears to be too slow from time to time.  Unlike a typical PC application, averaged performance is not a meaningful measure when we consider real-time systems.  An embedded system must work within specifications every time, all the time, and its performance must be guaranteed without statistical arguments.</p></li>
+<li><p><strong>Reliability:</strong>  Embedded systems can be safety-critical as another natural consequence of being connected to the physical environment.  Following are the major requirements of a reliable system.</p>
+<ul class="simple">
+<li><p><strong>Availability:</strong>  An embedded system must work within specifications as long as the system power is on.  Keeping wide tolerance limits (temperature, supply voltage, noise immunity, etc.) and implementing the necessary failure recovery procedures provide a high availability.</p></li>
+<li><p><strong>Handling exceptions:</strong>  Failure of a temperature sensor on a boiler should not cause a blast.  A dirty speed sensor should not result in a runaway wheel in the ABS system of a vehicle.  All similar failures of system components must be handled in the least harmful way.</p></li>
+<li><p><strong>System start-up and recovery:</strong>  Initial start-up and recovery after a power failure should be safe and consistent.</p></li>
+<li><p><strong>Security:</strong>  If necessary, access to the system controls must be restricted to the authorized users.  User data should be kept confidential whenever it is required and external communications should be protected.</p></li>
+</ul>
+</li>
+<li><p><strong>Efficiency:</strong>  The following measures can be used for evaluating the efficiency of embedded systems:</p>
+<ul class="simple">
+<li><p><strong>Power consumption:</strong>  Many embedded systems run on batteries or they may rely on limited supplies provided through other system components.</p></li>
+<li><p><strong>Code efficiency:</strong>  In most cases the entire code of an embedded system is stored with the system.  The code-size to implement the required functionality should be as small as possible especially for the systems to be manufactured in large quantities.</p></li>
+<li><p><strong>Run-time efficiency:</strong>  The minimum amount of resources should be used for implementing the required functionality.  We should be able to meet time constraints using the least amount of hardware resources and energy. Weight, compactness, and manufacturing costs can be the other efficiency factors in embedded systems applications.  Weight of a mobile consumer electronics device may not be critical, but usually there are strict limits for the systems used on aircrafts and military equipment.</p></li>
+</ul>
+</li>
+<li><p><strong>Dedicated application:</strong>  Embedded systems are dedicated towards a certain application.  User interfaces are also specialized and optimized for that application.</p></li>
+</ol>
+<section id="applications">
+<h3>Applications<a class="headerlink" href="#applications" title="Link to this heading">#</a></h3>
+<p>The following list summarizes the key areas in which embedded systems are used:</p>
+<ul>
+<li><p><strong>Industrial process control:</strong>  Control systems used in manufacturing environments are the most typical examples of embedded systems.  Reliability of these systems is critical.</p></li>
+<li><p><strong>Household and consumer electronics:</strong>  Home appliances, air conditioning equipment, and home security systems are the growing application areas for embedded systems.  Simple electrical or electromechanical control units have been replaced by more reliable and efficient digital controllers.</p>
+<p>Consumer electronics which constitutes the major part of the electronics industry relies on embedded processors.  The processing capability integrated into video and audio equipment is growing progressively with addition of high-performance digital signal processing (DSP) and memory units.  Mobile phone manufacturers have been pushing DSP and storage capabilities to the limits set by the power efficiency requirements in a very competitive market.</p>
+</li>
+<li><p><strong>Medical equipment:</strong>  Medical equipment used for diagnostic, therapeutic, and surgical purposes in hospitals have always been a traditional application area for embedded systems.  Home-care medical equipment and wearable devices or implants for patient monitoring and therapy purposes have growing potential for improving the quality of medical care.  Information processing power combined with the data storage and remote communication capabilities makes the embedded systems critical components of all modern medical devices .</p></li>
+<li><p><strong>Automotive electronics:</strong>  Cars and trucks that have been sold during the last few decades contain a number of electronic control units.  A few examples are engine and emission control systems, air bag controllers, anti-lock braking systems (ABS), navigation computers with GPS.  Reliability of these systems are critical for user safety.  Embedded systems also have an important place in other transportation vehicles such as trains and all kinds of boats where user safety is critical.</p></li>
+<li><p><strong>Avionics equipment:</strong>  All airplanes used for civil aviation or military purposes rely on electronic control and safety systems most of which can be classified as embedded systems.  An essential fraction - in some cases more than half - of the total cost of airplanes goes into the electronic components.</p></li>
+<li><p><strong>Robotics:</strong>  Embedded systems are the essential parts of robots or robotic actuators as a natural consequence of their interaction with the physical environment.</p></li>
+<li><p><strong>Military applications:</strong>  In many sections of the electronics industry, military applications led the development of electronic systems mainly due to the availability of financial resources for R&amp;D.  Embedded systems have been used heavily in the military equipment for telecommunication, navigation, remote sensing, targeting, and several other applications</p></li>
+</ul>
+</section>
+<section id="future">
+<h3>Future<a class="headerlink" href="#future" title="Link to this heading">#</a></h3>
+<p>The cost of digital electronic components have been decreasing steadily while the integration density is rising as a result of well-known trends in the semiconductor manufacturing industry.  Digital systems replaced their analog or electromechanical counterparts mainly because of their reliability and flexibility.  In addition, advancements in the electronic assembly and packaging technologies facilitated miniaturization of devices such as the medical implants that seemed impossible to produce ten years ago.  Most people encounter embedded processors in their daily lives more often than they can realize.  There may be several appliances with embedded processors in our homes, and our cars are likely to contain tens of microprocessors depending on their age and luxury level.</p>
+<p>Some market analysts predict that the embedded system market will be much larger than the market for PCs and similar systems in the near future.  It has been estimated that nearly 80% of the processors manufactured today are used in embedded systems <a class="footnote-reference brackets" href="#f2" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> .In terms of variety of the components available in the market, most of the microcontrollers or embedded processors contain 8-bit processors.  On the other hand, 75% of all 32-bit processors are integrated into embedded systems.  Also, the complexity of embedded software is expected to increase, doubling the length of code every two years in the area of consumer electronics.
+The marketing estimates on the number of processors are dictated by the expectations of the consumer electronics market.   Most consumer electronics products, such as mobile phones and portable audio/video players, heavily focus on the information processing capabilities.  These are high-volume products, so that the sales of every designed system can easily reach thousands or millions.  The number of embedded system designs in the other application areas is higher, but the sales of these products is much lower compared to consumer electronics products.  From a design engineer’s point of view, future trends in embedded systems should not be tied solely to the development of processors.  Development of new sensor and actuator technologies and driver electronics will result in a growing number of applications for embedded systems.</p>
+</section>
+</section>
+<section id="microcontroller-uc-microprocessor-integrated-circuit-ic">
+<h2>Microcontroller (UC), Microprocessor, Integrated Circuit (IC)<a class="headerlink" href="#microcontroller-uc-microprocessor-integrated-circuit-ic" title="Link to this heading">#</a></h2>
+<p><strong>Integrated Circuit (IC):</strong> (sometimes called a chip or microchip) a semiconductor wafer on which thousands or millions of tiny resistors, capacitors, and transistors are fabricated. An IC can function as an amplifier, oscillator, timer, counter, computer memory, or microprocessor. A particular IC is categorized as either linear (analog) or digital, depending on its intended application.</p>
+<p><strong>Microprocessor:</strong> An IC which has only the CPU inside them i.e. only the processing powers such as Intel’s Pentium 1,2,3,4, core 2 duo, i3, i5 etc. These microprocessors don’t have RAM, ROM, and other peripheral on the chip. A system designer has to add them externally to make them functional. Application of microprocessor includes Desktop PC’s, Laptops, notepads etc.</p>
+<p>It should be noted that although a microprocessor requires external memory to operate, modern microprocessors often incorporate internal memory (known as cache) in order to execute operations more efficiently. In practice many modern developments challenges the traditional definitions of the various parts of a computer system.</p>
+<p><strong>Microcontroller (UC):</strong> A system of a microprocessor that is packaged with RAM, program storage and interface (I/O) circuitry to make it simple to use.  They’re most used in (you guessed it) control applications. They are designed to perform specific tasks. Specific means applications where the relationship of input and output is defined.</p>
+<p><strong>Embedded System:</strong> The product that uses a microprocessor (or microcontroller) as a component. It consists of both hardware and software.</p>
+<figure class="align-center">
+<img alt="Embedded system block diagram" src="../../_images/EmbeddedSystems.png" />
+</figure>
+<p>Also there are some other early-fundamental tools that can be comparable with microcontrollers:</p>
+<p><strong>Programmable Logic Controller (PLC):</strong> is a specialized industrial computer. It is custom programmed to monitor input signals (digital or analog), perform logical operations, and trigger specific output signals. PLCs are known to be rugged and are commonly used in extreme industrial environments or applications that have almost no room for failure. PLCs are popular because of their modular structure. This makes them easy to install in a plug-and-play manner <a class="footnote-reference brackets" href="#f4" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+<p><strong>Field Programmable Gate Array (FPGA):</strong> can be defined as a <em>kind of</em> microprocessor which doesn’t have any hardwired logic blocks because that would defeat the field programmable aspect of it. An FPGA is laid out like a net with each junction containing a switch that the user can make or break. This determines how the logic of each block is determined. Programming an FPGA involves learning HDL or the Hardware Description Language; a low level language that some people say to be as difficult as assembly language <a class="footnote-reference brackets" href="#f5" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>. Compared to FPGAs, microprocessors have fixed instructions.</p>
+<section id="microprocessor-processing-structure">
+<h3>Microprocessor Processing Structure<a class="headerlink" href="#microprocessor-processing-structure" title="Link to this heading">#</a></h3>
+<figure class="align-center">
+<img alt="Batman is awesome!" src="../../_images/Batman.png" />
+</figure>
+<p>All of you know the stereotype: “computers work with ones and zeros”. When I was in the first grade of the engineering class, whenever some bighead told me this sentence, I always wanted to kick their face with a spade. <em>Everyone</em> knows that a computer works with ones and zeros but really, <em>how?</em></p>
+<p>Well, so far what we know that a processor consists of millions of transistors. It is obvious that switching on/off transistors creates those <em>famous</em> ones and zeros. But again, how when you type <code class="code docutils literal notranslate"><span class="pre">printf(&quot;Hello</span> <span class="pre">world!&quot;);</span></code> on a strange window (we will call it later IDE), thousands of transistor switches on and off in a couple of nanoseconds and a <strong>Hello world!</strong> appears on another strange window (typically called a Console)?</p>
+<p>There are many levels of nested knowledge which is required to fully grasp all the details of what is going on here. Furthermore a lot of software developers live happily without an understanding of the complete picture. Still some knowledge is required, especially for the times when things are not working they way you expect.</p>
+</section>
+</section>
+<section id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">#</a></h2>
+<p>The program you write usually contains at least two types of instructions. First it typically contains instruction to import other code in the form of libraries which are prepared for your convenience. Secondly your code, and the libraries contains instructions (formally known as statements) which are to be interpreted by the compiler.</p>
+<p>The compiler is a computer program which translates computer code written in one programming language (the source language) into another language (the target language). There are two versions of your program: the one you wrote but a computer can’t read (source code) <a class="footnote-reference brackets" href="#f8" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, and the magically generated one that a computer can read (machine code).</p>
+<p>The following figure attempts to illustrate this process:</p>
+<figure class="align-center">
+<img alt="Compiler illustration" src="../../_images/Compiler.png" />
+</figure>
+<p>And this is the reason why your 32-bit programs don’t work on a 64-bit computer (or they are needed to be installed into System32 folder etc). Because the controller divides all those set of 10101101’s into the parts that the architecture supports. If the processors are different or the operating systems are different, then they use different machine instructions. Today things works slightly different to overcome these compatibility issues but we are not in computer architecture class now so better to stop here.</p>
+<p>Further down the path of development the generated machine code is transferred to the microcontroller memory. When the microcontroller is started it will read and execute one instruction at a time, while traversing step by step through the memory. Special instruction are also able to instruct the controller to jump to different areas of the memory, allowing the program to take different paths depending on some external factors.</p>
+<figure class="align-center">
+<img alt="Microprocessor organization" src="../../_images/microprocessororganization.png" />
+</figure>
+<p>In practice there is usually an intermediate step between the source code, and the machine code. The intermediate step is known as the assembly code, and is a low level language where each statement corresponds to a single operation which is directly supported by the CPU. For some special cases where high performance is needed, or special features not available in the programming language are needed, assembly language is used. It is also used extensively by experienced developers while debugging code, as it is not always obvious how the compiler interpret and translates our instructions.</p>
+<p>Traditionally all software was developed using assembly language, but higher level languages (such as C/C++) have been designed to simplify the development process for all but the most advanced or special cases.</p>
+<p><a class="reference internal" href="../../_images/assembly1.png"><img alt="pic1" src="../../_images/assembly1.png" style="width: 33%;" /></a> <a class="reference internal" href="../../_images/assembly2.png"><img alt="pic2" src="../../_images/assembly2.png" style="width: 33%;" /></a> <a class="reference internal" href="../../_images/assembly3.png"><img alt="pic3" src="../../_images/assembly3.png" style="width: 33%;" /></a></p>
+<p><strong>Why assembly language?</strong></p>
+<ul class="simple">
+<li><p>It gives us direct access to machine instructions that we cannot use in high-level languages.</p></li>
+<li><p>It can be the best (only) way to generate efficient code in terms of speed and memory usage.</p></li>
+<li><p>It provides a better insight in to what is actually going on inside the computer (or microcontroller)</p></li>
+<li><p>It allows us to exploit hardware features not available in the programming language. One typical example is context switching of threads in a operating system.</p></li>
+<li><p>Provides a deeper understanding of how the system is operating. Invaluable when it comes to understanding the low level details of how the computer operates.</p></li>
+</ul>
+<p>The embedded system is a bottomless well. It is impossible to cover everything in this course - and we don’t need to. Embedded system world is a charming nerdy black hole that pulls you inside even more as you are willing to learn more. Therefore we limit have to limit for this course at some point.</p>
+<p>For the youtubers:  <a class="reference external" href="https://www.youtube.com/watch?v=QXjU9qTsYCc">How do computers read code?</a> , The Evolution Of CPU Processing Power <a class="reference external" href="https://www.youtube.com/watch?v=sK-49uz3lGg&amp;t=315s">Part 1</a> <a class="reference external" href="https://www.youtube.com/watch?v=kvDBJC_akyg">Part 2</a> <a class="reference external" href="https://www.youtube.com/watch?v=NTLwMgak3Fk">Part 3</a> .</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f8" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">1</a><span class="fn-bracket">]</span></span>
+<p>Strictly speaking the computer also reads the source language, but this reading process is more indirect. There is another set of instructions (another program, the compiler) running on the CPU which reads the code. The finalized program will be directly readable by the CPU without this intermediate step. Additionally for our purposes the compiler runs on your PC, while the finished program runs on the microcontroller.</p>
+</aside>
+</aside>
+<section id="arduino">
+<h3>Arduino<a class="headerlink" href="#arduino" title="Link to this heading">#</a></h3>
+<p>Open Source electronic prototyping platform based on flexible easy to use hardware and software.</p>
+<figure class="align-center">
+<img alt="The original Arduino UNO board" src="../../_images/Arduino.png" />
+</figure>
+<p>The Arduino family consists of a large number of boards with different sets of features. Depending on your requirements, you should select the board which best fits the intended application. It can however be a good idea to avoid controllers which exceed the performance requirements. Especially if you work in a big company which has a mass production, even a couple of cents of saving in production can make a huge difference. Thus you should choose the simplest controller which meets the requirements.</p>
+<p>In this course, we will not dwell to much on this aspect, the board is already selected for you (the Arduino UNO), and we are going to explore the features available.</p>
+<p>Efficiency in code is always important, i.e. the code should be written in a way which as efficiently as possible achieve the intended goal. In a microcontroller program it can often be vital, due to the limited resources available (e.g. limited memory, and CPU clock speed). Luckily Arduino is plenty powerful for what we are going to achieve in this course, but just keep this in mind!</p>
+<figure class="align-center">
+<img alt="Various boards in the Arduino family" src="../../_images/ArduinoFamily.png" />
+</figure>
+<p>Before Arduino and similar boards appeared on the marked, embedded programming had a pretty high entry barrier. It was hard for beginner to get started. You had to consider many different external circuits, clocks, prescalers, pin assignments, direct register access among other things. After Arduino entered the market, a new era has started.</p>
+<p>A quick google search reveals that there is a lot more interest in Arduino, than it is in the microcontroller on which the original Arduino is based:</p>
+<figure class="align-center">
+<img alt="Arduino vs Atmega on Google" src="../../_images/ArduinoVSAtmega.png" />
+</figure>
+<p>Some people may say that “Arduino is a toy”, well, in a way it is true. Depends on how you use it. Our computers are also a toy right? It has all the functionalities of a mid-advanced microcontrollers have. One thing to note though, is that the low entry barrier has allowed many poorly skilled programmers to write about their experiences on the web. Beware of shitty tutorials, which teach shitty programming style, and low performance electronics.</p>
+<section id="fun-fact-about-arduino">
+<h4>Fun fact about Arduino:<a class="headerlink" href="#fun-fact-about-arduino" title="Link to this heading">#</a></h4>
+<p>Atmega328P is a microcontroller originally developed by a company called <a class="reference external" href="https://www.wikiwand.com/en/Atmel">Atmel</a>. Atmel was bought by Microchip in 2016, and thus the company no longer exists. The microcontroller architecture particularly used by Atmel is called <a class="reference external" href="https://www.wikiwand.com/en/AVR_microcontrollers">AVR</a> developed by Alf-Egil Bogen and Vegard Wollan while they where students at NTNU in Trondheim. AVR derives its name from its developers and stands for Alf-Egil Bogen Vegard Wollan RISC microcontroller, although attempts have been made to re-define it as Advanced Virtual <a class="reference external" href="https://www.wikiwand.com/en/Reduced_instruction_set_computer">RISC</a> <a class="footnote-reference brackets" href="#f6" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> . It has a <a class="reference external" href="https://www.wikiwand.com/en/Modified_Harvard_architecture">modified Harvard architecture</a> .</p>
+</section>
+</section>
+</section>
+<section id="programming-languages">
+<h2>Programming languages<a class="headerlink" href="#programming-languages" title="Link to this heading">#</a></h2>
+<p>There are at least four (likely more) options for programming languages for programming the Arduino UNO.</p>
+<ul class="simple">
+<li><p>Assembly</p></li>
+<li><p>C</p></li>
+<li><p>C++</p></li>
+<li><p>Rust</p></li>
+</ul>
+<p>For the remainder of these notes we will be using C++, which is the language officially supported by the Arduino developers. Still it is useful to have some knowledge of the alternatives. C++ is to a large extent an extension to the C programming language, with extra features related to object oriented programming. The reader should note though, that there is nothing C++ can do which you can not do in plain C. C++ offers extra features to make some programming approaches more convenient, while it also imposes some restrictions to make it slightly more difficult to make some common mistakes.</p>
+<p>The Rust programming language differs a lot from the other two, although the syntax is inspired by the syntax found in C/C++. The development of Rust began in 2006, while C development began in 1972 with C++ released in 1983. Rust is a modern alterative which promises to solve some of the major challenges with the old low level languages, especially related to memory safety. It’s popularity has increased in recent years, and the support for various microcontrollers is increasing. Again it should be noted that Rust does not provide us with the ability to create functionality which is impossible in C/C++, but it attempts to reduce the likelihood of common mistakes, and make the development process more convenient.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">2</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Microcontroller">http://en.wikipedia.org/wiki/Microcontroller</a> - 17 October 2019.</p>
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Marwedel, Peter,  “Embedded System Design”  Springer, Boston, MA,  2006.</p>
+</aside>
+<aside class="footnote brackets" id="f3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">4</a><span class="fn-bracket">]</span></span>
+<p>Izmir Institute of Technology - Department of Electrical and Electronics Engineering <em>EE443 - Embedded Systems lecture notes - 2013</em></p>
+</aside>
+<aside class="footnote brackets" id="f4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">5</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://resources.altium.com/pcb-design-blog/plc-vs-embedded-system-when-you-should-choose-a-plc-despite-the-higher-cost-per-unit">https://resources.altium.com/pcb-design-blog/plc-vs-embedded-system-when-you-should-choose-a-plc-despite-the-higher-cost-per-unit</a> - 14 January 2020</p>
+</aside>
+<aside class="footnote brackets" id="f5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">6</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.element14.com/community/groups/fpga-group/blog/2018/02/22/comparing-an-fpga-to-a-microcontroller-microprocessor-or-an-asic">https://www.element14.com/community/groups/fpga-group/blog/2018/02/22/comparing-an-fpga-to-a-microcontroller-microprocessor-or-an-asic</a> - 14 January 2020</p>
+</aside>
+<aside class="footnote brackets" id="f6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">7</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.elprocus.com/difference-between-avr-arm-8051-and-pic-microcontroller/">https://www.elprocus.com/difference-between-avr-arm-8051-and-pic-microcontroller/</a> - 14 January 2020.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="software_hardware_preparations.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Software and hardware preparations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="L1b_Arduino_intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Arduino Introduction</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-systems">Embedded Systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-system-characteristics">Embedded System Characteristics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#future">Future</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#microcontroller-uc-microprocessor-integrated-circuit-ic">Microcontroller (UC), Microprocessor, Integrated Circuit (IC)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microprocessor-processing-structure">Microprocessor Processing Structure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation">Compilation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino">Arduino</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fun-fact-about-arduino">Fun fact about Arduino:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming-languages">Programming languages</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Phase locked loop (PLL) &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Projects/phase_locked_loop';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Phasor estimation" href="phasor_estimation.html" />
+    <link rel="prev" title="Phase displacement measurements" href="phase_displacement.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Projects/phase_locked_loop.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Phase locked loop (PLL)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-detector">Phase detector</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notch-filter">Notch filter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#experimenting-with-the-phase-detector-alone">Experimenting with the phase detector alone</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-filter-pi-controller">Loop filter (PI controller)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pi-controller-implementation">PI-controller implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-oscillator">Local oscillator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-and-cosine-generation-by-integration">Sine and cosine generation by integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-table">Lookup table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cordic">CORDIC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-approximation-by-quadratic-functions">Sine approximation by quadratic functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-lock-on-a-5-hz-sine-wave-from-a-signal-generator">Example: Lock on a 5 Hz sine wave from a signal generator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-lock-on-the-power-grid-waveform-sampled-on-the-adc">Example: Lock on the power grid waveform sampled on the ADC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-frequency-synchronization">Grid frequency synchronization</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="phase-locked-loop-pll">
+<span id="phase-locked-loop"></span><h1>Phase locked loop (PLL)<a class="headerlink" href="#phase-locked-loop-pll" title="Link to this heading">#</a></h1>
+<p>A phase locked loop (PLL) is a control loop which forces a locally generated signal to stay in phase with an external input signal. Since we are in control of our locally generated signal, it is more easy to extract information from it, when compared to the external signal. E.g. the frequency, and phase of our local signal can be used as measures of the frequency and phase of the external signal. The PLL can be realized in both software, and hardware, but in this lesson only software based PLLs are discussed.</p>
+<p>The PLL has numerous applications, some of which include:</p>
+<ul class="simple">
+<li><p>Demodulation of FM</p></li>
+<li><p>Demodulation of FSK</p></li>
+<li><p>Clock multiplication or division</p></li>
+<li><p>Grid frequency synchronization for grid connected inverters</p></li>
+</ul>
+<p>One of the many applications of a phase locked loop is determination of the frequency, and phase of a measured waveform. If we need to measure the phase difference between two external signals, we can use two PLL’s to determine the phase of each one, and compute the phase difference by subtraction.</p>
+<section id="phase-detector">
+<h2>Phase detector<a class="headerlink" href="#phase-detector" title="Link to this heading">#</a></h2>
+<p>In general when multiplying two sine waves you will end up with two new sine waves a different frequencies. One will be at a frequency equal to the difference between the two original frequencies, while the other will be at the sum frequency.</p>
+<p>We have the following trigonometric identity:</p>
+<div class="math notranslate nohighlight">
+\[2\sin(a)\sin(b) = \cos(a - b) - \cos(a + b)\]</div>
+<p>Consider the following expressions for a voltage, and a current:</p>
+<div class="math notranslate nohighlight">
+\[v(t) = \hat{V} \sin(\omega t + \phi_{v})\]</div>
+<div class="math notranslate nohighlight">
+\[i(t) = \hat{I} \sin(\omega t + \phi_{i})\]</div>
+<p>By taking the product, and utilizing the previously mentioned trigonometric identity, we end up with the following result:</p>
+<div class="math notranslate nohighlight">
+\[v(t)i(t) = \hat{V} \sin(\omega t + \phi_{v}) \hat{I} \sin(\omega t + \phi_{i}) = \frac{\hat{V}\hat{I}}{2} \left( \cos(\omega t + \phi_v - \omega t - \phi_i) - \cos(\omega t + \phi_v + \omega t + \phi_i) \right)\]</div>
+<div class="math notranslate nohighlight">
+\[v(t)i(t) = \frac{\hat{V}\hat{I}}{2} \left( \cos(\phi_i - \phi_v) - \cos(2\omega t + \phi_v + \phi_i) \right)\]</div>
+<p>The above expression reveals that the product of the two sinusoidal waveforms yields a new waveform which consists of one sine wave component at twice the frequency of the original waveforms (we assume the original waveforms have the same frequency), and another component which is a constant value proportional to the phase difference between the two waveforms.</p>
+<p>By passing the result from the multiplication through a low pass filter (or possibly a notch filter which removes the component at twice the fundamental frequency), we will obtain a value equal to the cosine of the phase difference between the two waveforms.</p>
+<div class="math notranslate nohighlight">
+\[\delta = \frac{1}{2} \cos(\phi_i - \phi_v)\]</div>
+<p>The phase difference can thus be calculated by:</p>
+<div class="math notranslate nohighlight">
+\[\varphi = \phi_i - \phi_v = \arccos(2 \delta)\]</div>
+<p>It is important to realize that this is not the general case, it is consequence of the two waveforms having the same frequency, and only different phase. In reality there could be slight (or even large) differences in the frequency, and this phase detector is only a partial solution. In order to have a robust phase estimation we need a complete phase locked loop.</p>
+<section id="notch-filter">
+<h3>Notch filter<a class="headerlink" href="#notch-filter" title="Link to this heading">#</a></h3>
+<p>A notch filter is a band stop filter with a high quality factor. I.e. it is a filter which will block a narrow range of frequencies. Since we know that the multiplication based phase detector will always output an unwanted sinusoidal component at twice the grid frequency, a notch filter becomes a logical choice to remove it.</p>
+<p>The quality factor should not be too high, as this could mean that the filter is not effective in case of slight variations in the grid frequency. It is also possible to use an adaptive notch filter, where the filter parameters are varied in accordance with variations in the frequency of the measured waveform.</p>
+<div class="math notranslate nohighlight">
+\[H(z) = \frac{b_0 + b_1 z^{-1} + b_2 z^{-2}}{a_0 + a_1 z^{-1} + a_2 z^{-2}}\]</div>
+<p>The following code listing provides an example implementation of a notch filter:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ynotch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="p">(</span><span class="n">a1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ynotch</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">a2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ynotch</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">b0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pd</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">b1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pd</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">b2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pd</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+
+<span class="c1">// Update the phase detector array for the next iteration</span>
+<span class="n">pd</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">pd</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="n">ynotch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ynotch</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="n">ynotch</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ynotch</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>As an alternative to the notch filter, or in combination with the notch filter, a low pass filter may be used. This will allow us to remove high frequency noise which might be present in the measured waveform.</p>
+</section>
+<section id="experimenting-with-the-phase-detector-alone">
+<h3>Experimenting with the phase detector alone<a class="headerlink" href="#experimenting-with-the-phase-detector-alone" title="Link to this heading">#</a></h3>
+<p>Despite it not being a robust way to estimate the phase difference in a production environment, it can still be rewarding to experience the operation of the phase detector outside the usage in a PLL, under ideal condition in a laboratory setup.</p>
+<p>The following code listing shows how to sample and measure the phase difference between two 50 Hz sinusoidal waveforms. It is not optimized for efficiency, and it also could benefit from higher acquisition speed from the <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code> function, in order to have the two sine wave samples occurring simultaneously.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 6</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">230400</span><span class="p">);</span>
+<span class="linenos"> 7</span><span class="p">}</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sample_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">11</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">prev_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="c1">// Notch filter for 100 Hz at fs = 1000 Hz</span>
+<span class="linenos">14</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.745</span><span class="p">,</span><span class="w"> </span><span class="mf">3.31</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.996</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5372</span><span class="p">};</span>
+<span class="linenos">15</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.732</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.371</span><span class="p">,</span><span class="w"> </span><span class="mf">3.384</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.371</span><span class="p">,</span><span class="w"> </span><span class="mf">0.732</span><span class="p">};</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="kt">float</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">float</span><span class="w"> </span><span class="nf">notch_filter_run</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x_in</span><span class="p">){</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">  </span><span class="c1">//static float y_notch[3] = {0};</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="linenos">24</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="linenos">25</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="linenos">26</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">27</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_in</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">y_notch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="linenos">30</span><span class="w">  </span><span class="c1">//-(a[1] * v[1]) - (a[2] * v[2]) + (b[0] * v[0]) + (b[1] * v[1]) + (b[2] * v[2]);</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y_notch</span><span class="p">;</span>
+<span class="linenos">33</span><span class="p">}</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prev_millis_ts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">sample_rate</span><span class="p">){</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">    </span><span class="c1">//PORTB |= (1&lt;&lt;PB0);</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="w">    </span><span class="c1">// Ideally we want to sample both voltages at the same time</span>
+<span class="linenos">44</span><span class="w">    </span><span class="c1">// but the analogRead function takes 100 microseconds to return</span>
+<span class="linenos">45</span><span class="w">    </span><span class="c1">// a value.</span>
+<span class="linenos">46</span><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ch1_raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ch2_raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ch1_volt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">ch1_raw</span><span class="p">)</span><span class="o">*</span><span class="mf">5.0</span><span class="o">/</span><span class="mf">1023.0</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2.5</span><span class="p">;</span>
+<span class="linenos">51</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ch2_volt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">ch2_raw</span><span class="p">)</span><span class="o">*</span><span class="mf">5.0</span><span class="o">/</span><span class="mf">1023.0</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">2.5</span><span class="p">;</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">ph</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ch1_volt</span><span class="o">*</span><span class="n">ch2_volt</span><span class="p">;</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">phase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">notch_filter_run</span><span class="p">(</span><span class="n">ph</span><span class="p">);</span><span class="w"> </span><span class="c1">// Multiply by 2 to get cos(phi)</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="w">    </span><span class="c1">//Serial.println(ch1_volt);</span>
+<span class="linenos">58</span><span class="w">    </span><span class="c1">//Serial.print(&quot;,&quot;);</span>
+<span class="linenos">59</span><span class="w">    </span><span class="c1">//Serial.println(ch2_volt);</span>
+<span class="linenos">60</span><span class="w">    </span><span class="c1">//Serial.print(ph);</span>
+<span class="linenos">61</span><span class="w">    </span><span class="c1">//Serial.print(&quot;,&quot;);</span>
+<span class="linenos">62</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">phase</span><span class="p">);</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span><span class="w">    </span><span class="n">prev_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="p">;</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span><span class="w">    </span><span class="c1">//PORTB &amp;= ~(1&lt;&lt;PB0);</span>
+<span class="linenos">67</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">68</span>
+<span class="linenos">69</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="loop-filter-pi-controller">
+<h2>Loop filter (PI controller)<a class="headerlink" href="#loop-filter-pi-controller" title="Link to this heading">#</a></h2>
+<p>The PLL is a control loop where we attempt to minimize the error in phase between our locally generated signal, and a measured signal. In practice the filter between our phase detector output, and our local oscillator input can often be realized as a PI-controller.</p>
+<p>The controller may be implemented as a first order IIR filter:</p>
+<div class="math notranslate nohighlight">
+\[y_n = a_1 y_{n - 1} + b_0 x_n + b_1 x_{n-1}\]</div>
+<div class="math notranslate nohighlight">
+\[Y(z) = a_1 z^{-1} Y(z) + b_0 X(z) + b_1 z^{-1}X(z)\]</div>
+<div class="math notranslate nohighlight">
+\[(1 - a_1 z^{-1}) Y(z) = (b_0 + b_1 z^{-1})X(z)\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{Y(z)}{X(z)} = \frac{b_0 + b_1 z^{-1}}{1 - a_1 z^{-1}}\]</div>
+<p>The laplace domain representation of a PI-controller is given by:</p>
+<div class="math notranslate nohighlight">
+\[H_{PI}(s) = K_p + \frac{K_i}{s}\]</div>
+<div class="math notranslate nohighlight">
+\[z = e^{sT}\]</div>
+<p>The bi-linear transformation is a linear first order approximation to the definition of z. It can be used to convert a continuous transfer function in to a discrete transfer function. It direct bilinear transformation is given by:</p>
+<div class="math notranslate nohighlight">
+\[s = \frac{2}{T} \left( \frac{z - 1}{z + 1} \right)\]</div>
+<p>The inverse bi-linear transformation is given by:</p>
+<div class="math notranslate nohighlight">
+\[z = \frac{1 + \frac{T}{2}s}{1 - \frac{T}{2}s}\]</div>
+<p>Where T is the sampling time.</p>
+<p>By applying the bi-linear transformation to the transfer equation for the PI-controller we obtain:</p>
+<div class="math notranslate nohighlight">
+\[H_{PI}(z) = K_p + \frac{K_i}{\frac{2}{T} \left( \frac{z - 1}{z + 1} \right)}\]</div>
+<div class="math notranslate nohighlight">
+\[H(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}\]</div>
+<p>One we have determined suitable gains for our PI-controller, the filter coefficients can be computed by:</p>
+<div class="math notranslate nohighlight">
+\[b_0 = \frac{2K_p + K_i T}{2}\]</div>
+<div class="math notranslate nohighlight">
+\[b_1 = -\frac{2K_p - K_i T}{2}\]</div>
+<section id="pi-controller-implementation">
+<h3>PI-controller implementation<a class="headerlink" href="#pi-controller-implementation" title="Link to this heading">#</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ylf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">a1_lf</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ylf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">b0_lf</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">b1_lf</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="c1">// Update array for next iteration</span>
+<span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">ylf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ylf</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="local-oscillator">
+<h2>Local oscillator<a class="headerlink" href="#local-oscillator" title="Link to this heading">#</a></h2>
+<p>In an analog PLL the oscillator is often referred to as a voltage controlled oscillator (VCO). In the digital domain however the oscillator output is simply discrete numbers. The oscillator must be realized using trigonometric functions, simplified using other mathematical functions, or lookup tables.</p>
+<section id="sine-and-cosine-generation-by-integration">
+<h3>Sine and cosine generation by integration<a class="headerlink" href="#sine-and-cosine-generation-by-integration" title="Link to this heading">#</a></h3>
+<p>The output from a function after a small change <span class="math notranslate nohighlight">\(\Delta t\)</span> in the input can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[y(t + \Delta t) = y(t) + \frac{\mathrm{d}y(t)}{\mathrm{d}t} \cdot \Delta t\]</div>
+<p>For a sine, and a cosine function this yields:</p>
+<div class="math notranslate nohighlight">
+\[sin(t + \Delta t) = \sin(t) + \cos(t) \cdot \Delta t\]</div>
+<div class="math notranslate nohighlight">
+\[cos(t + \Delta t) = \cos(t) - \sin(t) \cdot \Delta t\]</div>
+<p>This can be utilized to achieve a more efficient computation of the sine (and cosine) waveform for the local oscillator. We already know <span class="math notranslate nohighlight">\(\sin(t)\)</span>, and <span class="math notranslate nohighlight">\(\cos(t)\)</span> from our previous iteration, and thus the problem is reduced to some simple multiplications.</p>
+<p>The following code listing illustrates how the sine wave generation is performed, and also how to extract the phase (theta). The code is written with floating point operations in mind, and should be adapted if fixed point calculation are needed instead:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Obtain the required omega from the loop filter output</span>
+<span class="n">wo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wn</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y_pi</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="c1">// Perform integration process to compute sine and cosine</span>
+<span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">wo</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">wo</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="c1">//...</span>
+
+<span class="c1">// Compute theta</span>
+<span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">wo</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta_t</span><span class="p">);</span>
+<span class="c1">//theta[0] = theta[1] + (wo * 0.15915494 * delta_t); // Normalize theta to pu by multiplication by 1/(2*pi)</span>
+
+<span class="c1">//...</span>
+
+<span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+<span class="c1">// sin[0] is the sine value for the current iteration,</span>
+<span class="c1">// while sin[1] is the sine value for the previous iteration.</span>
+<span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>It should be noted that although the method is relatively efficient at generating a continuous waveform, it is not in general a good substitute for the slow sine and cosine functions available in various math libraries. The efficiency comes from the use in the iterative control loop, where the sine wave is approximated at small time steps. I.e. you do not know the sine of some arbitrary angle until you have stepped through all the other angles up to that point.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 6</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">230400</span><span class="p">);</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="p">}</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sample_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">f0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="linenos">13</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">PI</span><span class="o">*</span><span class="n">f0</span><span class="p">;</span>
+<span class="linenos">14</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">delta_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.001</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">prev_millis_ts_sine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">19</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos">20</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">};</span>
+<span class="linenos">21</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prev_millis_ts_sine</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">sample_rate</span><span class="p">){</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">    </span><span class="c1">//PORTB |= (1&lt;&lt;PB0);</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="w">    </span><span class="c1">// Compute sine and cosine by means of integration</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">){</span>
+<span class="linenos">34</span><span class="w">      </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">35</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">36</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="linenos">37</span><span class="w">      </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="linenos">38</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">){</span>
+<span class="linenos">41</span><span class="w">      </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">42</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">43</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">-1</span><span class="p">){</span>
+<span class="linenos">44</span><span class="w">      </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="linenos">45</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="w">    </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta_t</span><span class="p">);</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)){</span><span class="w"> </span><span class="c1">// Detect zero crossing from negative to positive half period</span>
+<span class="linenos">50</span><span class="w">      </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set theta to zero at the beginning of a period</span>
+<span class="linenos">51</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="linenos">54</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="linenos">55</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="w">    </span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">58</span>
+<span class="linenos">59</span><span class="w">    </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">60</span><span class="w">    </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">61</span>
+<span class="linenos">62</span><span class="w">    </span><span class="n">prev_millis_ts_sine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="p">;</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span><span class="w">    </span><span class="c1">//PORTB &amp;= ~(1&lt;&lt;PB0);</span>
+<span class="linenos">65</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">66</span>
+<span class="linenos">67</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="lookup-table">
+<h3>Lookup table<a class="headerlink" href="#lookup-table" title="Link to this heading">#</a></h3>
+<p>Since trigonometric operations are complex and often consume a large number of CPU cycles on a microcontroller, it is desirable to come up with a different approach to the generation of the local signal. One possibility is to use a lookup table with a large number of precalculated outputs from the trigonometric function.</p>
+<p>An efficient way to implement a lookup table in terms of both memory usage and computation, is to split it in to two tables. One table for the discrete outputs of the sine function, and another to hold the difference (delta) between each discrete value. The discrete values in the table are equally spaced in degrees (or time), but will vary in spacing because the steepness of the sine wave curve varies. Having a separate table of the spacings will simplify the interpolation between each discrete element, as the fractional part of the table index can be multiplied by the delta to determine the interpolation value.</p>
+<p>In practice it could be implemented as two tables of 256 elements, consuming 512 units of memory, where a unit could be 8, 16, or possibly 32 bit, depending on your requirements.</p>
+</section>
+<section id="cordic">
+<h3>CORDIC<a class="headerlink" href="#cordic" title="Link to this heading">#</a></h3>
+<p>Coordinate rotation digital computer (CORDIC) is a efficient algorithm for calculation of various mathematical functions.</p>
+</section>
+<section id="sine-approximation-by-quadratic-functions">
+<h3>Sine approximation by quadratic functions<a class="headerlink" href="#sine-approximation-by-quadratic-functions" title="Link to this heading">#</a></h3>
+<p>The time values can be normalized to 0 to 1, by:</p>
+<div class="math notranslate nohighlight">
+\[t = x \cdot \frac{1}{2\pi}\]</div>
+<p>In order to wrap around after t reaches 1, we can subtract the integer version of t:</p>
+</section>
+</section>
+<section id="example-lock-on-a-5-hz-sine-wave-from-a-signal-generator">
+<h2>Example: Lock on a 5 Hz sine wave from a signal generator<a class="headerlink" href="#example-lock-on-a-5-hz-sine-wave-from-a-signal-generator" title="Link to this heading">#</a></h2>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">  4</span>
+<span class="linenos">  5</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">  6</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">230400</span><span class="p">);</span>
+<span class="linenos">  7</span><span class="p">}</span>
+<span class="linenos">  8</span>
+<span class="linenos">  9</span><span class="c1">// Notch filter for 100 Hz at fs = 1000 Hz</span>
+<span class="linenos"> 10</span><span class="c1">//const float a[] = {0, -2.745, 3.31, -1.996, 0.5372};</span>
+<span class="linenos"> 11</span><span class="c1">//const float b[] = {0.732, -2.371, 3.384, -2.371, 0.732};</span>
+<span class="linenos"> 12</span>
+<span class="linenos"> 13</span><span class="c1">// Notch filter for 10 Hz at fs = 100 Hz</span>
+<span class="linenos"> 14</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.994</span><span class="p">,</span><span class="w"> </span><span class="mf">3.824</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.461</span><span class="p">,</span><span class="w"> </span><span class="mf">0.7021</span><span class="p">};</span>
+<span class="linenos"> 15</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.8178</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.648</span><span class="p">,</span><span class="w"> </span><span class="mf">3.78</span><span class="p">,</span><span class="w"> </span><span class="mf">-2.648</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8178</span><span class="p">};</span>
+<span class="linenos"> 16</span>
+<span class="linenos"> 17</span><span class="kt">float</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+<span class="linenos"> 18</span>
+<span class="linenos"> 19</span><span class="kt">float</span><span class="w"> </span><span class="nf">notch_filter_run</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x_in</span><span class="p">){</span>
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="linenos"> 22</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="linenos"> 23</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="linenos"> 24</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos"> 25</span><span class="w">  </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_in</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="linenos"> 26</span>
+<span class="linenos"> 27</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">y_notch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">v</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="linenos"> 28</span>
+<span class="linenos"> 29</span><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">y_notch</span><span class="p">;</span>
+<span class="linenos"> 30</span><span class="p">}</span>
+<span class="linenos"> 31</span>
+<span class="linenos"> 32</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">sample_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="linenos"> 33</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">prev_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 34</span>
+<span class="linenos"> 35</span><span class="c1">// Initial value for local oscillator</span>
+<span class="linenos"> 36</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">f0_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="linenos"> 37</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">omega0_n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">PI</span><span class="o">*</span><span class="n">f0_n</span><span class="p">;</span>
+<span class="linenos"> 38</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">delta_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">;</span><span class="w"> </span><span class="c1">// 100 Hz sample rate = 10 ms delta time.</span>
+<span class="linenos"> 39</span>
+<span class="linenos"> 40</span><span class="c1">// PI controller parameters for 50 Hz at fs = 1000 Hz</span>
+<span class="linenos"> 41</span><span class="c1">//const float a1_pi = 1;</span>
+<span class="linenos"> 42</span><span class="c1">//const float b0_pi = 234.75;</span>
+<span class="linenos"> 43</span><span class="c1">//const float b1_pi = -209.57;</span>
+<span class="linenos"> 44</span>
+<span class="linenos"> 45</span><span class="c1">// PI controller parameters for 5 Hz at fs = 100 Hz</span>
+<span class="linenos"> 46</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">a1_pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<span class="linenos"> 47</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b0_pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">348.1</span><span class="p">;</span>
+<span class="linenos"> 48</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">b1_pi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-96.25</span><span class="p">;</span>
+<span class="linenos"> 49</span>
+<span class="linenos"> 50</span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">pll_run</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">adc_raw</span><span class="p">){</span>
+<span class="linenos"> 51</span>
+<span class="linenos"> 52</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos"> 53</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.999</span><span class="p">,</span><span class="w"> </span><span class="mf">0.999</span><span class="p">};</span>
+<span class="linenos"> 54</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos"> 55</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">pd_notch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos"> 56</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">ypi</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">};</span>
+<span class="linenos"> 57</span>
+<span class="linenos"> 58</span><span class="w">  </span><span class="c1">//float adc_volt = ((adc_raw)*5.0/1023.0) - 2.5;</span>
+<span class="linenos"> 59</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">adc_pu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">adc_raw</span><span class="o">/</span><span class="mf">511.0</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos"> 60</span>
+<span class="linenos"> 61</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos"> 62</span><span class="cm">   * Detect phase difference</span>
+<span class="linenos"> 63</span><span class="cm">   */</span>
+<span class="linenos"> 64</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">pd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adc_pu</span><span class="o">*</span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="linenos"> 65</span>
+<span class="linenos"> 66</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos"> 67</span><span class="cm">   * Use notch filter to remove the frequency component at 2*f0</span>
+<span class="linenos"> 68</span><span class="cm">   */</span>
+<span class="linenos"> 69</span><span class="w">  </span><span class="n">pd_notch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">notch_filter_run</span><span class="p">(</span><span class="n">pd</span><span class="p">);</span>
+<span class="linenos"> 70</span>
+<span class="linenos"> 71</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">pd_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd_notch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos"> 72</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos"> 73</span><span class="cm">   * Run PI-controller </span>
+<span class="linenos"> 74</span><span class="cm">   */</span>
+<span class="linenos"> 75</span><span class="w">  </span><span class="n">ypi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.21</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pd_error</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.651</span><span class="o">*</span><span class="n">ypi</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="c1">//- (a1_pi * ypi[1]) + (b0_pi * pd_notch[0]) + (b1_pi * pd_notch[1]);</span>
+<span class="linenos"> 76</span>
+<span class="linenos"> 77</span><span class="w">  </span><span class="c1">// Update array for next iteration</span>
+<span class="linenos"> 78</span><span class="w">  </span><span class="n">pd_notch</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pd_notch</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos"> 79</span><span class="w">  </span><span class="n">ypi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ypi</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos"> 80</span>
+<span class="linenos"> 81</span><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">omega0_n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ypi</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos"> 82</span>
+<span class="linenos"> 83</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos"> 84</span><span class="cm">   * Compute sine and cosine by means of integration</span>
+<span class="linenos"> 85</span><span class="cm">   */</span>
+<span class="linenos"> 86</span><span class="w">  </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="linenos"> 87</span><span class="w">  </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">delta_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="linenos"> 88</span>
+<span class="linenos"> 89</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.99</span><span class="p">){</span>
+<span class="linenos"> 90</span><span class="w">    </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.99</span><span class="p">;</span>
+<span class="linenos"> 91</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 92</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">){</span>
+<span class="linenos"> 93</span><span class="w">    </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">;</span>
+<span class="linenos"> 94</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 95</span>
+<span class="linenos"> 96</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.99</span><span class="p">){</span>
+<span class="linenos"> 97</span><span class="w">    </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.99</span><span class="p">;</span>
+<span class="linenos"> 98</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 99</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">){</span>
+<span class="linenos">100</span><span class="w">    </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.99</span><span class="p">;</span>
+<span class="linenos">101</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">102</span>
+<span class="linenos">103</span><span class="w">  </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">omega0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">delta_t</span><span class="p">);</span>
+<span class="linenos">104</span>
+<span class="linenos">105</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)){</span><span class="w"> </span><span class="c1">// Detect zero crossing from negative to positive half period</span>
+<span class="linenos">106</span><span class="w">    </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set theta to zero at the beginning of a period</span>
+<span class="linenos">107</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">108</span>
+<span class="linenos">109</span><span class="w">  </span><span class="n">theta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">110</span>
+<span class="linenos">111</span><span class="w">  </span><span class="n">sin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">112</span><span class="w">  </span><span class="n">cos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="linenos">113</span>
+<span class="linenos">114</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">adc_pu</span><span class="p">);</span>
+<span class="linenos">115</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="linenos">116</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">cos</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="linenos">117</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="linenos">118</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="linenos">119</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="linenos">120</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">pd_error</span><span class="p">);</span>
+<span class="linenos">121</span><span class="p">}</span>
+<span class="linenos">122</span>
+<span class="linenos">123</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">124</span>
+<span class="linenos">125</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">126</span>
+<span class="linenos">127</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">current_millis_ts</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">prev_millis_ts</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">sample_rate</span><span class="p">){</span>
+<span class="linenos">128</span>
+<span class="linenos">129</span><span class="w">    </span><span class="n">PORTB</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">PB0</span><span class="p">);</span>
+<span class="linenos">130</span>
+<span class="linenos">131</span><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">ch1_raw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+<span class="linenos">132</span>
+<span class="linenos">133</span><span class="w">    </span><span class="n">pll_run</span><span class="p">(</span><span class="n">ch1_raw</span><span class="p">);</span>
+<span class="linenos">134</span>
+<span class="linenos">135</span><span class="w">    </span><span class="c1">//Serial.println(phase);</span>
+<span class="linenos">136</span>
+<span class="linenos">137</span><span class="w">    </span><span class="n">prev_millis_ts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_millis_ts</span><span class="p">;</span>
+<span class="linenos">138</span>
+<span class="linenos">139</span><span class="w">    </span><span class="n">PORTB</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">PB0</span><span class="p">);</span>
+<span class="linenos">140</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">141</span>
+<span class="linenos">142</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="example-lock-on-the-power-grid-waveform-sampled-on-the-adc">
+<h2>Example: Lock on the power grid waveform sampled on the ADC<a class="headerlink" href="#example-lock-on-the-power-grid-waveform-sampled-on-the-adc" title="Link to this heading">#</a></h2>
+<p>In this section we will consider the design of a PLL for locking on to a sine wave of 50 Hz, which is sampled by the ADC.</p>
+</section>
+<section id="grid-frequency-synchronization">
+<h2>Grid frequency synchronization<a class="headerlink" href="#grid-frequency-synchronization" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="phase_displacement.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Phase displacement measurements</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="phasor_estimation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Phasor estimation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-detector">Phase detector</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notch-filter">Notch filter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#experimenting-with-the-phase-detector-alone">Experimenting with the phase detector alone</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-filter-pi-controller">Loop filter (PI controller)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pi-controller-implementation">PI-controller implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#local-oscillator">Local oscillator</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-and-cosine-generation-by-integration">Sine and cosine generation by integration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-table">Lookup table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cordic">CORDIC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sine-approximation-by-quadratic-functions">Sine approximation by quadratic functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-lock-on-a-5-hz-sine-wave-from-a-signal-generator">Example: Lock on a 5 Hz sine wave from a signal generator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-lock-on-the-power-grid-waveform-sampled-on-the-adc">Example: Lock on the power grid waveform sampled on the ADC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grid-frequency-synchronization">Grid frequency synchronization</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

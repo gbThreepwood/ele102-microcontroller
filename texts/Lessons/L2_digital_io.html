@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Digital I/O, and serial port output &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L2_digital_io';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Digital I/O, and timing" href="L3_digital_io_and_timing.html" />
+    <link rel="prev" title="Arduino Introduction" href="L1b_Arduino_intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Lessons/L2_digital_io.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Digital I/O, and serial port output</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino-program-structure">Arduino program structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-define-a-macro">Exercise: define a macro</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-types">Variable Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#atmega328-gpio-pins">Atmega328 GPIO pins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-outputs">Digital outputs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-suitable-current-limiting-resistor-for-the-led">Selecting a suitable current limiting resistor for the LED</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-inputs">Digital inputs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-connect-a-button-to-the-arduino">How to connect a button to the Arduino</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-digital-output-of-digital-input-state">Exercise: Digital output of digital input state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-logic-operations-on-digital-inputs">Exercise: Logic operations on digital inputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-output">Serial port output</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-the-arduino-ide">Serial port monitor in the Arduino IDE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-platformio">Serial port monitor in PlatformIO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-tinkercad">Serial port monitor in TinkerCAD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">Hello World</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-print-some-numbers">Exercise: Print some numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-serial-output-of-digital-input">Exercise: Serial output of digital input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-arithmetics">Simple arithmetics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-calculator-with-serial-port-output">Exercise: Calculator with serial port output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-count-to-10">Exercise: Count to 10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-calculator-with-binary-display">Exercise: Calculator with binary display</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="digital-i-o-and-serial-port-output">
+<span id="l2-digital-io"></span><h1>Digital I/O, and serial port output<a class="headerlink" href="#digital-i-o-and-serial-port-output" title="Link to this heading">#</a></h1>
+<p>In this lesson we will cover how to deal with digital inputs, digital outputs, as well as how to send data out through the serial port.</p>
+<p>In addition to the microcontroller topics, we also need to cover some general programming concepts.</p>
+<p>The digital inputs and outputs (digital I/O) on the Arduino are one of the ways one may connect sensors, actuators, and other ICs to the Arduino. Learning how to use the inputs and outputs will allow you to use the Arduino to do some really useful things, such as reading switch inputs, turning on lights, and controlling relay outputs.</p>
+<section id="arduino-program-structure">
+<h2>Arduino program structure<a class="headerlink" href="#arduino-program-structure" title="Link to this heading">#</a></h2>
+<p>You remember that in the last course we have compiled the built-in <code class="code docutils literal notranslate"><span class="pre">Blink</span></code> example. Let’s remember the procedure first:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// the setup function runs once when you press reset or power the board</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="c1">// initialize digital pin LED_BUILTIN as an output.</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// the loop function runs over and over again forever</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w">   </span><span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w">    </span><span class="c1">// turn the LED off by making the voltage LOW</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Lets start by breaking down the different parts of the code.</p>
+<p>First you should know that any text which is preceded by two forward slashes <code class="code docutils literal notranslate"><span class="pre">//</span></code> is considered a comment, and is ignored. This is one of the two most common ways to add comments to you code, and is a very useful and important part of programming. Document anything which is not obvious in the code.</p>
+<p>The first lines of code is the <code class="code docutils literal notranslate"><span class="pre">setup()</span></code> function. A function is a group of code under a identifier (the identifier <code class="code docutils literal notranslate"><span class="pre">setup()</span></code>). The body of the <code class="code docutils literal notranslate"><span class="pre">setup()</span></code> function is delimited by the curly brackets <code class="code docutils literal notranslate"><span class="pre">{</span></code>, and <code class="code docutils literal notranslate"><span class="pre">}</span></code>. In this function the only statement we see is a call to another function, the <code class="code docutils literal notranslate"><span class="pre">pinMode(LED_BUILTIN,</span> <span class="pre">OUTPUT);</span></code> function. This function configures the pin which is connected to the build in LED as a output. It is one of the many functions in the Arduino library.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="c1">// initialize digital pin LED_BUILTIN as an output.</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Further down we see another function definition <code class="code docutils literal notranslate"><span class="pre">loop()</span></code>. When the processor has finished executing alle the statements in the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function, it starts over again from the top. Thus the microcontroller is able to continuously perform its duties. The first statement in the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function is a call to the function <code class="code docutils literal notranslate"><span class="pre">digitalWrite(LED_BUILTIN,</span> <span class="pre">HIGH);</span></code>. The function tells the microcontroller to set the pin connected to the built in LED high, i.e. the microcontroller will output 5 V on this pin. The second statement <code class="code docutils literal notranslate"><span class="pre">delay(1000);</span></code> performs a delay of 1000 milliseconds, i.e. 1 second. The microcontroller sits on this position in the code for one second, performing no other task except waiting. We then see a instruction to turn the output low <code class="code docutils literal notranslate"><span class="pre">digitalWrite(LED_BUILTIN,</span> <span class="pre">LOW);</span></code>, followed by another delay.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// the loop function runs over and over again forever</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w">   </span><span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">LED_BUILTIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w">    </span><span class="c1">// turn the LED off by making the voltage LOW</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Perhaps the need for two delay functions confuses you, i.e. why can we not use a single delay with the parameter 2000. try to think about what would happen if we only had a single delay in the code. Say we removed the second delay function, we would get the following structure of our program:</p>
+<ol class="arabic simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">digitalWrite(LED_BUILTIN,</span> <span class="pre">HIGH);</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">delay(1000);</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">digitalWrite(LED_BUILTIN,</span> <span class="pre">LOW);</span></code></p></li>
+</ol>
+<p>When the program reaches line 3, it will immediately jump to line 1 (due to the fact that we are in the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function). Hence the output goes from <cite>LOW</cite>, to <cite>HIGH</cite> as fast as the microcontroller is able to execute the instructions. It will then remain in <cite>HIGH</cite> for one second again. In practice the LED will remain <cite>HIGH</cite> for more than 99.9% percent of the time, and will appear to be glowing constantly.</p>
+<p>A final thing to note about this example, the code <code class="code docutils literal notranslate"><span class="pre">LED_BUILTIN</span></code> is a <em>Macro definition</em>, a pre-processor directive which is stored somewhere in the Arduino libraries. In the example the term <code class="code docutils literal notranslate"><span class="pre">LED_BUILTIN</span></code> is a place holder for the number <strong>13</strong>. Instead, we could have written the code like the following, and literally nothing would have change in practice:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// the setup function runs once when you press reset or power the board</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="c1">// initialize digital pin LED_BUILTIN as an output.</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// the loop function runs over and over again forever</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w">   </span><span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w">    </span><span class="c1">// turn the LED off by making the voltage LOW</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>However, the latter example is less flexible than the first. The reason is that whenever you have another LED attached to your Arduino, but in another pin than <strong>13</strong>, you need to change this <em>definition</em> in 3 different places. Therefore programming languages typically offer different kinds of <em>place holder</em> mechanisms. Macro definitions is one way to introduce them in C/C++, and is defined like:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define identifier replacement</span>
+</pre></div>
+</div>
+<p>Such as:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define LED_BUILTIN 13</span>
+</pre></div>
+</div>
+<p>Basically, it says your processor that “whenever you see this <code class="code docutils literal notranslate"><span class="pre">identifier</span></code>, replace it with the <code class="code docutils literal notranslate"><span class="pre">replacement</span></code>”. This way of introducing a place holder is executed in a pre-processor directive. It is not different than deleting one text (as <code class="code docutils literal notranslate"><span class="pre">identifier</span></code>) and replacing it with another text (as <code class="code docutils literal notranslate"><span class="pre">replacement</span></code>). All these replacements are performed before the compiler starts the job of interpreting our code.</p>
+<p>In fact any statement which begins with <code class="code docutils literal notranslate"><span class="pre">#</span></code> is interpreted by the preprocessor. In addition to <code class="code docutils literal notranslate"><span class="pre">#define</span></code>, you should also know about <code class="code docutils literal notranslate"><span class="pre">#include</span></code>, which imports another file in to your source file.</p>
+<section id="exercise-define-a-macro">
+<h3>Exercise: define a macro<a class="headerlink" href="#exercise-define-a-macro" title="Link to this heading">#</a></h3>
+<p>Let’s define our own macro definition for our external LED, attached to <strong>pin number 2</strong>. Also, change the blink rate from 1000 milliseconds to half a second.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#define MY_EXT_LED 2</span>
+<span class="linenos"> 2</span><span class="cp">#define BLINK_RATE 500</span>
+<span class="linenos"> 3</span><span class="c1">// the setup function runs once when you press reset or power the board</span>
+<span class="linenos"> 4</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="c1">// initialize digital pin LED_BUILTIN as an output.</span>
+<span class="linenos"> 6</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">MY_EXT_LED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 7</span><span class="p">}</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1">// the loop function runs over and over again forever</span>
+<span class="linenos">10</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">11</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">MY_EXT_LED</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w">   </span><span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+<span class="linenos">12</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">BLINK_RATE</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="linenos">13</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">MY_EXT_LED</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w">    </span><span class="c1">// turn the LED off by making the voltage LOW</span>
+<span class="linenos">14</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">BLINK_RATE</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="linenos">15</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="variable-types">
+<h2>Variable Types<a class="headerlink" href="#variable-types" title="Link to this heading">#</a></h2>
+<p>Macros are a powerful tool for managing large software projects, and this will become clear as the course progresses. For constant parameter values however it is not necessarily true that a <code class="code docutils literal notranslate"><span class="pre">#define</span></code> statement is the best choice. In any case a <code class="code docutils literal notranslate"><span class="pre">#define</span></code> statement is only suitable for values which are constant at run-time. I.e. macros can be complex and auto-generate code at compile-time, but when the program is running on your microcontroller, they have all been replaced with the value the preprocessor determined that they should have.</p>
+<p>For dynamic values (values which can change while the microcontroller is running), we use variables. A variable is closely related to the variable you know from mathematics. It is some identifier, which is associated with some value. For example the following code would first declare a variable with a size of 8 bit, and give it a value of 23. Then later on the value is changed to 42.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">number_of_students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">23</span><span class="p">;</span>
+
+<span class="n">number_of_students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The declaration of the variable is only performed the first time the identifier is introduced. It tells the compiler how much memory should be made available for the value, and what type of value we intend to store. <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> means unsigned 8-bit integer. I.e. a unsigned number which can not contain fractional parts, and with a range of values from 0 to 255. We use the equal sign <code class="docutils literal notranslate"><span class="pre">=</span></code> to <em>assign</em> a value to the identifier. Attempting to assign something which is outside the values supported by the declaration is an error.</p>
+<p>The following list provides a overview of the default variable types supported in the Arduino framework. You should note that <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> is not part of the list. This is because the name <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>, and many others like it (e.g. <code class="docutils literal notranslate"><span class="pre">int32_t</span></code>) are just redefinitions of the standard names to make them more readable. Unlike the standard names, names like <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> makes it immediately obvious what kind of type we are dealing with.</p>
+<table class="table" id="id9">
+<caption><span class="caption-text">Simple Primitive Types in Arduino (Variables)</span><a class="headerlink" href="#id9" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 8.3%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Numeric types</p></th>
+<th class="head"><p>Bytes</p></th>
+<th class="head"><p>Range</p></th>
+<th class="head"><p>Use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>int</p></td>
+<td><p>2</p></td>
+<td><p>-32768 to 32767</p></td>
+<td><p>Represents positive and negative integer values.</p></td>
+</tr>
+<tr class="row-odd"><td><p>unsigned int</p></td>
+<td><p>2</p></td>
+<td><p>0 to 65535</p></td>
+<td><p>Represents only positive values; otherwise, similar to int.</p></td>
+</tr>
+<tr class="row-even"><td><p>long</p></td>
+<td><p>4</p></td>
+<td><p>-2147483648 to 2147483647</p></td>
+<td><p>Represents a very large range of positive and negative values.</p></td>
+</tr>
+<tr class="row-odd"><td><p>unsigned long</p></td>
+<td><p>4</p></td>
+<td><p>0 to 4294967295</p></td>
+<td><p>Represents a very large range of positive values.</p></td>
+</tr>
+<tr class="row-even"><td><p>float</p></td>
+<td><p>4</p></td>
+<td><p>3.4028235E+38 to -3.4028235E+38</p></td>
+<td><p>Represents numbers with fractions; use to approximate real-world measurements.</p></td>
+</tr>
+<tr class="row-odd"><td><p>double</p></td>
+<td><p>4</p></td>
+<td><p>The same as float</p></td>
+<td><p>In Arduino, double is just another name for float.</p></td>
+</tr>
+<tr class="row-even"><td><p>boolean</p></td>
+<td><p>1</p></td>
+<td><p>false (0) or true (1)</p></td>
+<td><p>Represents true and false values.</p></td>
+</tr>
+<tr class="row-odd"><td><p>char</p></td>
+<td><p>1</p></td>
+<td><p>-128 to 127</p></td>
+<td><p>Represents a single character. Can also represent a signed value between -128 and 127.</p></td>
+</tr>
+<tr class="row-even"><td><p>byte</p></td>
+<td><p>1</p></td>
+<td><p>0 to 255</p></td>
+<td><p>Similar to char, but for unsigned values.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<tbody>
+<tr class="row-odd"><td><p>string</p></td>
+<td><p>Represents arrays of chars (characters) typically used to contain text.</p></td>
+</tr>
+<tr class="row-even"><td><p>void</p></td>
+<td><p>Used in function declarations where no value is returned, or for pointer to unspecified type.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Variables are generally defined such that the values can be changed during the execution of the program; after some calculations, in conditional cases, as a sensor readings change etc. On the other hand, there are some situations where the value is not expected to change. Through the whole program life time, it will remain the same value. In these cases it is more efficient and safe to define them as <strong>constant</strong> values, which tells the compiler that this value has just <em>read-only</em> property. This feature is useful for especially longer codes in their debug process. In our case, we know that the LED is always connected a predefined pin and it will not be changed in any conditions. Constant “variables” have some advantages over <code class="code docutils literal notranslate"><span class="pre">#define</span></code>, we will not go in to the details here, but both of them are used extensively.</p>
+<p>The following example uses a <code class="docutils literal notranslate"><span class="pre">const</span></code> “variable” for the pin definition, and a regular variable for the blink rate. Please note that it is optional to add the <code class="docutils literal notranslate"><span class="pre">const</span></code> qualifier. It improves safety, when you as the developer intends for the value to never change. In some other application it might be needed to change the led pin while the program is running, and if that is the case you can not use <code class="docutils literal notranslate"><span class="pre">const</span></code>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">led_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="linenos"> 2</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">blink_rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">500</span><span class="p">;</span>
+<span class="linenos"> 3</span><span class="c1">// the setup function runs once when you press reset or power the board</span>
+<span class="linenos"> 4</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="c1">// initialize digital pin LED_BUILTIN as an output.</span>
+<span class="linenos"> 6</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 7</span><span class="p">}</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1">// the loop function runs over and over again forever</span>
+<span class="linenos">10</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">11</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w">   </span><span class="c1">// turn the LED on (HIGH is the voltage level)</span>
+<span class="linenos">12</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">blink_rate</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="linenos">13</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w">    </span><span class="c1">// turn the LED off by making the voltage LOW</span>
+<span class="linenos">14</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">blink_rate</span><span class="p">);</span><span class="w">                       </span><span class="c1">// wait for a second</span>
+<span class="linenos">15</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Since in the embedded world memory usage is often a major concern, it is good to have a more friendly type definitions. Instead of trying to remember the memory spaces of all the variable types: <strong>uint8_t, uint16_t, uint32_t</strong>.</p>
+<p>For example <em>char</em> is <strong>int8_t</strong> but <em>byte</em> is <strong>uint8_t</strong>.</p>
+</div>
+</section>
+<section id="atmega328-gpio-pins">
+<h2>Atmega328 GPIO pins<a class="headerlink" href="#atmega328-gpio-pins" title="Link to this heading">#</a></h2>
+<p>Most of the physical pins on the microcontroller in the Arduino UNO (The Atmega328) are general purpose input output (GPIO) pins. This means that they support both the reading of input signals, and writing of output signals. All the GPIO pins support digital input, and digital output. In addition to digital I/O they also support various extra features such as analog input, pulse width modulation, UART, etc. The extra features that are supported, will vary from one pin to the next.</p>
+<p>The following figure depicts the internal structure of a single GPIO pin:</p>
+<img alt="Atmega328 GPIO block diagram" class="align-center" src="../../_images/atmega328-gpio-block-diagram.png" />
+<p>We will not go in to details about the internal operation here, but you should know that it is the configuration of this digital circuit that change when you call the function <code class="code docutils literal notranslate"><span class="pre">pinMode(MY_EXT_LED,</span> <span class="pre">OUTPUT);</span></code>, or <code class="code docutils literal notranslate"><span class="pre">pinMode(MY_EXT_LED,</span> <span class="pre">INPUT);</span></code></p>
+</section>
+<section id="digital-outputs">
+<h2>Digital outputs<a class="headerlink" href="#digital-outputs" title="Link to this heading">#</a></h2>
+<p>Digital outputs have already been demonstrated thoroughly. There are however some general things to note about the operation of the digital outputs.</p>
+<p>The maximum input or output current of any one pin is 20 mA. The output uses a transistor pair in a push-pull structure. It is able to raise the pin up to 5 V, or to pull it down to GND (0 V). The pin can either sink, or source current. I.e. the direct current can flow out of the microcontroller, or it can flow in to the microcontroller.</p>
+<section id="selecting-a-suitable-current-limiting-resistor-for-the-led">
+<h3>Selecting a suitable current limiting resistor for the LED<a class="headerlink" href="#selecting-a-suitable-current-limiting-resistor-for-the-led" title="Link to this heading">#</a></h3>
+<p>As you probably noticed, when we are controlling a LED from the Arduino we are using a resistor in series with the LED. This resistor is required in order to not destroy the LED, and should be of an appropriate resistance.</p>
+<p>The characteristics of a LED (like any diode) is inherently non-linear. A small voltage variation may cause a large variation in current through the diode. If this is not managed the diode will be destroyed by excessive current. As the light intensity of the diode depends on current, it is apparent that the diode should be supplied by a current source. A high performance current source is a complex device however, and thus we often opt to approximate the current source by means of a resistor.</p>
+<p>The color of a LED is not determined by the color of the package, but rather by it’s internal physical structure. The different colors thus have different characteristics, such as different nominal voltage drop. This has implications on the selection of the resistor. Also the value of the selected resistor will impact the light intensity of the LED. The minimum resistor value (i.e. maximum light intensity) depends on the maximum current, as well as the voltage/current-characteristics of the LED.</p>
+<p>The digital outputs of the Arduino UNO has a high voltage level of 5 V. The voltage drop of a LED will typically vary between 1.8 V and 3.3 V, depending on the color. It will also vary slightly depending on the current, but this variation may be ignored in most applications. The maximum current of the large THT LED’s in the Arduino kit is 20 mA. By subtracting the LED voltage from the supplied voltage, we find the required voltage drop of the resistor.</p>
+<p>The current through a resistor is given by:</p>
+<div class="math notranslate nohighlight">
+\[I_f = \frac{V_R}{R} = \frac{5 - V_f}{R}\]</div>
+<p>Thus a approximately constant voltage drop will cause a approximately constant current. The required resistor size is thus given by:</p>
+<div class="math notranslate nohighlight">
+\[R = \frac{5 - V_{f}}{I_f}\]</div>
+<p>Worst case, if the voltage drop is only 1.8V, and the maximum current is 20 mA, we get the following minimum resistor value:</p>
+<div class="math notranslate nohighlight">
+\[R = \frac{5 - 1.8}{0.02} = 160 \Omega\]</div>
+<p>In practice you might want to limit the current to a maximum of 15 mA or even less though. It the Arduino kit the recommended resistor size is 220 Ohm, which should be safe in all cases involving 20 mA LED’s. In practice values as high as 1k (or even more) may also be used, if the required light intensity is not to high.</p>
+<p>For high power LED’s you should also make sure that the power dissipated in the resistor does nod exceed the ratings of the resistor <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<div class="math notranslate nohighlight">
+\[P = I_f^2 \cdot R\]</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>For very high power applications a simple current limiting resistor is not suitable, and you should instead  use power electronics. This however is a entire field of engineering on it’s own, and way outside the scope of what we will be covering here.</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="digital-inputs">
+<h2>Digital inputs<a class="headerlink" href="#digital-inputs" title="Link to this heading">#</a></h2>
+<p>Digital inputs will be dealt with in greater detail in a lecture specifically dedicated to it. For now we will only introduce the basics, in order to get you quickly up and running with some interesting projects.</p>
+<p>As the name implies, digital inputs are used for getting information from the real world. A button, a digital sensor or a simple jumper cable connected to +5V (or GND) is processed in the same way in an Arduino program. So far, we have seen how to <em>express Arduino’s feelings</em> with digital output. Now it is time to express <em>our desire to the Arduino</em>. Let’s design an Arduino program to turn on/off the same LED based on a button state.</p>
+<section id="how-to-connect-a-button-to-the-arduino">
+<h3>How to connect a button to the Arduino<a class="headerlink" href="#how-to-connect-a-button-to-the-arduino" title="Link to this heading">#</a></h3>
+<p>You may think that “just to connect a button, what can it go wrong?” but unfortunately when it comes to push buttons, a common beginner mistake root from connecting the button wrong. For now, as a rule of thumb, keep in mind these two figures and check these:</p>
+<table class="table table-center" id="id10">
+<caption><span class="caption-text">How to connect a button?</span><a class="headerlink" href="#id10" title="Link to this table">#</a></caption>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../_images/arduino_button_correct.png"><img alt="button-correct" src="../../_images/arduino_button_correct.png" style="width: 388.5px; height: 247.5px;" /></a></p></td>
+<td><p><a class="reference internal" href="../../_images/arduino_button_fail.png"><img alt="button-fail" src="../../_images/arduino_button_fail.png" style="width: 395.7px; height: 245.1px;" /></a></p></td>
+</tr>
+</tbody>
+</table>
+<p>ALWAYS CHECK:
+- If the button orientation is correct. Remember: 1a-1b and 2a-2b are connected bus and should be place on the breadboard accordingly.
+- If both +5V and GND is connected. The button should have deterministic PRESSED and RELEASED voltage. Never leave a leg empty.
+- THE MOST CRITICAL: Are you sure that you didn’t connect +5V to GND? Always double check before connecting the Arduino to the power.</p>
+</section>
+<section id="exercise-digital-output-of-digital-input-state">
+<h3>Exercise: Digital output of digital input state<a class="headerlink" href="#exercise-digital-output-of-digital-input-state" title="Link to this heading">#</a></h3>
+<p>The following code shows how a digital input can be used to set the state of a digital output:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/single_button_led_circuit_code.png"><img alt="Single button single LED" src="../../_images/single_button_led_circuit_code.png" style="width: 771.5px; height: 297.0px;" /></a>
+</figure>
+<ol class="arabic simple">
+<li><p>Test the program on you own hardware</p></li>
+<li><p>Make the necessary modifications to allow the push button to enable blinking of the LED. (Hint: only one of the <code class="code docutils literal notranslate"><span class="pre">digitalWrite</span></code> in your blink program should depend on the state of the push button).</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+<section id="exercise-logic-operations-on-digital-inputs">
+<h3>Exercise: Logic operations on digital inputs<a class="headerlink" href="#exercise-logic-operations-on-digital-inputs" title="Link to this heading">#</a></h3>
+<p>It is possible to instruct the CPU in the Atmega328 to perform logic operations on the state of the digital inputs (or for that matter any internal state, such as a variable). The following table list the basic logical operations which are supported by the compiler (and also by the CPU):</p>
+<table class="table">
+<tbody>
+<tr class="row-odd"><td><p>Description</p></td>
+<td><p>Operator</p></td>
+</tr>
+<tr class="row-even"><td><p>Logical NOT</p></td>
+<td><p>!</p></td>
+</tr>
+<tr class="row-odd"><td><p>Logical AND</p></td>
+<td><p>&amp;&amp;</p></td>
+</tr>
+<tr class="row-even"><td><p>Logical OR</p></td>
+<td><p>||</p></td>
+</tr>
+</tbody>
+</table>
+<p>This can for example be used in the following manner to get the result from the <em>AND</em> operation on two digital inputs:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">q1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn_1</span><span class="p">);</span><span class="w"> </span><span class="c1">// The inverse of the digital input state</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">q2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn_1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn_2</span><span class="p">);</span><span class="w"> </span><span class="c1">// The AND between the two inputs</span>
+</pre></div>
+</div>
+<p>In this exercise you will try some basic logic operations on two digital inputs connected to push buttons. The result of the operation is to be displayed on a LED. The following figure depicts the connection of the push buttons, and the LED. Note that the push buttons are using “pull-down” resistors, i.e. the digital input will go high when you push the button.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_two_pb_one_led_bb.png"><img alt="Arduino with external LED, and two push buttons" src="../../_images/arduino_two_pb_one_led_bb.png" style="width: 477.0px; height: 661.5px;" /></a>
+</figure>
+<p>Use the following code as a basis for solving the exercise:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">btn_1</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="linenos">10</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">btn_2</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="linenos">11</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led_1</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">12</span><span class="p">}</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="w">  </span><span class="c1">// Use these lines if the push buttons are using &quot;pull-up&quot; resistors:</span>
+<span class="linenos">17</span><span class="w">  </span><span class="c1">//uint8_t a = !digitalRead(btn_1); // Invert the input, as the input state is high when you are not pushing the button.</span>
+<span class="linenos">18</span><span class="w">  </span><span class="c1">//uint8_t b = !digitalRead(btn_2);</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="w">  </span><span class="c1">// Use these lines if the push buttons are using &quot;pull-down&quot; resistors:</span>
+<span class="linenos">21</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn_1</span><span class="p">);</span>
+<span class="linenos">22</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn_2</span><span class="p">);</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led_1</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">);</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Add the required code to test the <em>NOT</em> operation on the input from push button 1.</p></li>
+<li><p>Add the required code to test the <em>AND</em> operation between the two inputs.</p></li>
+<li><p>Add the required code to test the <em>OR</em> operation between the two inputs.</p></li>
+<li><p>As you know form basics of digital electronics, these are the three fundamental logic operations. Try to build the <em>exclusive OR</em> using only the three basic operations.</p></li>
+<li><p>Try to build the active high SR-latch (Hint: declare the variables <code class="code docutils literal notranslate"><span class="pre">q</span></code>, and <code class="code docutils literal notranslate"><span class="pre">q_inv</span></code> as global variables, i.e. declare them outside the functions).</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+</section>
+<section id="serial-port-output">
+<h2>Serial port output<a class="headerlink" href="#serial-port-output" title="Link to this heading">#</a></h2>
+<p>The serial port will be covered in detail in a future lecture, for now we will only be using it in its simplest form as a way to output data from the microcontroller. This will allow us some better insight in to the internal operation of the controller.</p>
+<section id="serial-port-monitor-in-the-arduino-ide">
+<h3>Serial port monitor in the Arduino IDE<a class="headerlink" href="#serial-port-monitor-in-the-arduino-ide" title="Link to this heading">#</a></h3>
+<p>A very useful feature which is built-in to the Arduino IDE is the serial monitor.</p>
+<p>You can use the serial-monitor in the Arduino IDE for debugging purposes. (Of course there are many different ways of using it but personally this is by far the most common reason that I have been using it).</p>
+<img alt="Arduino serial monitor button" class="align-center" src="../../_images/serial-monitor.png" />
+</section>
+<section id="serial-port-monitor-in-platformio">
+<h3>Serial port monitor in PlatformIO<a class="headerlink" href="#serial-port-monitor-in-platformio" title="Link to this heading">#</a></h3>
+<p>PlatformIO also have a built in serial monitor. It is accessed by clicking the button looking like a power plug in at the toolbar in the bottom of the window:</p>
+<img alt="Arduino serial monitor button" class="align-center" src="../../_images/platformio-serial-monitor-button.png" />
+</section>
+<section id="serial-port-monitor-in-tinkercad">
+<h3>Serial port monitor in TinkerCAD<a class="headerlink" href="#serial-port-monitor-in-tinkercad" title="Link to this heading">#</a></h3>
+<p>TinkerCAD also have a built in serial monitor even more sophisticated than built-in Arduino serial monitor. It is located under the IDE.</p>
+<img alt="TinkerCAD serial monitor button" class="align-center" src="../../_images/tinkercad-serial-monitor.png" />
+</section>
+<section id="hello-world">
+<h3>Hello World<a class="headerlink" href="#hello-world" title="Link to this heading">#</a></h3>
+<p>In order to write something into the serial-monitor, we need to initialize the serial communication. This is achieved by calling the method <code class="docutils literal notranslate"><span class="pre">begin(9600)</span></code> on the <code class="docutils literal notranslate"><span class="pre">Serial</span></code> object. The parameter 9600 setts the baud rate of the serial transmission, i.e. the number of symbols which is transmitted per second. For now you should leave it at the rate of 9600, in future lectures we will go in to more detail about how and when to change it. Normally the <code class="docutils literal notranslate"><span class="pre">begin()</span></code> method is called in the <code class="docutils literal notranslate"><span class="pre">setup()</span></code> function. After initialization several methods such as <code class="docutils literal notranslate"><span class="pre">println()</span></code> allows us to send data back from the microcontroller to our serial monitor. This is demonstrated in the following “hello, world!” example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// initialize serial communication at 9600 bits per second:</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;hello, world!&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The result in PlatformIO should look something like this:</p>
+<img alt="Arduino serial monitor button" class="align-center" src="../../_images/platformio-serial-monitor.png" />
+</section>
+<section id="exercise-print-some-numbers">
+<h3>Exercise: Print some numbers<a class="headerlink" href="#exercise-print-some-numbers" title="Link to this heading">#</a></h3>
+<p>In this exercise you should expand the following program with the code necessary to print the numbers in the variables to the serial monitor.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">num1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="cp">#define NUM2 543</span>
+<span class="linenos"> 5</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">num3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">899</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">num4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8973</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kt">int16_t</span><span class="w"> </span><span class="n">num5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-14368</span><span class="p">;</span>
+<span class="linenos"> 9</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">num6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-14368</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="kt">float</span><span class="w"> </span><span class="n">num7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">48.9822</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">14</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;The numbers are:&quot;</span><span class="p">);</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">  </span><span class="c1">// Add the println calls here:</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+<span class="linenos">24</span><span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Add the required calls to serial <code class="code docutils literal notranslate"><span class="pre">println</span></code> in order to print the values of all the variables. One call for each variable</p></li>
+<li><p>Are there some errors in the printout of the numbers? Try to explain why, if there is some mismatch between the numbers in the code, and the numbers showing up in the serial monitor.</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+<section id="exercise-serial-output-of-digital-input">
+<h3>Exercise: Serial output of digital input<a class="headerlink" href="#exercise-serial-output-of-digital-input" title="Link to this heading">#</a></h3>
+<p>Inside your software, the state of a digital input is a number just like any other number. The only special property of this number is that it is always 1, or 0. Thus it can be printed on the serial port, in a similar fashion to the previous exercise.</p>
+<ol class="arabic simple">
+<li><p>Write a program which prints the state of two digital inputs to the serial monitor. The delay between each print should be 500 milliseconds.</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+</section>
+<section id="simple-arithmetics">
+<h2>Simple arithmetics<a class="headerlink" href="#simple-arithmetics" title="Link to this heading">#</a></h2>
+<p>The microcontroller (Atmega328) has built in support for some basic arithmetic operations (addition, subtraction, multiplication, but not division). Our programming language (C/C++) also support basic arithmetic operations on constant numbers or variables (including division, which is a relatively slow operation since the microcontroller does not support it directly, and has to use a multi step method to compute it).</p>
+<p>Note that if you need slightly more advanced mathematics (e.g. square root, or logarithm), you will need to use a library which contain a function for this purpose (or alternatively you can write your own function).</p>
+<p>We previously had a example variable for a number of students. The following example shows how you could add the number of one variable to the contents of another variable, overwriting the original value.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">number_of_students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">23</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">another_group_of_students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">19</span>
+
+<span class="n">number_of_students</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">number_of_students</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">another_group_of_students</span><span class="p">;</span><span class="w"> </span><span class="c1">// After this operation the value of number_of_students becomes 42</span>
+</pre></div>
+</div>
+<p>This example also illustrates an important thing to note about the assignment (<code class="docutils literal notranslate"><span class="pre">=</span></code>) operator. It is not a equal sign in the sense that the left and right sides have to be equal. It assigns the value which results from the expression to the right, in to the variable to the left.</p>
+<section id="exercise-calculator-with-serial-port-output">
+<h3>Exercise: Calculator with serial port output<a class="headerlink" href="#exercise-calculator-with-serial-port-output" title="Link to this heading">#</a></h3>
+<p>For each of the arithmetic operations, the output is to be printed on the serial console.</p>
+<ol class="arabic simple">
+<li><p>Perform the addition of 3, and 4.</p></li>
+<li><p>Perform the subtraction of 5, and 9.</p></li>
+<li><p>Perform the multiplication of 2, and 3.</p></li>
+<li><p>Perform the division of 20 and 4.</p></li>
+<li><p>Perform the division of 20 and 6.</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+<section id="exercise-count-to-10">
+<h3>Exercise: Count to 10<a class="headerlink" href="#exercise-count-to-10" title="Link to this heading">#</a></h3>
+<p>In this exercise we will modify the hello world example to a counter, which counts to 10 over a interval of 10 seconds, before it resets back to zero. Each count value is to be displayed on the serial monitor.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// initialize serial communication at 9600 bits per second:</span>
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Put your own code here.</span>
+<span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+</section>
+<section id="exercise-calculator-with-binary-display">
+<h3>Exercise: Calculator with binary display<a class="headerlink" href="#exercise-calculator-with-binary-display" title="Link to this heading">#</a></h3>
+<p>In this exercise you are going to extend the program from the exercise “Calculator with serial port output”, to one which output the result to some LEDs.</p>
+<ol class="arabic simple">
+<li><p>Connect 4 LEDs to some free GPIO pins.</p></li>
+<li><p>Add the required code to control the LED in accordance with the result from the mathematical operation</p></li>
+</ol>
+<div class="admonition-todo admonition" id="id8">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The serial-monitor is basically a terminal. In order to use the serial-monitor with your board, you need to establish a UART communication link between the two. By now you should have realized that you are uploading your software to the Arduino via USB cable. This transmission is using the same protocol as you use when printing text in the serial monitor. The general name of this commonly used protocol is <a class="reference external" href="https://www.wikiwand.com/en/Universal_asynchronous_receiver-transmitter">UART</a> (or sometimes the more general term <a class="reference external" href="https://www.wikiwand.com/en/Universal_synchronous_and_asynchronous_receiver-transmitter">USART</a> is used). It is a wide concept that requires more time to grasp the details. We will look into that in our <a class="reference internal" href="L12_communication.html#l12-communication"><span class="std std-ref">communication protocols</span></a> lesson later in the course.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="L1b_Arduino_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Arduino Introduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="L3_digital_io_and_timing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Digital I/O, and timing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino-program-structure">Arduino program structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-define-a-macro">Exercise: define a macro</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-types">Variable Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#atmega328-gpio-pins">Atmega328 GPIO pins</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-outputs">Digital outputs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-a-suitable-current-limiting-resistor-for-the-led">Selecting a suitable current limiting resistor for the LED</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-inputs">Digital inputs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-connect-a-button-to-the-arduino">How to connect a button to the Arduino</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-digital-output-of-digital-input-state">Exercise: Digital output of digital input state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-logic-operations-on-digital-inputs">Exercise: Logic operations on digital inputs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-output">Serial port output</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-the-arduino-ide">Serial port monitor in the Arduino IDE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-platformio">Serial port monitor in PlatformIO</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serial-port-monitor-in-tinkercad">Serial port monitor in TinkerCAD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hello-world">Hello World</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-print-some-numbers">Exercise: Print some numbers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-serial-output-of-digital-input">Exercise: Serial output of digital input</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-arithmetics">Simple arithmetics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-calculator-with-serial-port-output">Exercise: Calculator with serial port output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-count-to-10">Exercise: Count to 10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-calculator-with-binary-display">Exercise: Calculator with binary display</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

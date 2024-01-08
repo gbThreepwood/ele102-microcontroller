@@ -1,0 +1,862 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analog to digital conversion (ADC) &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L5_adc';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Serial I/O" href="L6_serial_io.html" />
+    <link rel="prev" title="Analog output (digital to analog conversion)" href="L4_dac_pwm.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Lessons/L5_adc.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analog to digital conversion (ADC)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-to-digital-converter">Analog to digital converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#successive-approximation-sar-adc">Successive Approximation (SAR) ADC.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization">Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important-parameters-for-adc-operation">Important parameters for ADC operation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-adc-in-arduino">Using the ADC in Arduino</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-print-raw-adc-value-to-serial-port">Exercise: print raw ADC value to serial port</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-temperature-measurement-using-tmp36">Example: Temperature measurement using TMP36</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-change-the-unit-of-temperature-measurement">Exercise: Change the unit of temperature measurement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-potentiometer-as-analog-input">Example: Potentiometer as Analog Input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-potentiometer-adjustable-blink-rate">Exercise: Potentiometer adjustable blink rate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-temperature-alarm-challenging">Exercise: Temperature alarm (challenging)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#servo-motor-control">Servo motor control</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-servo-and-map-function">Example: Servo and map function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-control-the-servo-position-based-on-light-on-phototransistor">Exercise: Control the servo position based on light on phototransistor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-toggle-position-setting-by-pushing-a-button">Exercise: Toggle position setting by pushing a button</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-check-the-potmeter-value-before-commanding-the-servo-motor">Exercise: Check the potmeter value before commanding the servo motor</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="analog-to-digital-conversion-adc">
+<span id="analog-to-digital-conversion"></span><h1>Analog to digital conversion (ADC)<a class="headerlink" href="#analog-to-digital-conversion-adc" title="Link to this heading">#</a></h1>
+<p>In the previous lesson we discussed digital to analog conversion. In this lesson we consider the opposite process, where a analog signal is converted in to a digital representation.</p>
+<p>In order to be prepared for most of the exercises in this lesson, the following connections should be made in advance:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_pb_led_pot_tmp36_bb.png"><img alt="Arduino with external LED, push buttons, potentiometer, and TMP32 temperature sensor." src="../../_images/arduino_pb_led_pot_tmp36_bb.png" style="width: 511.5px; height: 661.5px;" /></a>
+</figure>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>Analog to digital converters (ADC) and digital to analog converters (DAC) are
+the bridges between digital and analog worlds.</p>
+<p>The analog to digital converter has many applications, some of which include:</p>
+<ul class="simple">
+<li><p>Reading of potentiometer settings</p></li>
+<li><p>Reading of temperature sensors, pressure sensors, light sensors, strain sensors, etc.</p></li>
+<li><p>Reading the voltage on a battery in order to determine the state of charge (sometimes combined with a temperature reading, since battery voltage can be affected by temperature)</p></li>
+<li><p>Measurement of EMF in order to determine the rotational speed of a motor</p></li>
+<li><p>Measurement of voltage and current in power systems in order to calculate active (P), and reactive (Q) power.</p></li>
+<li><p>Reception of radio signals for use in a software defined radio (SDR)</p></li>
+</ul>
+<section id="analog-to-digital-converter">
+<h3>Analog to digital converter<a class="headerlink" href="#analog-to-digital-converter" title="Link to this heading">#</a></h3>
+<p>An A/D converter (analog to digital converter) is a device that converts a analog signal into an approximate digital representation. It measures the <span class="underlined">ratio</span> of an analog input value to a reference value and express it in a form of digital value. Many different technologies exits for this purpose, where each one has it’s own advantages and disadvantages. The following is a list of the more common types:</p>
+<ul class="simple">
+<li><p>Successive Approximation (SAR) ADC.</p></li>
+<li><p>Delta-sigma (ΔΣ) ADC.</p></li>
+<li><p>Dual Slope ADC.</p></li>
+<li><p>Pipelined ADC.</p></li>
+<li><p>Flash ADC</p></li>
+</ul>
+<p>The Atmega328p of the Arduino UNO has a successive approximation ADC, and the operation of this type of converter will be discussed briefly. The other types will not be discussed further in this lecture.</p>
+</section>
+<section id="successive-approximation-sar-adc">
+<h3>Successive Approximation (SAR) ADC.<a class="headerlink" href="#successive-approximation-sar-adc" title="Link to this heading">#</a></h3>
+<figure class="align-center">
+<img alt="../../_images/sar_block_diagram.png" src="../../_images/sar_block_diagram.png" />
+</figure>
+<p>The successive approximation ADC uses a binary search method to go through all possible quantization levels for the digital representation for the analog value, until it finally reaches the best approximation.</p>
+<p>The analog value is sampled, and a constant voltage sample is held in the sample and hold (S/H) circuit. This voltage sample is then compared to the output voltage from a digital to analog converter (DAC), which initially is set to zero volts. The comparator then informs the successive approximation register whether the sampled voltage is above or below the DAC output. If the sampled voltage is higher than the DAC output, the successive approximation register increase the DAC output on the next clock cycle. This process continues on each clock cycle until the DAC output becomes higher than the sampled value.</p>
+<p>The digital signal which is required to control the DAC in such a way that it outputs a voltage approximately equal to the sampled voltage, is then used as the digital representation of this analog voltage. The end of conversion (EOC) signal informs the processor that the conversion process is completed.</p>
+<p>It should be obvious from the above explanation that the analog to digital converter needs some time to complete the conversion process. The time it takes to complete one conversion is one of the fundamental parameters describing an ADC.</p>
+</section>
+<section id="quantization">
+<h3>Quantization<a class="headerlink" href="#quantization" title="Link to this heading">#</a></h3>
+<p>Quantization is the main step in digitizing an analog signal. Basically, categorize an analog signal into subset of digital values which can be expressed in desired resolution. Let’s have a look at a quantized sinusoidal signal in 4-bits resolution.</p>
+<figure class="align-center">
+<img alt="../../_images/quantization.jpg" src="../../_images/quantization.jpg" />
+</figure>
+<ul class="simple">
+<li><p><em>Sampling depth</em> is the minimum smallest analog value change that is detectable.</p></li>
+<li><p><em>Sampling rate</em> is the number of samples taken for quantization.</p></li>
+</ul>
+<p><strong>Note that</strong>  as we discussed before that we cannot every possible analog output in digital world (as we encounter conversion error), we cannot measure every possible analog input with an infinite precision, either.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Considering the fact that your reference analog voltage is 5V and you are using 10-bit ADC converter in Atmega328p, what is the minimum analog voltage difference you can distinguish?</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Do you think if there is any limitation of how fast/slow you can sample a signal? What is the advantages and disadvantages of sampling fast/slow?</p>
+</div>
+</section>
+<section id="important-parameters-for-adc-operation">
+<h3>Important parameters for ADC operation<a class="headerlink" href="#important-parameters-for-adc-operation" title="Link to this heading">#</a></h3>
+<p>There are many important parameters one should understand when applying an A/D converter. Even if a particular ADC is selected, there are still many parameters that can be adjusted within the ADC depending on how you intend to use it. The following is a summary of a few basic ones:</p>
+<ul class="simple">
+<li><p>Resolution - The digital representation of the analog signal must use a finite number of bits, and this imposes limitations on the smallest possible change in the analog value that is detectable by the converter.</p></li>
+<li><p>Sampling frequency - The conversion from analog to digital takes up a finite time, and this imposes limitation on how fast changes in the analog signals that are detectable.</p></li>
+<li><p><a class="reference external" href="https://jeelabs.org/article/1620b">Aliasing</a> - If the measured analog signal contains components with a frequency that is higher than half of the sampling frequency, there is a risk of aliasing. The risk is that the resulting digital representation contains frequency components that does not exist in the real analog signal.</p></li>
+<li><p>Dymaic range -  The range of signal amplitudes that the ADC can resolve.</p></li>
+</ul>
+<p>For simple applications with values that vary slowly (e.g. temperature measurements), it might be sufficient to only take these parameters into account. For more demanding applications (e.g. real time current measurements in a motor drive), one should obtain a deeper knowledge of all the parameters that will impact the performance.</p>
+<p>The analog input or output range is determined by a reference voltage, <span class="math notranslate nohighlight">\(V_{ref}\)</span>. Typically for an N-bit converter with
+unsigned digital I/O and unipolar analog range <span class="math notranslate nohighlight">\((0V .. +V_{ref})\)</span>, one step at the analog
+end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is given by:</p>
+<div class="math notranslate nohighlight">
+\[\Delta V_{LSB} = \frac{V_{ref}}{2^N}\]</div>
+<p>Similarly for a bipolar analog range <span class="math notranslate nohighlight">\((-V_{ref} .. +V_{ref})\)</span>, one step at the analog end is:</p>
+<div class="math notranslate nohighlight">
+\[\Delta V_{LSB} = \frac{V_{ref+} - V_{ref-}}{2^N}\]</div>
+<p>Another important thing is that the ADC is super slow process in 16 Mhz (about 62 ns) levels. For comparison, <code class="code docutils literal notranslate"><span class="pre">digitalRead()</span></code> takes 4.9us whereas <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code> 104us! For now, we keep the ADC in our main process but there are other ways to optimize your program when you need to include such a bulky process in your applications.</p>
+</section>
+</section>
+<section id="using-the-adc-in-arduino">
+<h2>Using the ADC in Arduino<a class="headerlink" href="#using-the-adc-in-arduino" title="Link to this heading">#</a></h2>
+<p>The Arduino UNO has six analog inputs on the pins A0 to A5. There is only a single ADC, but some internal switches allows us to select which of the inputs is sampled. By default the voltage range on each input is 0 - 5 V.</p>
+<p>In the Arduino library the function <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code> can be used to read data from the ADC. E.g. <code class="code docutils literal notranslate"><span class="pre">analogRead(A0)</span></code> in order to read the first analog input. This is a blocking function, meaning the program will stop and wait for the conversion process to complete before the function returns. The ADC has a resolution of 10 bit, which means that the value returned from <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code> will be a number between 0, and 1023. There is no 10 bit datatype, and in the function declaration the return type is set to <code class="code docutils literal notranslate"><span class="pre">int</span></code>, which is a 16 bit signed number on the Arduino UNO. In reality it can never be negative, and thus a unsigned int, or <code class="code docutils literal notranslate"><span class="pre">uint16_t</span></code> could have been used.</p>
+<p>The ADC will convert the analog input voltage (0 - 5 V) in to a number (0 - 1023). If you are interested in knowing the voltage level, some basic calculations has to be performed after the conversion is completed.</p>
+<p>If the number returned from <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code> is 400, the voltage is given by:</p>
+<div class="math notranslate nohighlight">
+\[V = \frac{400}{1023} \cdot 5 = 1.955 V\]</div>
+<p>You should also consider how many significant figures you can have in this number. I.e. how many volts do you have per bit.</p>
+<div class="math notranslate nohighlight">
+\[\frac{5 V}{1023} = 4.888 mV/bit\]</div>
+<p>The conversion time is approximately 100 microseconds, which means that it is possible to perform 10000 conversions each second. This is not the absolute maximum speed of the ADC, it is simply how the ADC is configured inside the Arduino library.</p>
+<section id="exercise-print-raw-adc-value-to-serial-port">
+<h3>Exercise: print raw ADC value to serial port<a class="headerlink" href="#exercise-print-raw-adc-value-to-serial-port" title="Link to this heading">#</a></h3>
+<p>In this exercise you will experience how various voltages applied to analog input A0 affects the value returned from <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Write a simple program that is able to print a message to the serial port at a given interval. Use <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> to obtain the delay, and use a interval of 2 seconds.</p></li>
+<li><p>Extend the program so that the value printed to the serial port is the raw value returned from <code class="code docutils literal notranslate"><span class="pre">analogRead()</span></code>.</p></li>
+<li><p>Test the program by applying various voltages to the A0 port. Try 5 V, 3.3 V, GND, and optionally a resistive voltage divider using two resistors.</p></li>
+</ol>
+</section>
+<section id="example-temperature-measurement-using-tmp36">
+<h3>Example: Temperature measurement using TMP36<a class="headerlink" href="#example-temperature-measurement-using-tmp36" title="Link to this heading">#</a></h3>
+<p>In this example we will be reading the temperature from the TMP36 sensor that is included in the Arduino kit. The TMP36 has a voltage output linearly proportional to the temperature, and thus makes it easy to measure temperatures without any curve fitting that must be used with nonlinear sensing elements.</p>
+<p>The details of how the TMP36 operates are available in the <a class="reference external" href="https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf/">datasheet</a></p>
+<p>Connect the sensor according to the following diagram:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/temperature_sensor_bb.png"><img alt="../../_images/temperature_sensor_bb.png" src="../../_images/temperature_sensor_bb.png" style="width: 484.5px; height: 660.0px;" /></a>
+</figure>
+<p>The following source code listing shows how to read the sensor, and how to convert the raw reading to voltage, and temperature:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Try to change the program to use <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">delay()</span></code>.</p>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">sensorVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">sensorVolt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sensorVal</span><span class="o">/</span><span class="mf">1024.0</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sensorVolt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Sensor verdi: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">sensorVal</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Sensor spenning: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">sensorVolt</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Sensor temperatur: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exercise-change-the-unit-of-temperature-measurement">
+<h3>Exercise: Change the unit of temperature measurement<a class="headerlink" href="#exercise-change-the-unit-of-temperature-measurement" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Use the program in the previous example as basis, and add the code required to print the temperature in Kelvin to the serial port.</p></li>
+<li><p>Extend the program by printing the temperature in Fahrenheit, and Rankine.</p></li>
+</ol>
+</section>
+<section id="example-potentiometer-as-analog-input">
+<h3>Example: Potentiometer as Analog Input<a class="headerlink" href="#example-potentiometer-as-analog-input" title="Link to this heading">#</a></h3>
+<p>A potentiometer is a type of variable resistor with 3 connections. Two of the connections are placed at the extreme ends of the resistor, for ease of discussion we will name them connector (1), and (2). I.e. the resistance between pins (1), and (2) is always equal to the maximum resistance of the variable resistor. The third connector (3) is connected to a sliding contact, which moves along the resistor. At one extreme end this sliding connector is at (or close to) connector (1), at the other extreme it is at connector (2).</p>
+<p>By applying a fixed voltage between connector (1), and (2), the voltage at the sliding contact (3) will vary linearly with the rotation of the potentiometer knob.</p>
+<p>You can use this potentiometer value for various different purposes. Now, assume that your microcontroller team is assigned to develop a simple heat display system. If the temperature is higher than 30 celcius, the display gives a warning. If it is between 20-30 celcius, everything is fine. If it is less than 20 celcius, then your display system warns again. To have a temperature sensor (in real life) and physically change the temperature of the room for the sake of test is not very efficient. <em>We all know</em> that temperature sensor gives an analog signal so I can test the system using a potentiometer to emulate the sensor.</p>
+<p>For this example you should use the following circuit:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_potmeter_bb.png"><img alt="Simple potentiometer circuit with Arduino" src="../../_images/arduino_potmeter_bb.png" style="width: 484.5px; height: 661.5px;" /></a>
+</figure>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">sensorVal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">sensorVolt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sensorVal</span><span class="o">/</span><span class="mf">1024.0</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">float</span><span class="w"> </span><span class="n">temperature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">sensorVolt</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Raw value: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">sensorVal</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Voltage: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">sensorVolt</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Temperature: &quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">temperature</span><span class="w"> </span><span class="o">&gt;=</span><span class="mi">30</span><span class="p">)</span>
+<span class="w">                </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Warm&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">((</span><span class="n">temperature</span><span class="w"> </span><span class="o">&gt;=</span><span class="mi">20</span><span class="p">)</span><span class="o">&amp;&amp;</span><span class="p">(</span><span class="n">temperature</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">30</span><span class="p">))</span>
+<span class="w">                </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;:)&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">else</span>
+<span class="w">                </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Cold&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After you have finished testing the software using a potentiometer to emulate the temperature sensor, you should connect a real temperature sensor for the final test. There is always a risk that there is something you did not take in to account when performing the emulated test.</p>
+</div>
+</section>
+<section id="exercise-potentiometer-adjustable-blink-rate">
+<h3>Exercise: Potentiometer adjustable blink rate<a class="headerlink" href="#exercise-potentiometer-adjustable-blink-rate" title="Link to this heading">#</a></h3>
+<p>In this exercise you will develop a program which allows adjusting the blink rate (frequency) of a LED by means of a potentiometer.</p>
+<ol class="arabic simple">
+<li><p>Write a program which blinks a LED using <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> for the delay.</p></li>
+<li><p>Connect a potentiometer to input A0, and add the code required to sample the potentiometer value at a rate of 10 milliseconds.</p></li>
+<li><p>Use the potentiometer value to control the blink frequency of the LED. The minimum setting should be 0.5 Hz, and maximum should be 25 Hz.</p></li>
+</ol>
+</section>
+<section id="exercise-temperature-alarm-challenging">
+<h3>Exercise: Temperature alarm (challenging)<a class="headerlink" href="#exercise-temperature-alarm-challenging" title="Link to this heading">#</a></h3>
+<p>In this exercise you will expand the temperature reading example in to a program that generates a alarm signal if the temperature exceeds a level of 27 degrees. The temperature alarm limit is set to this value so that it will be easy to test, it is above the typical room temperature, but below the body temperature (or the temperature of your coffee).</p>
+<ol class="arabic simple">
+<li><p>Start by connecting the TMP36, as well as a push button, and a red LED to the Arduino.</p></li>
+<li><p>Write a program which continuously reads the temperature value, and compares it to a alarm limit defined by a constant variable. Use <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">delay()</span></code> for delaying the execution time for the sampling. Use a interval of 1 second. For easy debugging the actual temperature value should be printed to the serial terminal at each sampling interval.</p></li>
+<li><p>Extend the program with the code required to initiate blinking of the LED, and printing of the text “Temperature alarm!” to the serial port as soon as the temperature exceeds the limit. The alarm should not stop, even if the temperature goes back down again below the alarm limit.</p></li>
+<li><p>Add an alarm acknowledge push button function. If the button is pushed, and the temperature is below the alarm limit, the LED blink, and alarm message should go away. For this functionality debouncing is not needed, as acknowledging an already acknowledged alarm will not perform any action.</p></li>
+</ol>
+</section>
+</section>
+<section id="servo-motor-control">
+<h2>Servo motor control<a class="headerlink" href="#servo-motor-control" title="Link to this heading">#</a></h2>
+<p>Servo motors is a category of motors designed specifically for accurate control of angular (or sometimes linear) position. There are many different variations of these motors, which require different types of driving circuits. Sometimes the driving can be challenging, but luckily Arduino kit includes a nearly plug-and-play solution.</p>
+<section id="example-servo-and-map-function">
+<h3>Example: Servo and map function<a class="headerlink" href="#example-servo-and-map-function" title="Link to this heading">#</a></h3>
+<p>The servo motor in the Arduino kit is of the pulse width controlled type. That is, the control signal is a PWM signal, the actual motor control system is an electronic circuit placed inside the motor housing. The PWM is simply used as a way to inform the motor controller of what angular position you would like the motor to have. There is an internal position sensor inside the motor, which measures the shaft position, and a controller which compares this measured value to the commanded value.</p>
+<p>The PWM control signal switching frequency should be 50 Hz, and the pulse width (duty-cycle) determine the set point for angular position. A pulse width of 1 ms correspond to 0 degree, 1.5 ms correspond to 90 degree, while 2 ms correspond to 180 degree. This is not standardized however, and motors from other manufacturers might have different interpretation of the pulse widths.</p>
+<figure class="align-center">
+<img alt="../../_images/logicServoWrite.png" src="../../_images/logicServoWrite.png" />
+</figure>
+<p>Note that there are a lot of details behind the operation of this motor, some of which will be covered in a future lecture. For now we will simply explore how to use the motor.</p>
+<p>The purpose of this example is to control the position of the motor using a potentiometer. In order to simplify the process of generating the required motor pulses, we will be using a library which provides a function to set the correct PWM output for a given numeric value corresponding to a desired angular position.</p>
+<p>The library is included by <code class="code docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;Servo.h&gt;</span></code></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The servo motor in the Arduino kit is quite fragile. If you try to rotate with hand or hold it while it is trying to rotate, then you may damage the gear box in it.  Please don’t!</p>
+</div>
+<p>First of all, let’s build the following circuit. Notice that there is a capacitor connected between 5 V, and ground. The purpose is to stabilize the voltage in case the servo motor pulls large transient currents. <strong>Make sure you connect this capacitor with correct polarity</strong>.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_servo_motor_bb.png"><img alt="Arduino with push button, potmeter, and servomotor." src="../../_images/arduino_servo_motor_bb.png" style="width: 694.5px; height: 661.5px;" /></a>
+</figure>
+<p>The servo motor has three wires: power, ground, and signal. The power wire is typically red, and should be connected to the 5V pin on the Arduino or Genuino board. The ground wire is typically black or brown and should be connected to a ground pin on the board. The signal pin is typically yellow or orange and should be connected to one of the pins which support PWM. Here we use pin 9.</p>
+<p>The potentiometer should be wired so that its two outer pins are connected to power (+5V) and ground, and its middle pin is connected to analog input A0 on the board.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Servo control using potentiometer</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
+
+<span class="w"> </span><span class="n">Servo</span><span class="w"> </span><span class="n">myservo</span><span class="p">;</span><span class="w">  </span><span class="c1">// create servo object to control a servo</span>
+
+<span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">potPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A0</span><span class="p">;</span><span class="w">  </span><span class="c1">// analog pin used to connect the potentiometer</span>
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">    </span><span class="c1">// variable to read the value from the analog pin</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">myservo</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span><span class="w">  </span><span class="c1">// attaches the servo on pin 9 to the servo object</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">potPin</span><span class="p">);</span><span class="w">            </span><span class="c1">// reads the value of the potentiometer (value between 0 and 1023)</span>
+<span class="w">     </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1023</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">180</span><span class="p">);</span><span class="w">     </span><span class="c1">// scale it to use it with the servo (value between 0 and 180)</span>
+<span class="w">     </span><span class="n">myservo</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span><span class="w">                  </span><span class="c1">// sets the servo position according to the scaled value</span>
+<span class="w">     </span><span class="n">delay</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span><span class="w">                           </span><span class="c1">// waits for the servo to get there</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">map</span></code> function is discussed in the previous lesson, it involves relatively simple calculations and could easily be performed by:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">val</span><span class="o">*</span><span class="mi">180</span><span class="p">)</span><span class="o">/</span><span class="mi">1023</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that the above calculation require that the intermediate calculations are 32 bit, since 1023*180 yields a number to large to be stored in 16 bits. Thus <code class="code docutils literal notranslate"><span class="pre">val</span></code> has to be declared <code class="code docutils literal notranslate"><span class="pre">uint32_t</span></code>, or some other mechanism must be employed to ensure that the intermediate result is stored using 32 bits of memory. The <code class="code docutils literal notranslate"><span class="pre">map()</span></code> function takes care of this by performing all calculations using 32 bit.</p>
+</section>
+<section id="exercise-control-the-servo-position-based-on-light-on-phototransistor">
+<h3>Exercise: Control the servo position based on light on phototransistor<a class="headerlink" href="#exercise-control-the-servo-position-based-on-light-on-phototransistor" title="Link to this heading">#</a></h3>
+<p>In this exercise we will use the ADC to digitize the voltage from a phototransistor of the type <em>HW5P-1</em>, and use the value returned from the ADC to control the position of a servo motor.</p>
+<p>The HW5P-1 phototransistor has two connections, collector and emitter. The base is the light sensitive element of the component, and thus no electrical base connection is available. The long lead is the emitter, and the short one is the collector. In order to use the transistor for light intensity measurements, it should be connected in series with a resistor of 1 - 2 kOhm in the collector, or emitter.</p>
+</section>
+<section id="exercise-toggle-position-setting-by-pushing-a-button">
+<h3>Exercise: Toggle position setting by pushing a button<a class="headerlink" href="#exercise-toggle-position-setting-by-pushing-a-button" title="Link to this heading">#</a></h3>
+<p>This exercise builds upon the example from the previous section.</p>
+<ol class="arabic simple">
+<li><p>Add the required code to detect the rising edge of a push button, including debouncing. Write a message to the serial port each time a debounced rising edge is detected.</p></li>
+<li><p>Use the rising edge to toggle the position of the servo motor in steps of 45 degrees. As soon as you reach 180 degree, the direction should change, i.e. you should step backwards from 180 towards zero with steps of 45 degree.</p></li>
+</ol>
+</section>
+<section id="exercise-check-the-potmeter-value-before-commanding-the-servo-motor">
+<h3>Exercise: Check the potmeter value before commanding the servo motor<a class="headerlink" href="#exercise-check-the-potmeter-value-before-commanding-the-servo-motor" title="Link to this heading">#</a></h3>
+<p>The following code example will light up a LED if the commanded value is above 90 degree. In this exercise the example should be expanded with some code which only initiate the movement if the user presses a push button.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Controlling LED based on Servo angle</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
+
+<span class="w"> </span><span class="n">Servo</span><span class="w"> </span><span class="n">myservo</span><span class="p">;</span><span class="w">  </span><span class="c1">// create servo object to control a servo</span>
+
+<span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">potPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A0</span><span class="p">;</span><span class="w">  </span><span class="c1">// analog pin used to connect the potentiometer</span>
+<span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ledPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span><span class="w"> </span><span class="c1">// output pin for the LED</span>
+
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w">    </span><span class="c1">// variable to read the value from the analog pin</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">myservo</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span><span class="w">  </span><span class="c1">// attaches the servo on pin 9 to the servo object</span>
+<span class="w"> </span><span class="p">}</span>
+
+<span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">potPin</span><span class="p">);</span><span class="w">            </span><span class="c1">// reads the value of the potentiometer (value between 0 and 1023)</span>
+<span class="w">     </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1023</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">180</span><span class="p">);</span><span class="w">     </span><span class="c1">// scale it to use it with the servo (value between 0 and 180)</span>
+
+<span class="w">     </span><span class="n">myservo</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span><span class="w">                  </span><span class="c1">// sets the servo position according to the scaled value</span>
+
+<span class="w">     </span><span class="k">if</span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">90</span><span class="p">){</span>
+<span class="w">         </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">     </span><span class="k">else</span><span class="p">{</span>
+<span class="w">         </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">     </span><span class="n">delay</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span><span class="w">                           </span><span class="c1">// waits for the servo to get there</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<ol class="arabic simple">
+<li><p>Make sure that the above code is operating as expected on you Arduino. The servo motor should follow you commands, and the LED should light up if the command is above 90 degree.</p></li>
+<li><p>Add code to continuously print the commanded servo angle to the serial port. Use <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> to limit the printing to only once a second.</p></li>
+<li><p>Add, and test the code which is required to detect the rising edge of a push button.</p></li>
+<li><p>Protect the <code class="code docutils literal notranslate"><span class="pre">myservo.write()</span></code> method so that it is only called if the button is pushed.</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="L4_dac_pwm.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Analog output (digital to analog conversion)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="L6_serial_io.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Serial I/O</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-to-digital-converter">Analog to digital converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#successive-approximation-sar-adc">Successive Approximation (SAR) ADC.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization">Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important-parameters-for-adc-operation">Important parameters for ADC operation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-adc-in-arduino">Using the ADC in Arduino</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-print-raw-adc-value-to-serial-port">Exercise: print raw ADC value to serial port</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-temperature-measurement-using-tmp36">Example: Temperature measurement using TMP36</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-change-the-unit-of-temperature-measurement">Exercise: Change the unit of temperature measurement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-potentiometer-as-analog-input">Example: Potentiometer as Analog Input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-potentiometer-adjustable-blink-rate">Exercise: Potentiometer adjustable blink rate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-temperature-alarm-challenging">Exercise: Temperature alarm (challenging)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#servo-motor-control">Servo motor control</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-servo-and-map-function">Example: Servo and map function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-control-the-servo-position-based-on-light-on-phototransistor">Exercise: Control the servo position based on light on phototransistor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-toggle-position-setting-by-pushing-a-button">Exercise: Toggle position setting by pushing a button</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-check-the-potmeter-value-before-commanding-the-servo-motor">Exercise: Check the potmeter value before commanding the servo motor</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

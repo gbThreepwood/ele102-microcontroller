@@ -1,0 +1,975 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analog output (digital to analog conversion) &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L4_dac_pwm';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analog to digital conversion (ADC)" href="L5_adc.html" />
+    <link rel="prev" title="Digital I/O, and timing" href="L3_digital_io_and_timing.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Lessons/L4_dac_pwm.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analog output (digital to analog conversion)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-to-analog-converter">Digital to analog converter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pulse-width-modulation-pwm">Pulse Width Modulation (PWM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-output-by-pwm">Analog output by PWM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operation-of-a-pulse-width-modulator">Operation of a pulse width modulator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-signals-with-different-dynamic-range">Mapping signals with different dynamic range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjusting-the-light-intensity-of-led">Exercise: Adjusting the light intensity of LED</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-continuously-adjusting-the-light-intensity-of-led">Exercise: Continuously adjusting the light intensity of LED</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjusting-the-light-intensity-of-multiple-leds">Exercise: Adjusting the light intensity of multiple LEDs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-input-no-output">No input no output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-output-but-with-input">No output but with input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-return">Integer return</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-abstracting-away-your-hardware">Exercise: Abstracting away your hardware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-pythagoras">Exercise: Pythagoras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-tilt-detection">Exercise: Tilt detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops">While loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">For loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-while-loops">Do while loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-example">Loop example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-a-colorful-led-n-times">Exercise: Blink a colorful LED n-times</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-a-colorful-led-n-times-with-user-input">Exercise: Blink a colorful LED n-times with user input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-serial-ui-for-led-control">Exercise: Serial UI for LED control</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="analog-output-digital-to-analog-conversion">
+<span id="dac-pwm"></span><h1>Analog output (digital to analog conversion)<a class="headerlink" href="#analog-output-digital-to-analog-conversion" title="Link to this heading">#</a></h1>
+<p>Computers work with numbers in a discrete manner, while the “real world” is continuous. If e.g. a computer (such as your Arduino) wants to measure a temperature, and turn on a heater if the temperature is below some threshold, the actions are performed in discrete steps, on discrete pieces of information. First the computer will have to convert the continous reading from a sensor to a digital representation using a finite number of ones and zeros. Only when the conversion is completed will it be possible to continue with the next step of comparing it to some threshold. Hence both the internal representation of the temperature, and all operations performed on this internal representation are of a discrete nature.</p>
+<figure class="align-center" id="id5">
+<img alt="DAC" src="../../_images/What-is-Analog-to-Digital-Converter.png" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.electrical4u.com/analog-to-digital-converter/">https://www.electrical4u.com</a></span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id6">
+<img alt="DAC" src="../../_images/arduino_adc_dac_example.png" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.tinkercad.com/things/bHU1CyP8TTu-adc-dac-with-arduino-by-ruzo">ADC DAC in Arduino (by Ruzo)</a></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this lecture, we will talk about how to convert something digital (discrete) into something analog (continuous).</p>
+<section id="digital-to-analog-converter">
+<h2>Digital to analog converter<a class="headerlink" href="#digital-to-analog-converter" title="Link to this heading">#</a></h2>
+<p>A digital to analog converter is a device which converts a digital representation of a signal in to a real physical signal, typically a voltage. The digital representation is just a number, which has discrete steps in it’s value, while the analog signal is capable of continuous variation <a class="footnote-reference brackets" href="#f10" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><em>Language is discrete, feelings are not</em></p>
+<p>One may think about this analog-digital trade off as an art of categorization. When I say <em>everything</em> in this world is continuous, I mean it. Let’s do a bit psychological brainstorming, shall we? Think about your feelings. When you experience something that makes you happy, you describe/express it with a word: Happy. What if you are really happy? Well, you can emphasize your word (very happy) or categorize and redefine your happiness with another word: Amused. If that’s not enough, you can always increase your precision: (very amused) or thrilled.</p>
+<p>What is important in here is not the language but the limitation of the language (which has a discrete characteristics) when you want to express your feelings (which has a continuous characteristics). It is never the exact representation of what really feel when you speak it out. This leads me to the conclusion that you will always lose when you trade off between analog and digital.</p>
+<figure class="align-center" id="id7">
+<img alt="../../_images/emotions-wheel.png" src="../../_images/emotions-wheel.png" />
+<figcaption>
+<p><span class="caption-text">Digital to Analog Conversion of feelings. The <em>language</em> is discrete.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<div class="legend">
+<p>Source: <a class="reference external" href="https://www.simplemost.com/feeling-wheel-will-help-better-describe-emotions/">https://www.simplemost.com/feeling-wheel-will-help-better-describe-emotions/</a></p>
+</div>
+</figcaption>
+</figure>
+<p>So, you can think about expressing your feelings with words as ANALOG-TO-DIGITAL conversion. Understanding what someone feel when they told you as DIGITAL-TO-ANALOG conversion.</p>
+</div>
+</section>
+<section id="pulse-width-modulation-pwm">
+<h2>Pulse Width Modulation (PWM)<a class="headerlink" href="#pulse-width-modulation-pwm" title="Link to this heading">#</a></h2>
+<p>Let’s go back to the Arduino world. <strong>There is NO ANALOG OUTPUT in Arduino</strong>. There is however a function called <a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite">analogWrite()</a> which can be used to acheive analog output within some limitations.</p>
+<figure class="align-center" id="id8">
+<img alt="../../_images/pwm_duty_cycle.png" src="../../_images/pwm_duty_cycle.png" />
+<figcaption>
+<p><span class="caption-text">PWM and duty cycle</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>There are three primary components that define a PWM signal’s behavior:</p>
+<p><strong>Duty cycle:</strong> A duty cycle is the fraction of one period when a system or signal is active. We typically express a duty cycle as a ratio or percentage.</p>
+<p><strong>Amplitude or high-level</strong> The voltage level the signal has when it is active. The passive level is usually zero.</p>
+<p><strong>Frequency:</strong> The rate at which something repeats or occurs over a particular period. In other words, the rate at which a vibration happens that creates a wave, e.g., sound, radio, or light waves, typically calculated per second. A period is the time it takes for a signal to conclude a full ON-OFF cycle, and it the reciprocal of frequency.</p>
+<div class="math notranslate nohighlight">
+\[Duty Cycle = Pulse Width (sec) \cdot Repetition Frequency (Hz) \cdot 100 = \frac{t_{HIGH}}{t_{HIGH} + t_{LOW}} \cdot 100\%\]</div>
+<p><em>Question:</em> How does the frequecy of the PWM signal affect the produced <em>analog</em> signal?</p>
+<section id="analog-output-by-pwm">
+<h3>Analog output by PWM<a class="headerlink" href="#analog-output-by-pwm" title="Link to this heading">#</a></h3>
+<p>As already discussed, analog output from a microcontroller (or any digital system) is performed by means of a Digital to Analog Converter (DAC). The Atmega328p of the Arduino UNO does not have a dedicated DAC built in to the device, but it has another feature which allows us to perform a crude digital to analog conversion <a class="footnote-reference brackets" href="#f11" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>. The feature is known as pulse width modulation, and basically means that we are switching one of the digital outputs on and off quickly, but with variation in the durations the output stays high and low. This allows us to control the average output voltage. By using some external components for filtering, this pulsating voltage can be converted to a steady voltage with a value corresponding to the average of the PWM signal.</p>
+<p>You may wonder why pulse width modulation is a special feature in the microcontroller, only available on some pins. As you know from the previous lessons, any GPIO pin is capable of switching between the two voltage states representing <em>high</em>, and <em>low</em> (5 V, and 0 V on the Arduino UNO). It is indeed possible to generate PWM on any GPIO, and there are examples on situations where switching a generic GPIO in this way is desirable. The problem is that this switching is controlled by the software, taking up a certain amount of the available CPU time. If the switching frequency is supposed to be high, it will leave little room for the microcontroller to be working on other tasks besides the PWM. Additionally having multiple PWM outputs in this way increases the load even further. For this reason dedicated hardware support for PWM in included on some pins of the microcontroller. You simply configure the PWM, and the output will be running continuously with your settings, until it is changed from software. The reason only some pins have PWM is simply to reduce cost, there are other more powerful microcontrollers which support PWM on any pin.</p>
+<p>Alternatively if you need “real” analog output you may use an external chip (such as <a class="reference external" href="https://learn.adafruit.com/mcp4725-12-bit-dac-tutorial/using-with-arduino?view=all">MCP4725 12-Bit DAC</a>, that the Arduino may control by a digital bus such as I2C.</p>
+</section>
+<section id="operation-of-a-pulse-width-modulator">
+<h3>Operation of a pulse width modulator<a class="headerlink" href="#operation-of-a-pulse-width-modulator" title="Link to this heading">#</a></h3>
+<p>In this section we will cover the basics of how the PWM-outputs on the Atmega328p are operating.</p>
+<p>The Arduino function associated with analog output signals that we will be using in this tutorial are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/">analogWrite(pin, value)</a></p></li>
+</ul>
+<p>The function in the Arduino library used to output a PWM signal is <code class="code docutils literal notranslate"><span class="pre">analogWrite(pin,</span> <span class="pre">value)</span></code>. <em>pin</em> is the pin number used for the PWM output. <em>value</em> is a number proportional to the duty cycle of the signal. When value = 0, the signal is always off. When value = 255, the signal is always on. On the Arduino UNO, the PWM function is available on pins 3, 5, 6, 9, 10, and 11. The frequency of the PWM signal on most pins is approximately 490 Hz. On the Uno and similar boards, pins 5 and 6 have a frequency of approximately 980 Hz. Pins 3 and 11 on the Arduino Leonardo also run at 980 Hz. The Arduino library does not support changing this frequency, but it is possible to do so by directly manipulating the registers of the Atmega328p hardware.</p>
+<figure class="align-center" id="id9">
+<img alt="../../_images/pwm_adjust_freq_duty.png" src="../../_images/pwm_adjust_freq_duty.png" />
+<figcaption>
+<p><span class="caption-text">PWM adjusting the frequency and duty cycle.</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id10">
+<img alt="../../_images/pwm_pins.png" src="../../_images/pwm_pins.png" />
+<figcaption>
+<p><span class="caption-text">PWM outputs on Arduino and Atmega328</span><a class="headerlink" href="#id10" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>PWM is a complex topic and requires a good understanding of the microcontroller that you are working with. The <code class="code docutils literal notranslate"><span class="pre">analogWrite()</span></code> makes the life easier for you but it is important to know that the PWM produced by this command is not the only PWM type exist. By manipulating the timers and registers in your microcontroller, you can obtain various PWM signals. Two main PWM techniques are:</p>
+<ol class="arabic simple">
+<li><p><strong>Fast PWM:</strong> In the simplest PWM mode, the timer repeatedly counts from 0 to 255. (aka Edge-aligned)</p></li>
+<li><p><strong>Phase-Correct PWM:</strong> In this mode, the timer counts from 0 to 255 and then back down to 0. (aka Center-aligned)</p></li>
+</ol>
+<figure class="align-center" id="id11">
+<img alt="../../_images/pwm_modes.png" src="../../_images/pwm_modes.png" />
+<figcaption>
+<p><span class="caption-text">PWM modes. See more at <a class="reference external" href="http://www.righto.com/2009/07/secrets-of-arduino-pwm.html">secrets of Arduino PWM</a>.</span><a class="headerlink" href="#id11" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Please see that in fast PWM when the duty cycle changes, the center position of the pulse changes position (therefore the phase changes). With phase correct PWM when the duty cycle changes, the center position of the pulse remains constant (and therefore the phase remains constant). This is particularly important in fine DC-motor speed regulations, sound signal producing etc. where you don’t want sharp edges on your sampled signal. On the other hand, sharp edges are almost a must in servo-motor control.</p>
+</div>
+</section>
+<section id="mapping-signals-with-different-dynamic-range">
+<h3>Mapping signals with different dynamic range<a class="headerlink" href="#mapping-signals-with-different-dynamic-range" title="Link to this heading">#</a></h3>
+<p>Suppose your input signal has a range of 0 - 1023, and you need to drive the PWM which expects a value of 0 - 255. The larger dynamic range input signal needs to be <em>mapped</em> to the low dynamic range parameter of the PWM control signal. In order to achieve this one may use the following generic equation, where <em>x</em> is the input, and <em>y</em> is the output signal:</p>
+<div class="math notranslate nohighlight">
+\[y = \frac{(x - x_{min}) \cdot (y_{max} - y_{min})}{(x_{max} - x_{min})} + y_{min}\]</div>
+<p>For our example, this yields:</p>
+<div class="math notranslate nohighlight">
+\[y = \frac{(x - 0) \cdot (255 - 0)}{(1023 - 0)} + 0 = x \cdot \frac{255}{1023}\]</div>
+<p>The Arduino library has a built in function for the mapping of one signal over to another with a different range. But as you have seen from the above example it might be just as easy to do the calculations on your own. Anyway the function definition in the library is as follows:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">long</span><span class="w"> </span><span class="nf">map</span><span class="p">(</span><span class="kt">long</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">in_min</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">in_max</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">out_min</span><span class="p">,</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">out_max</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">in_min</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">out_max</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">out_min</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">in_max</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">in_min</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">out_min</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Hence to map an analog input value, which ranges from 0 to 1023 to a PWM output signal, which ranges from 0 - 255, you can use the <code class="code docutils literal notranslate"><span class="pre">map(value,</span> <span class="pre">0,</span> <span class="pre">1023,</span> <span class="pre">0,</span> <span class="pre">255)</span></code> function. This function has five parameters, one is the variable in which the analog value is stored, while the others are 0, 1023, 0 and 255 respectively.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">long</span></code> variable type used it the function has the same size as <code class="code docutils literal notranslate"><span class="pre">int32_t</span></code>.</p>
+</section>
+<section id="exercise-adjusting-the-light-intensity-of-led">
+<h3>Exercise: Adjusting the light intensity of LED<a class="headerlink" href="#exercise-adjusting-the-light-intensity-of-led" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="../../_images/single_led_bb.png"><img alt="Single external LED" class="align-center" src="../../_images/single_led_bb.png" style="width: 438.0px; height: 610.5px;" /></a>
+<p>In this exercise we will adjust the light intensity of a single LED by means of PWM.</p>
+<ol class="arabic simple">
+<li><p>Connect a LED in accordance with the figure. If you already have a LED connected, you only have to make sure it is connected to one of the pins which support PWM.</p></li>
+<li><p>Write a simple test program where <code class="code docutils literal notranslate"><span class="pre">analogWrite(pin,</span> <span class="pre">value)</span></code> is used to control the pin connected to the LED. Try with various values for the <code class="code docutils literal notranslate"><span class="pre">value</span></code>, e.g. 64, 128, 255.</p></li>
+<li><p>Extend the program so that a digital input connected to a push button changes the intensity of the LED. When you push the button it should change the duty-cycle from 64, to 128.</p></li>
+</ol>
+</section>
+<section id="exercise-continuously-adjusting-the-light-intensity-of-led">
+<h3>Exercise: Continuously adjusting the light intensity of LED<a class="headerlink" href="#exercise-continuously-adjusting-the-light-intensity-of-led" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Write a program which increase the light intensity by pushing button 1, and decrease by pushing button 2.</p></li>
+</ol>
+</section>
+<section id="exercise-adjusting-the-light-intensity-of-multiple-leds">
+<h3>Exercise: Adjusting the light intensity of multiple LEDs<a class="headerlink" href="#exercise-adjusting-the-light-intensity-of-multiple-leds" title="Link to this heading">#</a></h3>
+<p>In this example we will be adjusting the light intensity of two LED’s connected to pin 5, and 6. A push button on pin 10 is used to step through various intensity levels.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/digital_input_and_output_bb.png"><img alt="../../_images/digital_input_and_output_bb.png" src="../../_images/digital_input_and_output_bb.png" style="width: 477.0px; height: 660.0px;" /></a>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Logic Analyzer, or scope demonstration.</p>
+</div>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Add solution after the lecture</p>
+</div>
+<ol class="arabic simple">
+<li><p>Connect the push button, and the two LEDs in accordance with the schematic.</p></li>
+<li><p>Write a program which toggles evenly between 5 levels of light intensity (from 0 to 255) by the pushing of the button. Both LEDs should have the same intensity, starting at 0, and ending at 255.</p></li>
+<li><p>Extend the program such that after reaching maximum intensity, another push of the button resets the intensity back to 0.</p></li>
+<li><p>Extend the program such that while one LED is stepping down, the other is stepping up in intensity. After reaching maximum (or minimum) intensity, the direction should change.</p></li>
+</ol>
+</section>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
+<p><em>Functions</em> are used to organize the actions performed by your software into functional blocks. Functions package functionality into well-defined <em>inputs</em> (information given to a function) and <em>outputs</em> (information provided by a function) that make it easier to structure, maintain, and reuse your code. You are already familiar with the two functions that are in every Arduino firmware: <code class="code docutils literal notranslate"><span class="pre">setup</span></code> and <code class="code docutils literal notranslate"><span class="pre">loop</span></code>. You create a function by declaring its return type (the information it provides), its name, and any optional parameters (values that the function will receive when it is called). <a class="footnote-reference brackets" href="#f2" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The terms functions and methods are used to refer to well-defined blocks of code that can be called as a single entity by other parts of a program. The C language refers to these as functions. Object-oriented languages such as C++ that expose functionality through classes tend to use the term method. Arduino uses a mix of styles (the example sketches tend to use C-like style, libraries tend to be written to expose C++ class methods). We will normally use the term <em>function</em>, unless the code is exposed through a class. Don’t worry; if that distinction is not clear to you, treat both terms as the same.</p>
+</div>
+<p>A parameter is sometimes referred to as an argument in some documentation. For practical purposes, you can treat these terms as meaning the same thing. We will use them interchangeably here.</p>
+<section id="no-input-no-output">
+<h3>No input no output<a class="headerlink" href="#no-input-no-output" title="Link to this heading">#</a></h3>
+<p>In mathematic a function which takes no input, and provide no output makes no sense. In our software however it does make sense because here a function can have side effects. I.e. it can affect something outside of the function call, such as a digital output, a memory location, or it can simply block forcing us to wait for a while. E.g. a function <code class="code docutils literal notranslate"><span class="pre">delay_one_second()</span></code> could be defined which block for one second (though we would not recommend this, or consider it a good practice).</p>
+<p>Actually, even if the function takes no parameters, the function call can be considered the simples possible parameter. The call will happen on a specific instant in your code, and this will affect the instant at which the side effects of the function.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ledPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">my_func_on</span><span class="p">();</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<span class="w">    </span><span class="n">my_func_off</span><span class="p">();</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">my_func_on</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">my_func_off</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="no-output-but-with-input">
+<h3>No output but with input<a class="headerlink" href="#no-output-but-with-input" title="Link to this heading">#</a></h3>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ledPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">ledState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">my_func</span><span class="p">(</span><span class="n">ledState</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ledState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">ledState</span><span class="p">;</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">my_func</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">){</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">my_nosense_func</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">){</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="integer-return">
+<h3>Integer return<a class="headerlink" href="#integer-return" title="Link to this heading">#</a></h3>
+<p>The following code demonstrate how to define a function which is capable of returning a single integer. It is a silly function which always returns 5, regardless of what value you try to pass as a parameter.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">my_meaningful_func</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">){</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The basic functions in C are only able to return a single value. You can return multiple values but it is a bit more advanced topic which require utilizing some features on the language which we have not discussed so far.</p>
+</section>
+<section id="exercise-abstracting-away-your-hardware">
+<h3>Exercise: Abstracting away your hardware<a class="headerlink" href="#exercise-abstracting-away-your-hardware" title="Link to this heading">#</a></h3>
+<p>In order to make it easy to reuse your code on multiple platforms, it can be useful to use functions to abstract away you hardware. E.g. instead of running <code class="code docutils literal notranslate"><span class="pre">digitalWrite(red_led,</span> <span class="pre">HIGH)</span></code> when you need to change a digital output for a LED, it is better to define a separate function <code class="code docutils literal notranslate"><span class="pre">red_led_on();</span></code> which perform this operation.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">red_led_on</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">red_led</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you move to a different platform instead of Arduino, it is likely that the function which modify a digital output will be different. E.g. on the STM32 HAL the function is <code class="code docutils literal notranslate"><span class="pre">HAL_GPIO_WritePin(GPIOA,</span> <span class="pre">RED_LED_PIN,</span> <span class="pre">GPIO_PIN_SET);</span></code>. For a large software project you could easily be modifying the state of the LED in multiple areas of your code. Thus there will me many places you would have to change. If you have abstracted the operation by a function however, the only place you have to change your code is inside this special function.</p>
+<ol class="arabic simple">
+<li><p>Start by copying the switch debounce example discussed previously in to a new project.</p></li>
+<li><p>Modify the program so that it toggles the state of a LED when a button is pushed.</p></li>
+<li><p>Modify the program so that it toggles the state of a LED by use of two functions, <code class="code docutils literal notranslate"><span class="pre">red_led_on()</span></code>, and <code class="code docutils literal notranslate"><span class="pre">red_led_off()</span></code>. I.e. one function which turns on the LED, and another which turns it off.</p></li>
+<li><p>Add another function <code class="code docutils literal notranslate"><span class="pre">red_led_toggle()</span></code> which toggles the state of the LED. Update your software to use this new function.</p></li>
+</ol>
+</section>
+<section id="exercise-pythagoras">
+<h3>Exercise: Pythagoras<a class="headerlink" href="#exercise-pythagoras" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Declare, and define a function which computes the hypotenuse of a right angled rectangle given the length of the two other sides. The function should take two arguments of type integer, and return a single integer result.</p></li>
+<li><p>Test the function with some data, and print the result to the serial port.</p></li>
+</ol>
+</section>
+<section id="exercise-tilt-detection">
+<h3>Exercise: Tilt detection<a class="headerlink" href="#exercise-tilt-detection" title="Link to this heading">#</a></h3>
+<p>In this exercise we are going to utilize a 4-pin tilt sensor to detect the orientation of the Arduino board. It is possible to detect the direction of orientation by checking which of the 4 pins are connected, but for this exercise you should only check if the switch is oriented in such a way that no pins are connected.</p>
+<p>The datasheet for the tilt sensor is available at: <a class="reference external" href="https://www.arduino.cc/documents/datasheets/TiltSensor.PDF">https://www.arduino.cc/documents/datasheets/TiltSensor.PDF</a></p>
+<ol class="arabic simple">
+<li><p>Connect the sensor to a digital input.</p></li>
+<li><p>Write a function which checks the state of the orientation switch. The function should return 1 (true) if the board is tilted.</p></li>
+<li><p>Complete the application with the required code to print a message to the serial port when the board is tilted.</p></li>
+</ol>
+</section>
+</section>
+<section id="loops">
+<h2>Loops<a class="headerlink" href="#loops" title="Link to this heading">#</a></h2>
+<p>Loops are the mechanism by which our software is able to perform repetitive tasks. We have already been using a loop, our <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function. This loop is known as an infinite loop, as there is no condition in our software which will make it stop. Ofc it will stop if you reset your controller, or remove the power supply, but such conditions are outside the control of our software. Infinite loops are useful in application which should be performing some operation constantly, e.g. in order to be responsive to external events.</p>
+<p>For many applications however it is useful to have a loop which only execute the same code a limited number of times. This could be a given fixed number of times, or there could be some condition which will make the loop stop.</p>
+<section id="while-loops">
+<h3>While loops<a class="headerlink" href="#while-loops" title="Link to this heading">#</a></h3>
+<p>The while loop executes as long as the condition inside the parentheses is true.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="n">condition</span><span class="p">){</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="for-loops">
+<h3>For loops<a class="headerlink" href="#for-loops" title="Link to this heading">#</a></h3>
+<p>The for loop execute as long as a condition is true, but unlike the while loop it has a slightly more organized structure for counting. There is nothing the for loop can do, which the while loop can not do, but it can make your code more clean.</p>
+<p>The following example illustrates the use of the for loop for executing the same code 10 times.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="c1">// Add code to execute here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you want to use a while loop to perform the same task, you would have to write:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">){</span>
+<span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// Add code to execute here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the for loop the counter variable <code class="code docutils literal notranslate"><span class="pre">i</span></code> is updated after the code inside the loop is executed, hence if the counter variable is used by the code and you want the exact same operation as the for loop example, you must do the following:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">){</span>
+<span class="w">    </span><span class="c1">// Add code to execute here</span>
+<span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>That is you must place the code that you are going to add above the increment of the counter (in the above code only the comment is moved).</p>
+</section>
+<section id="do-while-loops">
+<h3>Do while loops<a class="headerlink" href="#do-while-loops" title="Link to this heading">#</a></h3>
+<p>The do while loop is likely the least commonly used of the three types we discuss here. The difference between while, and do while, is that the latter is executed at least once. Again there is nothing preventing you from achieving the same result by using while, or for loops, but in some situations the do while loop will produce the most clean code.</p>
+<p>For our count to 10 example we can do:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Add code to execute here</span>
+<span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Remember the difference between while and do-while loops:</p>
+<figure class="align-center">
+<img alt="../../_images/road_runner_coyote.jpeg" src="../../_images/road_runner_coyote.jpeg" />
+</figure>
+</section>
+<section id="loop-example">
+<h3>Loop example<a class="headerlink" href="#loop-example" title="Link to this heading">#</a></h3>
+<p>The following code listing demonstrate the three loop types discussed in the previous sections. As a bonus a fourth loop type based on the <code class="code docutils literal notranslate"><span class="pre">goto</span></code> keyword is also demonstrated, but this type is rarely used in practice.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kt">void</span><span class="w"> </span><span class="nf">while_loop_test</span><span class="p">(){</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;While loop: &quot;</span><span class="p">);</span>
+<span class="linenos">10</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="linenos">11</span><span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="linenos">12</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">13</span><span class="p">}</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="kt">void</span><span class="w"> </span><span class="nf">for_loop_test</span><span class="p">(){</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="linenos">18</span><span class="w">  </span><span class="p">{</span>
+<span class="linenos">19</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;For loop: &quot;</span><span class="p">);</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="linenos">21</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">22</span><span class="p">}</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="kt">void</span><span class="w"> </span><span class="nf">do_while_loop_test</span><span class="p">(){</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="w">  </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Do while loop: &quot;</span><span class="p">);</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="linenos">31</span><span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="linenos">32</span><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="linenos">33</span><span class="p">}</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="cm">/**</span>
+<span class="linenos">36</span><span class="cm"> * Note: unless you are absolutely sure that it is the right choice it is better to avoid the goto/label approach.</span>
+<span class="linenos">37</span><span class="cm"> * It is somtimes used for error handling, but rarely a good choice for loops.</span>
+<span class="linenos">38</span><span class="cm"> */</span>
+<span class="linenos">39</span><span class="kt">void</span><span class="w"> </span><span class="nf">goto_loop_test</span><span class="p">(){</span>
+<span class="linenos">40</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="w">  </span><span class="nl">loop_label</span><span class="p">:</span>
+<span class="linenos">43</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;goto loop: &quot;</span><span class="p">);</span>
+<span class="linenos">44</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="linenos">46</span><span class="w">  </span>
+<span class="linenos">47</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">){</span>
+<span class="linenos">48</span><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">loop_label</span><span class="p">;</span>
+<span class="linenos">49</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">50</span><span class="p">}</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">53</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos">54</span><span class="p">}</span>
+<span class="linenos">55</span>
+<span class="linenos">56</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">57</span>
+<span class="linenos">58</span><span class="w">  </span><span class="n">while_loop_test</span><span class="p">();</span>
+<span class="linenos">59</span><span class="w">  </span><span class="n">for_loop_test</span><span class="p">();</span>
+<span class="linenos">60</span><span class="w">  </span><span class="n">do_while_loop_test</span><span class="p">();</span>
+<span class="linenos">61</span><span class="w">  </span><span class="n">goto_loop_test</span><span class="p">();</span>
+<span class="linenos">62</span>
+<span class="linenos">63</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+<span class="linenos">64</span><span class="p">}</span>
+<span class="linenos">65</span>
+</pre></div>
+</div>
+</section>
+<section id="exercise-blink-a-colorful-led-n-times">
+<h3>Exercise: Blink a colorful LED n-times<a class="headerlink" href="#exercise-blink-a-colorful-led-n-times" title="Link to this heading">#</a></h3>
+<p>No copy paste this time. Can you make this to work? Observe different colors.</p>
+<figure class="align-center">
+<img alt="../../_images/rgb_led_func.png" src="../../_images/rgb_led_func.png" />
+</figure>
+</section>
+<section id="exercise-blink-a-colorful-led-n-times-with-user-input">
+<h3>Exercise: Blink a colorful LED n-times with user input<a class="headerlink" href="#exercise-blink-a-colorful-led-n-times-with-user-input" title="Link to this heading">#</a></h3>
+<p>Extend the previous example by asking the user how many times s/he wants the LED to blink. Instead of printing the total number of blinks, print out the blink number in every iteration.</p>
+</section>
+<section id="exercise-serial-ui-for-led-control">
+<span id="serial-ui-for-led-control"></span><h3>Exercise: Serial UI for LED control<a class="headerlink" href="#exercise-serial-ui-for-led-control" title="Link to this heading">#</a></h3>
+<p>Let’s design a serial UI for controlling the button state.</p>
+<p>Design requirements:</p>
+<ul class="simple">
+<li><p>An LED is connected to pin number 3 will be controlled by keyboard inputs.</p></li>
+<li><p>The user is allowed to enter <strong>1</strong>, <strong>2</strong> and <strong>3</strong> as input. If something else is entered, a help manual will appear.</p></li>
+<li><p>Keyboard number 1 will turn on the LED.</p></li>
+<li><p>Keyboard number 2 will turn off the LED.</p></li>
+<li><p>Keyboard number 3 will give the help manual as shown in the figure.</p></li>
+</ul>
+<figure class="align-center">
+<img alt="../../_images/led_serial_requirements.png" src="../../_images/led_serial_requirements.png" />
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">rx_byte</span> <span class="pre">=</span> <span class="pre">Serial.read();</span></code> will be useful.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f10" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>In reality the digital representation is also analog. It is analog in the sense that the computer exists in a analog universe, but it does not matter if the computer uses 0 V and 5 V, 0 V and 3.3 V, or some other voltage levels to represent the binary values. Either way the interpretation of the digital value should be the same.</p>
+</aside>
+<aside class="footnote brackets" id="f11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>In reality the PWM DAC does not necessarily have to be considered a crude way to convert from digital to analog. It all depends on the switching frequency, and the analog filtering which is applied.</p>
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
+<p>Arduino Cookbook by Michael Margolis Chapter 2.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="L3_digital_io_and_timing.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Digital I/O, and timing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="L5_adc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Analog to digital conversion (ADC)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-to-analog-converter">Digital to analog converter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pulse-width-modulation-pwm">Pulse Width Modulation (PWM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analog-output-by-pwm">Analog output by PWM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#operation-of-a-pulse-width-modulator">Operation of a pulse width modulator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-signals-with-different-dynamic-range">Mapping signals with different dynamic range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjusting-the-light-intensity-of-led">Exercise: Adjusting the light intensity of LED</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-continuously-adjusting-the-light-intensity-of-led">Exercise: Continuously adjusting the light intensity of LED</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjusting-the-light-intensity-of-multiple-leds">Exercise: Adjusting the light intensity of multiple LEDs</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-input-no-output">No input no output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#no-output-but-with-input">No output but with input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integer-return">Integer return</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-abstracting-away-your-hardware">Exercise: Abstracting away your hardware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-pythagoras">Exercise: Pythagoras</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-tilt-detection">Exercise: Tilt detection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loops">Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#while-loops">While loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">For loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-while-loops">Do while loops</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loop-example">Loop example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-a-colorful-led-n-times">Exercise: Blink a colorful LED n-times</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-a-colorful-led-n-times-with-user-input">Exercise: Blink a colorful LED n-times with user input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-serial-ui-for-led-control">Exercise: Serial UI for LED control</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

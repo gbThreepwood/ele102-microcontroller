@@ -1,0 +1,1298 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Digital I/O, and timing &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L3_digital_io_and_timing';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analog output (digital to analog conversion)" href="L4_dac_pwm.html" />
+    <link rel="prev" title="Digital I/O, and serial port output" href="L2_digital_io.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/assembly_programming.html">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Lessons/L3_digital_io_and_timing.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Digital I/O, and timing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-digital-inputs">Using digital inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection">Edge detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-algorithm">Edge detection algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-press-counter">Simple button press counter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-led-state-change">Simple button LED state change</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-and-falling-edge-detection">Exercise: Rising and falling edge detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-edge-counter">Exercise: Rising edge counter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-timing-in-the-microcontroller">Efficient timing in the microcontroller</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-two-leds-at-different-frequencies">Exercise: Blink two LEDs at different frequencies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjustable-blink-frequency">Exercise: Adjustable blink frequency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constant-frequency">Constant frequency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-the-load-on-the-microcontroller">Reducing the load on the microcontroller</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#millis-overflow"><code class="code docutils literal notranslate"><span class="pre">millis()</span></code> overflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-bouncing">Switch bouncing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bounce-problem-edge-detection-demonstration">Bounce problem edge detection demonstration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-debounce-methods">Hardware debounce methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-debounce-methods">Software debounce methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-debounce-for-the-edge-detection-demo">Switch debounce for the edge detection demo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-push-button-de-bouncing">Exercise: Push button de-bouncing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-stopwatch">Exercise: Stopwatch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-timing-in-arduino">Rough Timing in Arduino</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="digital-i-o-and-timing">
+<span id="digital-io-and-timing"></span><h1>Digital I/O, and timing<a class="headerlink" href="#digital-i-o-and-timing" title="Link to this heading">#</a></h1>
+<section id="using-digital-inputs">
+<h2>Using digital inputs<a class="headerlink" href="#using-digital-inputs" title="Link to this heading">#</a></h2>
+<p>Digital inputs have already been covered in detail in a previous lesson. In this lesson the focus is on how to best utilize the digital input signal in software.</p>
+</section>
+<section id="edge-detection">
+<h2>Edge detection<a class="headerlink" href="#edge-detection" title="Link to this heading">#</a></h2>
+<p>When reading a digital input it is often desirable to determine the instant it is changing, and how it is changing. I.e. whether it is a rising, or a falling edge. There are several approaches we can take to solve this problem, but in this section we focus on solutions involving the sampling of the digital input. I.e. we are continuously checking the state of the digital input with a certain time interval. This approach is fine for slowly changing signals such as push buttons. Actually it is not only fine, it is often the recommended way to deal with slow signals.</p>
+<p>In order to detect the rising edge of a digital input by the sampling method, we continuously compare the current state of the input, to the state at the previous iteration (the previous time we checked it). If the previous value was <em>low</em>, and the current value is <em>high</em>, we have a rising edge. The same logic can be applied it the reverse direction to detect the falling edge.</p>
+<p>Let’s think about what happens when you press a button. In this example (and the last) we have a digital pin connected to 5 volts through a tilt sensor. When the system is vertical, two pins are in contact. The 5 volts is applied to the digital pin. However, when you tilt the system, the connection is broken. Therefore, the system is not in <em>OFF state</em> but in an <em>unknown state</em>. Consider the figure below:</p>
+<figure class="align-center">
+<img alt="../../_images/switchFailure.png" src="../../_images/switchFailure.png" />
+</figure>
+<figure class="align-center" id="id6">
+<img alt="../../_images/edgedetection.jpg" src="../../_images/edgedetection.jpg" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.programmingelectronics.com/tutorial-18-state-change-detection-and-the-modulo-operator-old-version">programmingelectronics.com</a></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="understanding-pull-up-pull-down-resistors">
+<h3>Understanding Pull-up / Pull-down resistors<a class="headerlink" href="#understanding-pull-up-pull-down-resistors" title="Link to this heading">#</a></h3>
+<p>As already discussed in terms of push buttons, when using digital inputs it is often required to add resistors to either pull up, or pull down the potential at the input. This is required because the input impedance of the digital input is very high, and the state may change randomly if it is not forced to a known state. For our convenience the Atmega 328 used in the Arduino UNO has internal pull up resistors that may be enabled or disabled in software. Alternatively you may add external resistors.</p>
+<p>The size of the resistors is not critical, but it should not be selected on random either. A to small resistor may cause excessive current, while a to large resistor will defeat the purpose of trying to pull towards a given potential. I.e. the resistor value should be far away from the value of the input impedance. In practice a 10k resistor is often used.</p>
+<figure class="align-center" id="id7">
+<img alt="Arduino with pull-up, and pull-down resistors on push buttons" src="../../_images/Pull-up-and-Pull-down-Resistor.png" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://circuitdigest.com/tutorial/pull-up-and-pull-down-resistor">circuitdigest.com</a></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The following figure depicts the connection of two push buttons to the Arduino. For the leftmost button the resistor in the figure pulls the input low, and the push button is connected in such a way that it can pull it up. For the button to the right the configuration is opposite.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_two_pb_pull_up_pull_down_bb.png"><img alt="Arduino with external LED, and two push buttons" src="../../_images/arduino_two_pb_pull_up_pull_down_bb.png" style="width: 477.0px; height: 661.5px;" /></a>
+</figure>
+<p>It is very important to realize that the default state of a digital input depends on whether the input is pulled up, or pulled down. If the input is pulled down by a resistor, and the push button pulls it up, then a push on the button will make the input logical <strong>HIGH</strong>. If on the other hand the input is pulled up by a resistor, and a push on the button pulls it down, pushing the button will make the input logical <strong>LOW</strong></p>
+<p>It is not important which of the two you choose, because it is easy to invert the state in software. But it is important to realize the difference, in order to know when you have to invert it in software.</p>
+</section>
+<section id="edge-detection-algorithm">
+<h3>Edge detection algorithm<a class="headerlink" href="#edge-detection-algorithm" title="Link to this heading">#</a></h3>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Describe a typicall edge detection algorithm</p>
+</div>
+</section>
+<section id="simple-button-press-counter">
+<h3>Simple button press counter<a class="headerlink" href="#simple-button-press-counter" title="Link to this heading">#</a></h3>
+<p>Imagine that you develop a system that counts how many times a button pressed. It can be on a secure door, a keyboard software or a simple knitting row counter! Here is a simple system:</p>
+<figure class="align-center">
+<img alt="../../_images/simple_button_press.png" src="../../_images/simple_button_press.png" />
+</figure>
+<p>Here is the code template:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// define led_pin at pin nr.2;</span>
+<span class="c1">// define button_pin at pin nr.11;</span>
+<span class="c1">// define a counter variable</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// set input/output pin modes</span>
+<span class="w">    </span><span class="c1">// start a serial communication between Arduino and the PC</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// read button value and keep it in a variable</span>
+<span class="w">    </span><span class="c1">// increase the counter variable</span>
+<span class="w">    </span><span class="c1">// change the LED state accordingly</span>
+<span class="w">    </span><span class="c1">// Print the button state and the total count on the same line with a *tab* space</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following code listing is one possible solution:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">button_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="w">    </span><span class="n">pinMode</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">button_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">button_pin</span><span class="p">);</span>
+<span class="w">    </span><span class="n">count</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">button_state</span><span class="p">;</span>
+<span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">button_state</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">button_state</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">count</span><span class="p">);</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Can you run and determine if the system meets your requirements, or if something is off? What if you change the <code class="code docutils literal notranslate"><span class="pre">delay()</span></code> duration? Would it be <em>perfect</em> then?</p>
+</section>
+<section id="simple-button-led-state-change">
+<h3>Simple button LED state change<a class="headerlink" href="#simple-button-led-state-change" title="Link to this heading">#</a></h3>
+<p>Maybe we can modify the code such that the LED is not <em>directly</em> controlled by the button value but it can be controlled by its <em>change</em>. Design a system that changes the LED state in every button press.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// define led_pin at pin nr.2;</span>
+<span class="c1">// define button_pin at pin nr.11;</span>
+<span class="c1">// define 2 variables to keep button past and current states</span>
+<span class="c1">// (make sure that you set an initial value for the past state)</span>
+<span class="c1">// define a variable to keep LED state</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">(){</span>
+<span class="w">    </span><span class="c1">// set input/output pin modes</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="w"> </span><span class="p">(){</span>
+<span class="w">    </span><span class="c1">// read button value and keep it in a variable (current state)</span>
+<span class="w">    </span><span class="c1">// IF there is a difference between past and current state of the button{</span>
+<span class="w">        </span><span class="c1">// toggle LED state</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// change the LED state accordingly</span>
+<span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Again the following code listing is one possible solution:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">button_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">button_state_now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">button_state_prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">led_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// set input/output pin modes</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="n">button_pin</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// start a serial communication between Arduino and the PC</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="n">button_state_now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">button_pin</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">((</span><span class="n">button_state_now</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">button_state_prev</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">button_state_now</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LOW</span><span class="p">)){</span>
+<span class="w">    </span><span class="n">led_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">led_state</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">digitalWrite</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">led_state</span><span class="p">);</span>
+<span class="n">button_state_prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">button_state_now</span><span class="p">;</span>
+
+<span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exercise-rising-and-falling-edge-detection">
+<h3>Exercise: Rising and falling edge detection<a class="headerlink" href="#exercise-rising-and-falling-edge-detection" title="Link to this heading">#</a></h3>
+<p>For this exercise you can use the following connections:</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../../_images/arduino_two_pb_one_led_bb.png"><img alt="Arduino with external LED, and two push buttons" src="../../_images/arduino_two_pb_one_led_bb.png" style="width: 477.0px; height: 661.5px;" /></a>
+</figure>
+<ol class="arabic simple">
+<li><p>Write a program which detect the rising edge of a push button. The program should send the text “rising edge detected” to the serial port on each rising edge.</p></li>
+<li><p>Extend the program to also detect the falling edge, and send the text “falling edge detected”.</p></li>
+<li><p>Extend the program to toggle a LED on the rising edge.</p></li>
+<li><p>Take note on how many rising and falling edge detected messages you receive each time you push the button. If you receive more than one message on each button push this is likely due to mechanical bouncing which is covered in the next section.</p></li>
+<li><p>Extend the program to detect the rising and falling edge of a second push button.</p></li>
+</ol>
+</section>
+<section id="exercise-rising-edge-counter">
+<h3>Exercise: Rising edge counter<a class="headerlink" href="#exercise-rising-edge-counter" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Write a program which counts the rising edges of the push button. On each rising edge, the value of the counter should be printed to the serial port.</p></li>
+<li><p>Push the button 10 times, and take note of the value of your counter. If the value is higher than 10, it means that the button is bouncing (or that you made a mistake in your program)</p></li>
+</ol>
+</section>
+</section>
+<section id="efficient-timing-in-the-microcontroller">
+<h2>Efficient timing in the microcontroller<a class="headerlink" href="#efficient-timing-in-the-microcontroller" title="Link to this heading">#</a></h2>
+<p>We have previously used the <code class="code docutils literal notranslate"><span class="pre">delay()</span></code> function to perform blocking delays in our code. This way of performing delays quickly becomes problematic as our software is growing in size. A function call such as <code class="code docutils literal notranslate"><span class="pre">delay(1000)</span></code> will make the controller wait and do nothing for the duration of one second. This makes implementing even simple programs such as one that blinks two LEDs at different rates a challenge.</p>
+<p>One alternative approach involves the use of the function <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>. The function returns the number of milliseconds since the last time the microcontroller was reset. This can be exploited by constantly checking the current value returned from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>, and executing some code only when the returned value has increased by the same amount as our desired delay. When our code executes after the delay, we must also store the current value from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>, so that we again can compare it to future values from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">delay_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1200</span><span class="p">;</span><span class="w"> </span><span class="c1">// 1200 ms delay</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">delay_time</span><span class="p">)){</span>
+<span class="w">        </span><span class="c1">// Blink a LED, or something...</span>
+<span class="w">        </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Alternatively you can modify the code to only use a single call to <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>. This is slightly better, as there is a risk that the <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> call in <code class="code docutils literal notranslate"><span class="pre">old_millis</span> <span class="pre">=</span> <span class="pre">millis()</span></code> returns a slightly larger value than the <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> in <code class="code docutils literal notranslate"><span class="pre">if((uint32_t)(millis()</span> <span class="pre">-</span> <span class="pre">old_millis</span> <span class="pre">&gt;=</span> <span class="pre">delay_time))</span></code>. Hence the timing could be more accurate in the following code:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">delay_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1200</span><span class="p">;</span><span class="w"> </span><span class="c1">// 1200 ms delay</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">(){</span>
+
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">current_millis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">delay_time</span><span class="p">)){</span>
+<span class="w">        </span><span class="c1">// Blink a LED, or something...</span>
+<span class="w">        </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_millis</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Additionally it is convenient in the case you have multiple section of code which use the result returned from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> to compute different delay intervals.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Blink without delay example</p>
+</div>
+<section id="exercise-blink-two-leds-at-different-frequencies">
+<h3>Exercise: Blink two LEDs at different frequencies<a class="headerlink" href="#exercise-blink-two-leds-at-different-frequencies" title="Link to this heading">#</a></h3>
+<p>The following code demonstrates how to blink two LEDs at different frequencies using the <code class="code docutils literal notranslate"><span class="pre">delay()</span></code> method. It should be obvious that this code will be difficult to maintain.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">short_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">10</span><span class="p">}</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos">15</span><span class="cm">   * Blink one led at 1 Hz, and another at 5 Hz </span>
+<span class="linenos">16</span><span class="cm">   */</span>
+<span class="linenos">17</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led1</span><span class="p">));</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">short_delay</span><span class="p">);</span>
+<span class="linenos">20</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">21</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">short_delay</span><span class="p">);</span>
+<span class="linenos">22</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">23</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">short_delay</span><span class="p">);</span>
+<span class="linenos">24</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">25</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">short_delay</span><span class="p">);</span>
+<span class="linenos">26</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">27</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="n">short_delay</span><span class="p">);</span>
+<span class="linenos">28</span><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>In this exercise a similar program should be designed without the use of <code class="code docutils literal notranslate"><span class="pre">delay()</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Connect two external LEDs to the microcontroller.</p></li>
+<li><p>Write a program which blinks one LED at a frequency of 1 Hz.</p></li>
+<li><p>Extend the program to blink the other LED at a frequency of 5 Hz.</p></li>
+</ol>
+<p>The following code listing provides one possible solution:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1">// 1/1Hz = 1 s = 1000 ms</span>
+<span class="linenos"> 9</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">led1_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<span class="linenos">10</span><span class="c1">// 1/5Hz = 0.2 s = 200 ms</span>
+<span class="linenos">11</span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">led2_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="kt">void</span><span class="w"> </span><span class="nf">led1_omvendt</span><span class="p">(){</span>
+<span class="linenos">14</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led1</span><span class="p">));</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="kt">void</span><span class="w"> </span><span class="nf">led2_omvendt</span><span class="p">(){</span>
+<span class="linenos">18</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos">19</span><span class="p">}</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">22</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">23</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos">26</span><span class="p">}</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">29</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">led1_delay</span><span class="p">){</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="w">    </span><span class="n">led1_omvendt</span><span class="p">();</span>
+<span class="linenos">38</span><span class="w">    </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_timestamp</span><span class="p">;</span>
+<span class="linenos">39</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">led2_delay</span><span class="p">){</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="w">    </span><span class="n">led2_omvendt</span><span class="p">();</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_timestamp</span><span class="p">;</span>
+<span class="linenos">46</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exercise-adjustable-blink-frequency">
+<h3>Exercise: Adjustable blink frequency<a class="headerlink" href="#exercise-adjustable-blink-frequency" title="Link to this heading">#</a></h3>
+<p>In this exercise we are going to adjust the blink frequency of two LEDs independently by using two push buttons.</p>
+<ol class="arabic simple">
+<li><p>Write the necessary code to allow a push button to step through the blink frequencies 2 Hz, 1 Hz, 0.5 Hz, 0.25 Hz. After reaching the lowest frequency it should wrap around.</p></li>
+<li><p>Extend the program with a second LED which should be controlled independently of the first.</p></li>
+</ol>
+<p>The following code listing provides one possible solution. Notice how the same logic is applied twice for the two push buttons. Repetitive code usually indicate that your solution is not optimal. It will likely be possible to make the solution more generic, and applicable to an arbitrary number of inputs and outputs. We will explore this in a future lecture.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following solution proposal does not take the push button bouncing problem in to account. Thus you should pay attention to the output in the serial monitor, in might jump thorough several frequency steps on each button push.</p>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<span class="linenos">  4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7</span><span class="p">;</span>
+<span class="linenos">  5</span>
+<span class="linenos">  6</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="linenos">  7</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn2_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="linenos">  8</span>
+<span class="linenos">  9</span><span class="kt">void</span><span class="w"> </span><span class="nf">led1_omvendt</span><span class="p">(){</span>
+<span class="linenos"> 10</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led1</span><span class="p">));</span>
+<span class="linenos"> 11</span><span class="p">}</span>
+<span class="linenos"> 12</span>
+<span class="linenos"> 13</span><span class="kt">void</span><span class="w"> </span><span class="nf">led2_omvendt</span><span class="p">(){</span>
+<span class="linenos"> 14</span><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">led2</span><span class="p">));</span>
+<span class="linenos"> 15</span><span class="p">}</span>
+<span class="linenos"> 16</span>
+<span class="linenos"> 17</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 18</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led1</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 19</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">led2</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos"> 22</span><span class="p">}</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 25</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 26</span>
+<span class="linenos"> 27</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_old_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 28</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn2_old_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 29</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">led1_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">250</span><span class="p">;</span>
+<span class="linenos"> 30</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">led2_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">250</span><span class="p">;</span>
+<span class="linenos"> 31</span>
+<span class="linenos"> 32</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 33</span>
+<span class="linenos"> 34</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos"> 35</span>
+<span class="linenos"> 36</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">led1_delay</span><span class="p">){</span>
+<span class="linenos"> 37</span>
+<span class="linenos"> 38</span><span class="w">    </span><span class="n">led1_omvendt</span><span class="p">();</span>
+<span class="linenos"> 39</span><span class="w">    </span><span class="n">old_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_timestamp</span><span class="p">;</span>
+<span class="linenos"> 40</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 41</span>
+<span class="linenos"> 42</span>
+<span class="linenos"> 43</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">current_timestamp</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">led2_delay</span><span class="p">){</span>
+<span class="linenos"> 44</span>
+<span class="linenos"> 45</span><span class="w">    </span><span class="n">led2_omvendt</span><span class="p">();</span>
+<span class="linenos"> 46</span><span class="w">    </span><span class="n">old_timestamp2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">current_timestamp</span><span class="p">;</span>
+<span class="linenos"> 47</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 48</span>
+<span class="linenos"> 49</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn1_pin</span><span class="p">);</span><span class="w"> </span><span class="c1">// Invert the read, since PB pulls the digital input low</span>
+<span class="linenos"> 50</span>
+<span class="linenos"> 51</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">btn1_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">btn1_old_state</span><span class="p">){</span>
+<span class="linenos"> 52</span>
+<span class="linenos"> 53</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">HIGH</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">){</span><span class="w"> </span><span class="c1">// Button state is high</span>
+<span class="linenos"> 54</span>
+<span class="linenos"> 55</span><span class="w">      </span><span class="cm">/**</span>
+<span class="linenos"> 56</span><span class="cm">       * Step through the frequencies 2 Hz, 1 Hz, 0.5 Hz and 0.25 Hz </span>
+<span class="linenos"> 57</span><span class="cm">       * 2 Hz equals a period of 500 ms, i.e. 250 ms on time, and 250 ms</span>
+<span class="linenos"> 58</span><span class="cm">       * off time for the LED.</span>
+<span class="linenos"> 59</span><span class="cm">       */</span>
+<span class="linenos"> 60</span><span class="w">      </span><span class="n">led1_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">led1_delay</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+<span class="linenos"> 61</span><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">led1_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2000</span><span class="p">){</span>
+<span class="linenos"> 62</span><span class="w">        </span><span class="n">led1_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">250</span><span class="p">;</span>
+<span class="linenos"> 63</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos"> 64</span>
+<span class="linenos"> 65</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Setting LED1 f = &quot;</span><span class="p">);</span>
+<span class="linenos"> 66</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mf">1000.0</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">led1_delay</span><span class="p">));</span>
+<span class="linenos"> 67</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot; Hz&quot;</span><span class="p">);</span>
+<span class="linenos"> 68</span>
+<span class="linenos"> 69</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos"> 70</span>
+<span class="linenos"> 71</span><span class="w">    </span><span class="n">btn1_old_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">;</span>
+<span class="linenos"> 72</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 73</span>
+<span class="linenos"> 74</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn2_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn2_pin</span><span class="p">);</span><span class="w"> </span><span class="c1">// Invert the read, since PB pulls the digital input low</span>
+<span class="linenos"> 75</span>
+<span class="linenos"> 76</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">btn2_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">btn2_old_state</span><span class="p">){</span>
+<span class="linenos"> 77</span>
+<span class="linenos"> 78</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">HIGH</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn2_state</span><span class="p">){</span><span class="w"> </span><span class="c1">// Button state is high</span>
+<span class="linenos"> 79</span>
+<span class="linenos"> 80</span><span class="w">      </span><span class="cm">/**</span>
+<span class="linenos"> 81</span><span class="cm">       * Step through the frequencies 2 Hz, 1 Hz, 0.5 Hz and 0.25 Hz </span>
+<span class="linenos"> 82</span><span class="cm">       * 2 Hz equals a period of 500 ms, i.e. 250 ms on time, and 250 ms</span>
+<span class="linenos"> 83</span><span class="cm">       * off time for the LED.</span>
+<span class="linenos"> 84</span><span class="cm">       */</span>
+<span class="linenos"> 85</span><span class="w">      </span><span class="n">led2_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">led2_delay</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span>
+<span class="linenos"> 86</span><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">led2_delay</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2000</span><span class="p">){</span>
+<span class="linenos"> 87</span><span class="w">        </span><span class="n">led2_delay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">250</span><span class="p">;</span>
+<span class="linenos"> 88</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos"> 89</span>
+<span class="linenos"> 90</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Setting LED2 f = &quot;</span><span class="p">);</span>
+<span class="linenos"> 91</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mf">1000.0</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">led2_delay</span><span class="p">));</span>
+<span class="linenos"> 92</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot; Hz&quot;</span><span class="p">);</span>
+<span class="linenos"> 93</span>
+<span class="linenos"> 94</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos"> 95</span>
+<span class="linenos"> 96</span><span class="w">    </span><span class="n">btn2_old_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">btn2_state</span><span class="p">;</span>
+<span class="linenos"> 97</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos"> 98</span>
+<span class="linenos"> 99</span>
+<span class="linenos">100</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="constant-frequency">
+<h3>Constant frequency<a class="headerlink" href="#constant-frequency" title="Link to this heading">#</a></h3>
+<p>If constant frequency execution of your code is important, and you are certain that the code will execute in less time than your delay time, the following code can be used:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">time_interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1200</span><span class="p">;</span><span class="w"> </span><span class="c1">// 1200 ms delay</span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">(){</span>
+
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">current_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">current_millis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">time_interval</span><span class="p">)){</span>
+<span class="w">        </span><span class="c1">// Blink a LED, or something...</span>
+<span class="w">        </span><span class="c1">//old_millis = millis();</span>
+<span class="w">        </span><span class="n">old_millis</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">time_interval</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The advantage of adding a time interval to <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> instead of updating it with the new millisecond value, is that the former avoid the potential problem that the delay gets off by some milliseconds if a interrupt or some other part of the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function causes it to execute to late. If the code in the previous section executes two milliseconds too late on a given iteration of the loop, it will never be able to correct for this. Thus if you are implementing a watch or some other application where it is important that (on average) the timing is accurate, you should consider the approach in this section. The only source of error will be the accuracy of the clock source (typically a quarts crystal), which drives the CPU of the microcontroller.</p>
+<p>The code in the previous section will guarantee that the delay will be at least equal to <code class="code docutils literal notranslate"><span class="pre">time_interval</span></code>, but it could be slightly longer.</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>More detailed explanation is needed</p>
+</div>
+<p>A problem with the approach of adding a interval on each invocation is how to set the initial condition of <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code>. The first time <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> is called in your software it might return a value larger than zero, because some other startup code has had the microcontroller spend some time before it enters <code class="code docutils literal notranslate"><span class="pre">loop()</span></code>. This will cause our delayed code to execute at a high rate until the value in <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> has accumulated to a value above what is returned from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code>.</p>
+</section>
+<section id="reducing-the-load-on-the-microcontroller">
+<h3>Reducing the load on the microcontroller<a class="headerlink" href="#reducing-the-load-on-the-microcontroller" title="Link to this heading">#</a></h3>
+<p>The CPU in the Atmega328p operates on 8 bit at a time. Hence the 32-bit operations of the previous <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> examples requires many operations. If you only only require delays of 1 minute, or less, you can use 16 bit operations:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">old_millis</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">delay_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4000</span><span class="p">;</span>
+
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">current_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">current_millis</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_millis</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">delay_time</span><span class="p">){</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="millis-overflow">
+<h3><code class="code docutils literal notranslate"><span class="pre">millis()</span></code> overflow<a class="headerlink" href="#millis-overflow" title="Link to this heading">#</a></h3>
+<p>The counter variable used by the <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> function is 32-bit unsigned integer. The maximum value is given by:</p>
+<div class="math notranslate nohighlight">
+\[2^{32} = 4294967296\]</div>
+<p>The milliseconds value can be converted to days by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{4294967296}{1000 \cdot 60 \cdot 60 \cdot 24} = 49.71\]</div>
+<p>I.e. the function will overflow after approximately 50 days. Even if this is a long time, there are certainly applications where the microcontroller could run for much longer periods than this. For some applications this could be a problem, but for the examples demonstrated previously in this section there is no problem that the variable overflows and resets back to zero. It is however easy to fall in to the trap of the following buggy code:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">delay_time</span><span class="p">){</span>
+<span class="w">        </span><span class="c1">// Blink a LED, or something...</span>
+<span class="w">        </span><span class="n">old_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The above example will exhibit buggy behavior after the overflow. After the overflow the value returned by <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> will be close to zero. The value stored in <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> however will be close to the number of milliseconds in 49.7 days. It is a possibility that <code class="code docutils literal notranslate"><span class="pre">old_millis</span> <span class="pre">+</span> <span class="pre">delay_time</span></code> will also overflow, but if it does not, it will take a very long time (49.7 days) until <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> again become large enough for the relational operator <code class="code docutils literal notranslate"><span class="pre">&gt;</span></code> to evaluate to true. Even if <code class="code docutils literal notranslate"><span class="pre">old_millis</span> <span class="pre">+</span> <span class="pre">delay_time</span></code> also overflows, it will still probably be a glitch here. It is very unlikely that the delay will be the same as it is supposed to be.</p>
+<p>The question then is why this is not a problem in the code in the previous examples. We had the following comparison:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_millis</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">delay_time</span>
+</pre></div>
+</div>
+<p>The subtraction is evaluated before the comparison. Hence we compare the value in <code class="code docutils literal notranslate"><span class="pre">millis()</span> <span class="pre">-</span> <span class="pre">old_millis</span></code>, with the value in <code class="code docutils literal notranslate"><span class="pre">delay_time</span></code>. Since <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> returns a unsigned value, and <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> is declared to be unsigned, the result from the subtraction can not become negative.</p>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Add a more detailed explanation. Including explanation of modular arithmetic</p>
+</div>
+<p>Instead of thinking about the value returned from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> as the number of milliseconds since you restarted the microcontroller, you could also think of it as a unique time stamp of the instant that the function is called. I.e. the numeric value returned uniquely identifies the instant. Ofc these so called unique time stamps will be reused eventually after the rollover, but as long as you are not interested in time intervals of more than 49.7 days, this will not be a problem.</p>
+<p>If the returned values are timestamps, then a duration can be computed by computing the difference between two time stamps. This duration can then be compared to the duration we want to have in our program.</p>
+</section>
+</section>
+<section id="switch-bouncing">
+<h2>Switch bouncing<a class="headerlink" href="#switch-bouncing" title="Link to this heading">#</a></h2>
+<p>A mechanical switch will often generate spurious open/close transitions in a short period after it has been activated. It is a risk that these spurious transitions are interpreted as multiple signals from the switch. In order to avoid these problems some form of debounce remedy should be applied. This could be a hardware solution, a software solution or a combination of the two.</p>
+<p>The graph to the right in the following figure illustrates the spurious changes in voltage level at the node between the resistor and the switch.</p>
+<figure class="align-center" id="id8">
+<img alt="Switch bounce" src="../../_images/switch_bounce.png" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.best-microcontroller-projects.com/easy_switch_debounce.html">https://www.best-microcontroller-projects.com/easy_switch_debounce.html</a></span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="bounce-problem-edge-detection-demonstration">
+<span id="bounce-problem-demo"></span><h3>Bounce problem edge detection demonstration<a class="headerlink" href="#bounce-problem-edge-detection-demonstration" title="Link to this heading">#</a></h3>
+<p>The following rising and falling edge detection software will clearly demonstrate the bouncing problem if there in fact is a bouncing problem with the mechanical switches. By observing the edge counter in a serial monitor, it will become apparent that it counts more then one event each time a button is pushed.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+
+<span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Default the btn1_prev_state to 1 if using pull up resistors, and a push</span>
+<span class="cm"> * button which pulls the logic level low. Change to 0 if using pull down</span>
+<span class="cm"> * resistors.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Othervise the MCU will detect a single button event upon boot.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Also remember that the rising edge will be at button release, if you are</span>
+<span class="cm"> * using pull up resistors.</span>
+<span class="cm"> */</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_prev_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">rise_edge_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">fall_edge_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">btn1</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Send a message on the serial port on each rising, and falling</span>
+<span class="cm">   * edge of the push button</span>
+<span class="cm">   */</span>
+
+<span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn1</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">btn1_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">btn1_prev_state</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">HIGH</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">){</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Rising edges detected: &quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="o">++</span><span class="n">rise_edge_cnt</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">LOW</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">){</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Falling edges detected: &quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="o">++</span><span class="n">fall_edge_cnt</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">btn1_prev_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="hardware-debounce-methods">
+<h3>Hardware debounce methods<a class="headerlink" href="#hardware-debounce-methods" title="Link to this heading">#</a></h3>
+<p>Hardware solutions include analog filters using resistors and capacitors, or digital circuits as illustrated in the following figure:</p>
+<figure class="align-center" id="id9">
+<img alt="../../_images/Shift-register_and_a_nand_gate_as_a_debouncer.png" src="../../_images/Shift-register_and_a_nand_gate_as_a_debouncer.png" />
+<figcaption>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/">https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/</a></span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The button state is <em>clocked</em> in to the d flip-flops, and only when all the flip-flops have registered the same state the output will change. This solution is typically found in programmable logic, but it is rather expensive to realise by using discrete components.</p>
+<p>A really efficient and reliable debounce circuit can be built bu using a SR-latch in conjunction with a SPDT switch. In one position the switch is connected to the <em>set</em> input, while the other position of the switch is connected to <em>reset</em> input of the latch. That way you do not have to consider the time you expect the bouncing to last, or the duration between each of the spurious voltage pulses.</p>
+</section>
+<section id="software-debounce-methods">
+<h3>Software debounce methods<a class="headerlink" href="#software-debounce-methods" title="Link to this heading">#</a></h3>
+<p>If a software debounce solution is desired, one possibility is to check the button state twice, within a short time windows. I.e. check, delay, check again. The following source code listing illustrates one possibility:</p>
+<p>Note that the variables are declared <code class="code docutils literal notranslate"><span class="pre">static</span></code> inside the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function. This ensures that the value is persistent between the invocation of the function. Alternatively they could be declared globally, i.e. outside of any function definition.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">push_button_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">greenLED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 7</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">push_button_1</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">greenLED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos">10</span><span class="p">}</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">latest_edge_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">15</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">previous_button_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOW</span><span class="p">;</span>
+<span class="linenos">16</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">button_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOW</span><span class="p">;</span>
+<span class="linenos">17</span><span class="w">  </span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">button_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">push_button_1</span><span class="p">);</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">button_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">previous_button_state</span><span class="p">){</span>
+<span class="linenos">22</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">button_state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">HIGH</span><span class="p">){</span>
+<span class="linenos">23</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Rising edge.&quot;</span><span class="p">);</span>
+<span class="linenos">24</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">counter</span><span class="p">);</span>
+<span class="linenos">25</span><span class="w">      </span><span class="n">counter</span><span class="o">++</span><span class="p">;</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="w">      </span><span class="n">latest_edge_millis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">28</span><span class="w">      </span><span class="n">button_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HIGH</span><span class="p">;</span>
+<span class="linenos">29</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">30</span><span class="w">    </span><span class="n">previous_button_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">button_state</span><span class="p">;</span>
+<span class="linenos">31</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">latest_edge_millis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">button_event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">HIGH</span><span class="p">)){</span>
+<span class="linenos">34</span><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Button event detected&quot;</span><span class="p">);</span>
+<span class="linenos">35</span><span class="w">    </span><span class="n">button_event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOW</span><span class="p">;</span>
+<span class="linenos">36</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">37</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="switch-debounce-for-the-edge-detection-demo">
+<h3>Switch debounce for the edge detection demo<a class="headerlink" href="#switch-debounce-for-the-edge-detection-demo" title="Link to this heading">#</a></h3>
+<p>The following code listing demonstrates one way to solve the bouncing problem from the example in the section  <a class="reference internal" href="#bounce-problem-demo"><span class="std std-ref">Bounce problem edge detection demonstration</span></a>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">debounce_interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="linenos"> 5</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">btn1_change_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="cm">/**</span>
+<span class="linenos"> 7</span><span class="cm"> * Default the btn1_prev_state to 1 if using pull up resistors, and a push </span>
+<span class="linenos"> 8</span><span class="cm"> * button which pulls the logic level low. Change to 0 if using pull down</span>
+<span class="linenos"> 9</span><span class="cm"> * resistors.</span>
+<span class="linenos">10</span><span class="cm"> * </span>
+<span class="linenos">11</span><span class="cm"> * Othervise the MCU will detect a single button event upon boot.</span>
+<span class="linenos">12</span><span class="cm"> * </span>
+<span class="linenos">13</span><span class="cm"> * Also remember that the rising edge will be at button release, if you are</span>
+<span class="linenos">14</span><span class="cm"> * using pull up resistors.</span>
+<span class="linenos">15</span><span class="cm"> */</span>
+<span class="linenos">16</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_prev_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">17</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_dbn_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">rise_edge_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">20</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">fall_edge_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">23</span><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">btn1</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="linenos">26</span><span class="p">}</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="w">  </span><span class="cm">/**</span>
+<span class="linenos">32</span><span class="cm">   * Send a message on the serial port on each rising, and falling</span>
+<span class="linenos">33</span><span class="cm">   * edge of the push button </span>
+<span class="linenos">34</span><span class="cm">   */</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="w">  </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">btn1_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digitalRead</span><span class="p">(</span><span class="n">btn1</span><span class="p">);</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="w">  </span><span class="c1">// Check if the button state has changed compared to the previos time we checked</span>
+<span class="linenos">39</span><span class="w">  </span><span class="k">if</span><span class="p">(</span><span class="n">btn1_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">btn1_prev_state</span><span class="p">){</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="w">    </span><span class="c1">// Store a timestamp of the last time the button state changed</span>
+<span class="linenos">42</span><span class="w">    </span><span class="n">btn1_change_timestamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="w">    </span><span class="n">btn1_prev_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">;</span>
+<span class="linenos">45</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span><span class="w">  </span><span class="c1">// Make sure the button state remains stable for a time equal to debounce_interval</span>
+<span class="linenos">48</span><span class="w">  </span><span class="k">if</span><span class="p">((</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">btn1_change_timestamp</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">debounce_interval</span><span class="p">){</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="w">    </span><span class="c1">// Check if the button state has changed compared to the previous time it was debounced</span>
+<span class="linenos">51</span><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">btn1_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">btn1_dbn_state</span><span class="p">){</span>
+<span class="linenos">52</span><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">HIGH</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">){</span>
+<span class="linenos">53</span><span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Rising edges detected: &quot;</span><span class="p">);</span>
+<span class="linenos">54</span><span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="o">++</span><span class="n">rise_edge_cnt</span><span class="p">);</span>
+<span class="linenos">55</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">56</span><span class="w">      </span><span class="k">if</span><span class="p">(</span><span class="n">LOW</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">){</span>
+<span class="linenos">57</span><span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Falling edges detected: &quot;</span><span class="p">);</span>
+<span class="linenos">58</span><span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="o">++</span><span class="n">fall_edge_cnt</span><span class="p">);</span>
+<span class="linenos">59</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">60</span><span class="w">      </span><span class="n">btn1_dbn_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">btn1_state</span><span class="p">;</span>
+<span class="linenos">61</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">62</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">63</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="exercise-push-button-de-bouncing">
+<h3>Exercise: Push button de-bouncing<a class="headerlink" href="#exercise-push-button-de-bouncing" title="Link to this heading">#</a></h3>
+<p>In this exercise you will (hopefully) experience the bouncing problem in practice, and then resolve the problem by applying the technique discussed in the previous section.</p>
+<ol class="arabic simple">
+<li><p>Write a program which toggles a LED on the rising edge of a push button. The program should also print a message to the serial port on the rising edge.</p></li>
+<li><p>Extend the program with the code required to avoid bouncing problems.</p></li>
+<li><p>Try to press the push button repetitively to make sure that it is not bouncing.</p></li>
+</ol>
+</section>
+<section id="exercise-stopwatch">
+<h3>Exercise: Stopwatch<a class="headerlink" href="#exercise-stopwatch" title="Link to this heading">#</a></h3>
+<p>Since we now know some ways of eliminating the glitches (or jitter) on the button, we can design a nice stopwatch timer, where a push button starts and stops the timing. Use the comments in the source code as your guide on how to solve this exercise.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1">// include Arduino.h library</span>
+<span class="linenos"> 4</span><span class="c1">// define led_pin attached to pin 2</span>
+<span class="linenos"> 5</span><span class="c1">// define button_pin attached to pin 10</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span><span class="w">  </span><span class="c1">// set button_pin as input</span>
+<span class="linenos"> 9</span><span class="w">  </span><span class="c1">// set led_pin as output</span>
+<span class="linenos">10</span><span class="w">  </span><span class="c1">// start serial in 9600 hertz</span>
+<span class="linenos">11</span><span class="w">  </span><span class="c1">// turn off LED</span>
+<span class="linenos">12</span><span class="w">  </span><span class="c1">// notification on serial: &quot;Setup ready&quot;</span>
+<span class="linenos">13</span><span class="p">}</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">16</span><span class="w">  </span><span class="c1">// define static 8-bit integer button_past</span>
+<span class="linenos">17</span><span class="w">  </span><span class="c1">// define 8-bit integer button_now</span>
+<span class="linenos">18</span><span class="w">  </span><span class="c1">// define static 8-bit integer timer_active</span>
+<span class="linenos">19</span><span class="w">  </span><span class="c1">// define static 32-bit integer start_time</span>
+<span class="linenos">20</span><span class="w">  </span><span class="c1">// define static 8-bit integer stop_past</span>
+<span class="linenos">21</span><span class="w">  </span><span class="c1">// define 32-bit integer delta_time and set initial value as 0</span>
+<span class="linenos">22</span><span class="w">  </span><span class="c1">// define float timer_seconds and set initial value as 0</span>
+<span class="linenos">23</span><span class="w">  </span><span class="c1">// set button_now from digital pin button_pin</span>
+<span class="linenos">24</span><span class="w">  </span><span class="c1">//if((button_now equals to 0) and (button_past == equals to 1)){</span>
+<span class="linenos">25</span><span class="w">    </span><span class="c1">//if timer_active equals to 0{</span>
+<span class="linenos">26</span><span class="w">      </span><span class="c1">// start_time as milliseconds</span>
+<span class="linenos">27</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Starttid: &quot;</span><span class="p">);</span>
+<span class="linenos">28</span><span class="w">      </span><span class="c1">// print start_time</span>
+<span class="linenos">29</span><span class="w">      </span><span class="c1">// set timer_active to 1</span>
+<span class="linenos">30</span><span class="w">      </span><span class="p">}</span>
+<span class="linenos">31</span><span class="w">    </span><span class="k">else</span><span class="p">{</span>
+<span class="linenos">32</span><span class="w">      </span><span class="c1">// stop_time as milliseconds</span>
+<span class="linenos">33</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Stopptid: &quot;</span><span class="p">);</span>
+<span class="linenos">34</span><span class="w">      </span><span class="c1">// print stop_time</span>
+<span class="linenos">35</span><span class="w">      </span><span class="c1">// calculate delta_time</span>
+<span class="linenos">36</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Delta tid: &quot;</span><span class="p">);</span>
+<span class="linenos">37</span><span class="w">      </span><span class="c1">// print delta_time</span>
+<span class="linenos">38</span><span class="w">      </span><span class="c1">// convert delta_time into seconds as &quot;timer_seconds&quot;</span>
+<span class="linenos">39</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Delta tid sekunder: &quot;</span><span class="p">);</span>
+<span class="linenos">40</span><span class="w">      </span><span class="c1">// print timer_seconds</span>
+<span class="linenos">41</span><span class="w">      </span><span class="c1">// set timer_active to 0</span>
+<span class="linenos">42</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">43</span><span class="w">  </span><span class="p">}</span>
+<span class="linenos">44</span><span class="w">  </span>
+<span class="linenos">45</span><span class="w">  </span><span class="n">button_past</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">button_now</span><span class="p">;</span>
+<span class="linenos">46</span><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="linenos">47</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Add solution proposal after the lecture</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that this is not necessarily a perfect solution. If you press and release the button so fast that the program cannot catch <code class="code docutils literal notranslate"><span class="pre">digitalRead(button_pin)</span></code> line - since the microcontroller reads memory line by line - then you miss a button press. This will likely not be a problem for manual push buttons (unless your microcontroller executes a lot of code between each time it reads the digital input), but it might be a problem if you try to use the stopwatch for timing of something which is faster than a human hand. E.g. if you want to determine the speed of you bicycle, and try to measure the interval between pulses from a sensor on the wheel. The solution for fast signals is to use the <em>interrupt</em> system. This will be covered in a future lecture.</p>
+</div>
+</section>
+</section>
+<section id="rough-timing-in-arduino">
+<h2>Rough Timing in Arduino<a class="headerlink" href="#rough-timing-in-arduino" title="Link to this heading">#</a></h2>
+<p>The Arduino functions associated with timing are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/time/delay/">delay()</a></p></li>
+<li><p><a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/time/delaymicroseconds/">delayMicroseconds()</a></p></li>
+<li><p><a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/time/millis/">millis()</a></p></li>
+<li><p><a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/time/micros/">micros()</a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="L2_digital_io.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Digital I/O, and serial port output</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="L4_dac_pwm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Analog output (digital to analog conversion)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-digital-inputs">Using digital inputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection">Edge detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-algorithm">Edge detection algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-press-counter">Simple button press counter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-led-state-change">Simple button LED state change</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-and-falling-edge-detection">Exercise: Rising and falling edge detection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-edge-counter">Exercise: Rising edge counter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-timing-in-the-microcontroller">Efficient timing in the microcontroller</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-blink-two-leds-at-different-frequencies">Exercise: Blink two LEDs at different frequencies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-adjustable-blink-frequency">Exercise: Adjustable blink frequency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constant-frequency">Constant frequency</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-the-load-on-the-microcontroller">Reducing the load on the microcontroller</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#millis-overflow"><code class="code docutils literal notranslate"><span class="pre">millis()</span></code> overflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-bouncing">Switch bouncing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bounce-problem-edge-detection-demonstration">Bounce problem edge detection demonstration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-debounce-methods">Hardware debounce methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-debounce-methods">Software debounce methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#switch-debounce-for-the-edge-detection-demo">Switch debounce for the edge detection demo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-push-button-de-bouncing">Exercise: Push button de-bouncing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-stopwatch">Exercise: Stopwatch</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rough-timing-in-arduino">Rough Timing in Arduino</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

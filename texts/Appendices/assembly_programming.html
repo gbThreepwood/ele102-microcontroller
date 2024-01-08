@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Assembly programming &#8212; ELE102</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Appendices/assembly_programming';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Basics of digital filters" href="digital_filters.html" />
+    <link rel="prev" title="Stacks, queues and lists" href="stacks_queues_lists.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-light" alt="ELE102 - Home"/>
+    <script>document.write(`<img src="../../_static/hvl_logo_engelsk.png" class="logo__image only-dark" alt="ELE102 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lessons:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L0_Introduction_elk.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/software_hardware_preparations.html">Software and hardware preparations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1a_UC_intro.html">Lesson 1a: What is a Microcontroller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L1b_Arduino_intro.html">Lesson 1b: Introduction to Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L2_digital_io.html">Lesson 2: Digital I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L3_digital_io_and_timing.html">Lesson 3: Use of digital I/O and timing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L4_dac_pwm.html">Lesson 4: Analog output (PWM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L5_adc.html">Lesson 5: Analog to digital conversion (ADC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L6_serial_io.html">Lesson 6: Serial I/O</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L7_timer_interrupt.html">Lesson 7: Timers and interrupts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L8_LC_display.html">Lesson 8: LC-Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L9_memory_and_architecture.html">Lesson 9: Memory and MCU architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L10_motor_drive.html">Lesson 10: Motor drive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons/L12_communication.html">Lesson 11: Communication Protocols</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional material:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L1_additional.html">Additional material lesson 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L2_additional.html">Additional material lesson 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L3_additional.html">Additional material lesson 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L4_additional.html">Additional material lesson 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L5_additional.html">Additional material lesson 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L6_additional.html">Additional material lesson 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L7_additional.html">Additional material lesson 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L8_additional.html">Additional material lesson 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L9_additional.html">Additional material lesson 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L10_additional.html">Additional material lesson 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Additionals.html">Binary counter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="low_power_operation.html">Low power operation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stacks_queues_lists.html">Stacks, Queues, Lists</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Assembly programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="digital_filters.html">Digital filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="floating_point_numbers.html">Floating point numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kalman_filter.html">Kalman filter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the_build_process.html">The build process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="direct_register_manipulations.html">Direct register manipulation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/texts/Appendices/assembly_programming.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Assembly programming</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disassembly-of-your-project">Disassembly of your project</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#better-disassembly">Better disassembly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disassembly-in-platformio">Disassembly in PlatformIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-assembly">Inline assembly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixing-c-and-assembly">Mixing C and assembly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bare-metal-project">Bare metal project</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platformio">PlatformIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pure-assembly">Pure assembly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interrupts">Interrupts</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="assembly-programming">
+<span id="id1"></span><h1>Assembly programming<a class="headerlink" href="#assembly-programming" title="Link to this heading">#</a></h1>
+<p>In this chapter we will cover the basics how how to develop software using assembly language on the Atmega 328p microcontroller on the Arduino UNO. We will cover three different scenarios, pure assembly, some assembly and some C in separate files, and inline assembly in C. Although assembly language is typically more cumbersome to use than C, it has some advantages when it comes to optimizing the code for speed or memory usage. It is typically not a god idea to write a large software project using pure assembly language, but it can be useful for optimizing the most CPU intensive parts of the code. Additionally an understanding of assembly language is invaluable when debugging problematic code.</p>
+<section id="disassembly-of-your-project">
+<h2>Disassembly of your project<a class="headerlink" href="#disassembly-of-your-project" title="Link to this heading">#</a></h2>
+<p>It is useful to be able to view the assembly code which is generated by the C compiler. This is commonly used as part of the debugging process.</p>
+<p>The command line tool “avr-objdump” can be used to obtain a disassembly code listing for a given object file, or the entire project.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">objdump</span> <span class="o">-</span><span class="n">d</span> <span class="n">example</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>The command produces the following result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">o</span><span class="p">:</span>     <span class="n">file</span> <span class="nb">format</span> <span class="n">elf32</span><span class="o">-</span><span class="n">avr</span>
+
+
+<span class="n">Disassembly</span> <span class="n">of</span> <span class="n">section</span> <span class="o">.</span><span class="n">text</span><span class="p">:</span>
+
+<span class="mi">00000000</span> <span class="o">&lt;</span><span class="n">led_on_asm_function</span><span class="o">&gt;</span><span class="p">:</span>
+   <span class="mi">0</span><span class="p">:</span>       <span class="mi">0</span><span class="n">f</span> <span class="mi">93</span>           <span class="n">push</span>    <span class="n">r16</span>
+   <span class="mi">2</span><span class="p">:</span>       <span class="mi">01</span> <span class="n">e0</span>           <span class="n">ldi</span>     <span class="n">r16</span><span class="p">,</span> <span class="mh">0x01</span>       <span class="p">;</span> <span class="mi">1</span>
+   <span class="mi">4</span><span class="p">:</span>       <span class="mi">05</span> <span class="n">bd</span>           <span class="n">out</span>     <span class="mh">0x25</span><span class="p">,</span> <span class="n">r16</span>       <span class="p">;</span> <span class="mi">37</span>
+   <span class="mi">6</span><span class="p">:</span>       <span class="mi">0</span><span class="n">f</span> <span class="mi">91</span>           <span class="n">pop</span>     <span class="n">r16</span>
+   <span class="mi">8</span><span class="p">:</span>       <span class="mi">08</span> <span class="mi">95</span>           <span class="n">ret</span>
+
+<span class="mi">0000000</span><span class="n">a</span> <span class="o">&lt;</span><span class="n">led_off_asm_function</span><span class="o">&gt;</span><span class="p">:</span>
+   <span class="n">a</span><span class="p">:</span>       <span class="mi">21</span> <span class="n">e0</span>           <span class="n">ldi</span>     <span class="n">r18</span><span class="p">,</span> <span class="mh">0x01</span>       <span class="p">;</span> <span class="mi">1</span>
+   <span class="n">c</span><span class="p">:</span>       <span class="mi">28</span> <span class="n">bb</span>           <span class="n">out</span>     <span class="mh">0x18</span><span class="p">,</span> <span class="n">r18</span>       <span class="p">;</span> <span class="mi">24</span>
+   <span class="n">e</span><span class="p">:</span>       <span class="mi">08</span> <span class="mi">95</span>           <span class="n">ret</span>
+</pre></div>
+</div>
+<p>If the command is used on the object file from “main.cpp” however, it will produce a huge output even for a simple program. This is due to all the additional code which is included from the Arduino library.</p>
+<p>It is also possible to disassemble the entire HEX file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">objdump</span> <span class="o">-</span><span class="n">j</span> <span class="o">.</span><span class="n">sec1</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">m</span> <span class="n">avr5</span> <span class="n">firmware</span><span class="o">.</span><span class="n">hex</span>
+</pre></div>
+</div>
+<section id="better-disassembly">
+<h3>Better disassembly<a class="headerlink" href="#better-disassembly" title="Link to this heading">#</a></h3>
+<p>If you are developing a program, and hence have access to the C/C++ source code, it is possible to generate a more insightful disassembly.</p>
+</section>
+<section id="disassembly-in-platformio">
+<h3>Disassembly in PlatformIO<a class="headerlink" href="#disassembly-in-platformio" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="inline-assembly">
+<h2>Inline assembly<a class="headerlink" href="#inline-assembly" title="Link to this heading">#</a></h2>
+</section>
+<section id="mixing-c-and-assembly">
+<h2>Mixing C and assembly<a class="headerlink" href="#mixing-c-and-assembly" title="Link to this heading">#</a></h2>
+<p>In this section we will go through the procedure, and provide some examples on how to mix C and assembly language, where the code is kept in separate files. You may define special high performance function which are written in assembly, and call those functions from within your C program.</p>
+<section id="bare-metal-project">
+<h3>Bare metal project<a class="headerlink" href="#bare-metal-project" title="Link to this heading">#</a></h3>
+<p>In this section we will explore the process of creating and uploading a simple bare metal project which blinks a LED on the Arduino UNO using a mix of C, and assembly.</p>
+<p>Start by creating two files: “main.c”, and “ledcontrol.S” in a new directory.</p>
+<p><strong>main.c:</strong></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span>
+<span class="linenos"> 2</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_on_asm</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 5</span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_off_asm</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 6</span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_on_asm_inefficient</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 7</span><span class="k">extern</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_off_asm_inefficient</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mb">0b00011111</span><span class="p">;</span><span class="w"> </span><span class="c1">// Set the pins as outputs</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="linenos">15</span><span class="w">	</span><span class="n">led_on_asm</span><span class="p">();</span>
+<span class="linenos">16</span><span class="w">	</span><span class="n">led_on_asm_inefficient</span><span class="p">();</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">        </span><span class="n">_delay_ms</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="w">	</span><span class="n">led_off_asm</span><span class="p">();</span>
+<span class="linenos">21</span><span class="w">	</span><span class="n">led_off_asm_inefficient</span><span class="p">();</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="w">        </span><span class="n">_delay_ms</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span>
+<span class="linenos">24</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">25</span><span class="w">    </span>
+<span class="linenos">26</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>ledcontrol.S:</strong></p>
+<div class="highlight-ca65 notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">#</span><span class="n">include</span><span class="w"> </span><span class="o">&lt;</span><span class="n">avr</span><span class="o">/</span><span class="n">io.h</span><span class="o">&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kp">.global</span><span class="w"> </span><span class="n">led_on_asm</span>
+<span class="linenos"> 4</span><span class="kp">.global</span><span class="w"> </span><span class="n">led_off_asm</span>
+<span class="linenos"> 5</span><span class="kp">.global</span><span class="w"> </span><span class="n">led_on_asm_inefficient</span>
+<span class="linenos"> 6</span><span class="kp">.global</span><span class="w"> </span><span class="n">led_off_asm_inefficient</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kp">.section</span><span class="w"> </span><span class="kp">.text</span><span class="w">                  </span><span class="c1">; Defines a code section</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="c1">; The port number must be PORTB - 0x20 = 0x05</span>
+<span class="linenos">11</span><span class="c1">; This is due to how the in, and out instructions operate</span>
+<span class="linenos">12</span><span class="p">#</span><span class="n">define</span><span class="w"> </span><span class="n">LED_PORT</span><span class="w"> </span><span class="mi">0</span><span class="n">x05</span>
+<span class="linenos">13</span><span class="p">#</span><span class="n">define</span><span class="w"> </span><span class="n">LED1_PIN</span><span class="w"> </span><span class="mi">0</span><span class="n">x4</span>
+<span class="linenos">14</span><span class="p">#</span><span class="n">define</span><span class="w"> </span><span class="n">LED2_PIN</span><span class="w"> </span><span class="mi">0</span><span class="n">x3</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="c1">; This function turns on PB11, and PB12</span>
+<span class="linenos">17</span><span class="c1">; It is written in an inefficient manner for illustrative purposes</span>
+<span class="linenos">18</span><span class="nl">led_on_asm_inefficient:</span>
+<span class="linenos">19</span><span class="w">    </span><span class="n">push</span><span class="w"> </span><span class="n">r16</span>
+<span class="linenos">20</span><span class="w">    </span><span class="n">push</span><span class="w"> </span><span class="n">r17</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1">;ldi r16, 0b00000010</span>
+<span class="linenos">23</span><span class="w">    </span><span class="n">sbr</span><span class="w"> </span><span class="n">r16</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">LED1_PIN</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">LED2_PIN</span><span class="p">)</span><span class="w"> </span><span class="c1">; Set bits 1 and 2 in register 16.</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">in</span><span class="w"> </span><span class="n">r17</span><span class="p">,</span><span class="w"> </span><span class="n">LED_PORT</span><span class="w"> </span><span class="c1">; Read the state of the port</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">or</span><span class="w"> </span><span class="n">r17</span><span class="p">,</span><span class="w"> </span><span class="n">r16</span><span class="w"> </span><span class="c1">; Or the port state with the bits you would like to set</span>
+<span class="linenos">26</span><span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="n">r17</span><span class="w"> </span><span class="c1">; Output the result</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="w">    </span><span class="n">pop</span><span class="w"> </span><span class="n">r17</span>
+<span class="linenos">29</span><span class="w">    </span><span class="n">pop</span><span class="w"> </span><span class="n">r16</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="n">ret</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="c1">; This function turns off PB11, and PB12</span>
+<span class="linenos">34</span><span class="c1">; It is written in an inefficient manner for illustrative purposes</span>
+<span class="linenos">35</span><span class="nl">led_off_asm_inefficient:</span>
+<span class="linenos">36</span><span class="w">    </span><span class="n">push</span><span class="w"> </span><span class="n">r16</span>
+<span class="linenos">37</span><span class="w">    </span><span class="n">push</span><span class="w"> </span><span class="n">r17</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="w">    </span><span class="n">sbr</span><span class="w"> </span><span class="n">r16</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">LED1_PIN</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">LED2_PIN</span><span class="p">)</span><span class="w"> </span><span class="c1">; Set appropriate bits in r16</span>
+<span class="linenos">40</span><span class="w">    </span><span class="n">com</span><span class="w"> </span><span class="n">r16</span><span class="w"> </span><span class="c1">; Perform ones&#39; complement (invert all bits)</span>
+<span class="linenos">41</span><span class="w">    </span><span class="n">in</span><span class="w"> </span><span class="n">r17</span><span class="p">,</span><span class="w"> </span><span class="n">LED_PORT</span><span class="w"> </span><span class="c1">; Read the state of the port in to r17</span>
+<span class="linenos">42</span><span class="w">    </span><span class="k">and</span><span class="w"> </span><span class="n">r17</span><span class="p">,</span><span class="w"> </span><span class="n">r16</span><span class="w"> </span><span class="c1">; AND the port state with the mask of bits you would like to clear</span>
+<span class="linenos">43</span><span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="n">r17</span><span class="w"> </span><span class="c1">; Output the result</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="w">    </span><span class="n">pop</span><span class="w"> </span><span class="n">r17</span>
+<span class="linenos">46</span><span class="w">    </span><span class="n">pop</span><span class="w"> </span><span class="n">r16</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="n">ret</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="c1">; Turn on two outputs by using the special Set bit I/O (sbi) instruction</span>
+<span class="linenos">51</span><span class="nl">led_on_asm:</span>
+<span class="linenos">52</span><span class="w">    </span><span class="n">sbi</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">53</span><span class="w">    </span><span class="n">sbi</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">54</span><span class="n">ret</span>
+<span class="linenos">55</span>
+<span class="linenos">56</span><span class="c1">; Turn off two outputs by using the special Clear bit I/O (cbi) instruction</span>
+<span class="linenos">57</span><span class="nl">led_off_asm:</span>
+<span class="linenos">58</span><span class="w">    </span><span class="n">cbi</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="linenos">59</span><span class="w">    </span><span class="n">cbi</span><span class="w"> </span><span class="n">LED_PORT</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="linenos">60</span><span class="n">ret</span>
+</pre></div>
+</div>
+<p>Assemble the assembly file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">gcc</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Os</span> <span class="o">-</span><span class="n">DF_CPU</span><span class="o">=</span><span class="mi">16000000</span> <span class="o">-</span><span class="n">mmcu</span><span class="o">=</span><span class="n">atmega328</span> <span class="o">-</span><span class="n">c</span> <span class="n">ledcontrol</span><span class="o">.</span><span class="n">S</span>
+</pre></div>
+</div>
+<p>Compile the c file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">gcc</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Os</span> <span class="o">-</span><span class="n">DF_CPU</span><span class="o">=</span><span class="mi">16000000</span> <span class="o">-</span><span class="n">mmcu</span><span class="o">=</span><span class="n">atmega328</span> <span class="o">-</span><span class="n">c</span> <span class="n">main</span><span class="o">.</span><span class="n">c</span>
+</pre></div>
+</div>
+<p>Link the object files</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">gcc</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="n">mmcu</span><span class="o">=</span><span class="n">atmega328</span> <span class="o">-</span><span class="n">o</span> <span class="n">firmware</span><span class="o">.</span><span class="n">elf</span> <span class="n">main</span><span class="o">.</span><span class="n">o</span> <span class="n">delay</span><span class="o">.</span><span class="n">o</span>
+</pre></div>
+</div>
+<p>Generate the HEX file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avr</span><span class="o">-</span><span class="n">objcopy</span> <span class="o">-</span><span class="n">O</span> <span class="n">ihex</span> <span class="n">firmware</span><span class="o">.</span><span class="n">elf</span> <span class="n">firmware</span><span class="o">.</span><span class="n">hex</span>
+</pre></div>
+</div>
+<p>Flash the firmware using the Arduino bootloader:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">avrdude</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">p</span> <span class="n">atmega328p</span> <span class="o">-</span><span class="n">c</span> <span class="n">arduino</span> <span class="o">-</span><span class="n">P</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyACM0</span> <span class="o">-</span><span class="n">b</span> <span class="mi">115200</span> <span class="o">-</span><span class="n">D</span> <span class="o">-</span><span class="n">U</span> <span class="n">flash</span><span class="p">:</span><span class="n">w</span><span class="p">:</span><span class="n">firmware</span><span class="o">.</span><span class="n">hex</span><span class="p">:</span><span class="n">i</span>
+</pre></div>
+</div>
+</section>
+<section id="platformio">
+<h3>PlatformIO<a class="headerlink" href="#platformio" title="Link to this heading">#</a></h3>
+<p>In order to mix C and Assembly in a Arduino project in PlatformIO you should create a new source file with the “.S” extension in your “src” directory.</p>
+<p>In order to access your assembly functions from C, they need to be declared using C syntax in the source file where they are going to be used, or in a header file which is included in to the source file. Since platformIO uses C++ for Arduino you have to use the <code class="code docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> directive:</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_on_asm_function</span><span class="p">();</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">led_off_asm_function</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>C++ uses a technique known as name mangling on the function names in order to support features such as polymorphism. This causes the function names in the object files to change compared to how they appear in the source file, and thus they will not match the name defined in the assembly file. If the names does not match, the linker will not be able to produce functional machine code. The <code class="code docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> directive disables this feature by informing the compiler that the function should be considered C functions.</p>
+</section>
+</section>
+<section id="pure-assembly">
+<h2>Pure assembly<a class="headerlink" href="#pure-assembly" title="Link to this heading">#</a></h2>
+<p>Pure assembly development is also possible, and provides a deep insight in to the low level operation of the microcontroller.</p>
+<section id="interrupts">
+<h3>Interrupts<a class="headerlink" href="#interrupts" title="Link to this heading">#</a></h3>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="stacks_queues_lists.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Stacks, queues and lists</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="digital_filters.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Basics of digital filters</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disassembly-of-your-project">Disassembly of your project</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#better-disassembly">Better disassembly</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#disassembly-in-platformio">Disassembly in PlatformIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inline-assembly">Inline assembly</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mixing-c-and-assembly">Mixing C and assembly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bare-metal-project">Bare metal project</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platformio">PlatformIO</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pure-assembly">Pure assembly</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interrupts">Interrupts</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gizem Ateş & Eirik Haustveit 
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022, Gizem Ateş &amp; Eirik Haustveit.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
