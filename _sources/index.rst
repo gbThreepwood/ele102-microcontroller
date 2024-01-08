@@ -3,10 +3,29 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ELE102 Microcontroller course!
-============================================
+Welcome to the ELE102 Microcontroller course!
+=============================================
 
-On this page we will publish new lecture notes every week, as the course is progressing. The lecture notes will contain the curriculum that you need to know for the exam, as well as some additional material for those of you who are eager for more in depth knowledge.
+
+
+On this webpage you will find theory, source code examples, and excercises to help you grasp the curriculum of the course. The webpage is divided in to a range of chapters, and we will roughly cover one chapter each week. There are also additional material available for the students who would like to expand their knowledge beyond the curriculum.
+
+Please note that this webpage is a supplement, and **not** a replacement to attending the physical lectures. Think of this page as the book you whish you had in the course.
+
+Use the left hand menu to navigate the various pages (chapters) of the course, while the menu on the right can be used to navigate the individual sections within a chapter.
+
+
+You need to have:
+==================
+
+For the microcontroller part of ELE102 you will be needing some hardware, as well as some software.
+
+* `Arduino Starter Kit <https://www.kjell.com/no/produkter/elektro-og-verktoy/utviklerkit/arduino/utviklingskort/arduino-startpakke-p87875>`_
+* `PlatformIO <https://platformio.org/platformio-ide>`_
+* `(optionally) Arduino Software <https://www.arduino.cc/en/main/software>`_
+
+
+.. On this page we will publish new lecture notes every week, as the course is progressing. The lecture notes will contain the curriculum that you need to know for the exam, as well as some additional material for those of you who are eager for more in depth knowledge.
 
 .. toctree::
    :maxdepth: 3
@@ -158,16 +177,6 @@ On this page we will publish new lecture notes every week, as the course is prog
 
 
 
-You need to have:
-==================
-
-For the microcontroller part of ELE102 you will be needing some hardware, as well as some software.
-
-* `Arduino Starter Kit <https://www.kjell.com/no/produkter/elektro-og-verktoy/utviklerkit/arduino/utviklingskort/arduino-startpakke-p87875>`_
-
-* `Arduino Software <https://www.arduino.cc/en/main/software>`_
-
-* `PlatformIO <https://platformio.org/platformio-ide>`_
 
 ..
    .. note::
