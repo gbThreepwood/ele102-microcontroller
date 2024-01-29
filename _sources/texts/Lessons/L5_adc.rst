@@ -6,12 +6,8 @@ Analog to digital conversion (ADC)
 
 In the previous lesson we discussed digital to analog conversion. In this lesson we consider the opposite process, where a analog signal is converted in to a digital representation.
 
-In order to be prepared for most of the exercises in this lesson, the following connections should be made in advance:
+In order to be prepared for most of the exercises in this lesson, you can make this circuit ready in advance: :ref:`common-circuit`.
 
-.. figure:: ../../fig/fritzing/arduino_pb_led_pot_tmp36_bb.png
-  :alt: Arduino with external LED, push buttons, potentiometer, and TMP32 temperature sensor.
-  :align: center
-  :scale: 50
 
 .. As we discuss about how to convert something digital into something analog, now it is time to talk about the opposite!
 
@@ -160,6 +156,8 @@ The following source code listing shows how to read the sensor, and how to conve
 .. note:: Try to change the program to use :code:`millis()` instead of :code:`delay()`.
 
 .. code-block:: c
+	:caption: Example
+	:class: toggle
 
 	#include <Arduino.h>
                 
@@ -227,6 +225,8 @@ For this example you should use the following circuit:
 
 
 .. code-block:: c
+	:caption: Example
+	:class: toggle
 
 	void setup() {
 		Serial.begin(9600);
@@ -330,7 +330,8 @@ The servo motor has three wires: power, ground, and signal. The power wire is ty
 The potentiometer should be wired so that its two outer pins are connected to power (+5V) and ground, and its middle pin is connected to analog input A0 on the board.
 
 .. code-block:: c
-   :caption: Servo control using potentiometer
+   :caption: Example: servo control using potentiometer
+   :class: toggle
 
     #include <Servo.h>  // add servo library
 
@@ -383,7 +384,8 @@ Exercise: Check the potmeter value before commanding the servo motor
 The following code example will light up a LED if the commanded value is above 90 degree. In this exercise the example should be expanded with some code which only initiate the movement if the user presses a push button.
 
 .. code-block:: c
-   :caption: Controlling LED based on Servo angle
+   :caption: Example: controlling LED based on Servo angle
+   :class: toggle
 
     #include <Servo.h>  // add servo library
 
@@ -421,3 +423,8 @@ The following code example will light up a LED if the commanded value is above 9
 #. Add, and test the code which is required to detect the rising edge of a push button.
 #. Protect the :code:`myservo.write()` method so that it is only called if the button is pushed.
 
+.. code-block:: c
+	:caption: Solution
+	:class: toggle
+
+	// I am sorry but there is nothing for you here... (yet).

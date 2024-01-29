@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
@@ -39,7 +40,13 @@
     <script src="_static/documentation_options.js?v=ae12eeca"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -188,29 +195,7 @@
 <li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
 <li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="texts/Appendices/Additionals.html">Binary counter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/ir_communication.html">Infrared remote</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/audio_processing.html">Audio processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/dc_motor_control.html">DC motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/digital_piano.html">Digital piano</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/digital_synth.html">Digital synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/dtmf_generator.html">DTMF generator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/frequency_estimator.html">Frequency estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/induction_motor_control.html">Induction motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/lorawan.html">LoRaWan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phase_displacement.html">Phase displacement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phasor_estimation.html">Phasor estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/radio_transmitter.html">Radio transmitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/stepper_motor_control.html">Stepper motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/synchroscope.html">Synchroscope</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/thyristor_controller.html">Thyristor controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/Handson_exercises.html">Hands-on Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
 <ul class="nav bd-sidenav">
@@ -531,7 +516,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#software-debounce-methods">Software debounce methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#switch-debounce-for-the-edge-detection-demo">Switch debounce for the edge detection demo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#exercise-push-button-de-bouncing">Exercise: Push button de-bouncing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#exercise-stopwatch">Exercise: Stopwatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#exercise-stopwatch">EXERCISE: Stopwatch</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="texts/Lessons/L3_digital_io_and_timing.html#rough-timing-in-arduino">Rough Timing in Arduino</a></li>
@@ -805,6 +790,7 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/L4_additional.html">Additional material lesson 4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="texts/Lessons-additional/L4_additional.html#two-types-of-pwm">Two Types of PWM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="texts/Lessons-additional/L4_additional.html#functions-in-c">Functions in C</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="texts/Lessons-additional/L4_additional.html#function-syntax">Function syntax</a></li>
 <li class="toctree-l3"><a class="reference internal" href="texts/Lessons-additional/L4_additional.html#functions-in-arduino">Functions in Arduino</a></li>
@@ -958,169 +944,10 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="texts/Appendices/Additionals.html">Binary counter</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#bit-binary-counter">4-bit binary counter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#using-a-potentiometer-to-test-the-analog-to-digital-converter">Using a potentiometer to test the analog to digital converter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#debounce-of-mechanical-switch">Debounce of mechanical switch</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Appendices/Additionals.html#generalizing-the-concept">Generalizing the concept</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="texts/Appendices/Additionals.html#rough-timing-in-arduino">Rough Timing in Arduino</a></li>
+<li class="toctree-l1"><a class="reference internal" href="texts/Lessons-additional/Handson_exercises.html">Hands-on Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="texts/Lessons-additional/Handson_exercises.html#a-common-circuit-for-almost-all-of-the-exercises">A Common Circuit for Almost All of the Exercises</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#operation">Operation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#stopwatch">Stopwatch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#assignment-1-real-time-clock">Assignment 1 : Real time clock</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#switching-frequency-modulation-example">Switching frequency modulation example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#arduino-math-functions">Arduino math functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Appendices/Additionals.html#trigonometry">Trigonometry</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Appendices/Additionals.html#simple-motor-drive-example-with-speed-control">Simple motor drive example with speed control</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/ir_communication.html">Infrared remote</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/ir_communication.html#optical-communication">Optical communication</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/ir_communication.html#ir-transmitters-and-receivers">IR transmitters and receivers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/ir_communication.html#electrical-characteristics">Electrical characteristics</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/ir_communication.html#ir-receiver">IR receiver</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/ir_communication.html#phototransistor">Phototransistor</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/ir_communication.html#demodulation-of-the-signal">Demodulation of the signal</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/audio_processing.html">Audio processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/audio_processing.html#using-the-adc-to-read-audio">Using the ADC to read audio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/audio_processing.html#resistor-ladder-digital-to-analog-converter">Resistor ladder digital to analog converter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/audio_processing.html#transmitting-audio-digitally-through-uart">Transmitting audio digitally through UART</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/RC_car.html#bluetooth-controlled">Bluetooth Controlled</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/RC_car.html#joystick-controlled">Joystick Controlled</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/RC_car.html#wheels-and-dc-motors">Wheels and DC motors</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/Robotarm.html#bluetooth-controlled">Bluetooth Controlled</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/Robotarm.html#joystick-controlled">Joystick Controlled</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/Robotarm.html#mini-3-dof-manipulator">Mini 3-Dof manipulator</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/dc_motor_control.html">DC motor control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dc_motor_control.html#torque-speed-and-position-control">Torque, speed and position control</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/dc_motor_control.html#development-of-the-transfer-functions">Development of the transfer functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/dc_motor_control.html#measurement-of-the-motor-response">Measurement of the motor response</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dc_motor_control.html#implementation-of-the-control-loops">Implementation of the control loops</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/digital_piano.html">Digital piano</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/digital_piano.html#bit-digital-to-analog-converter">8-bit digital to analog converter</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/digital_piano.html#summing-amplifier">Summing amplifier</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/digital_piano.html#analog-write-function">Analog write function</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/digital_piano.html#keyboard-hardware">Keyboard hardware</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/digital_piano.html#generation-of-notes">Generation of notes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/digital_piano.html#sinusoidal-waveforms-and-look-up-tables">Sinusoidal waveforms and look up tables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/digital_piano.html#musical-scales-and-frequency-tables">Musical scales and frequency tables</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/digital_piano.html#karplus-strong-algorithm">Karplus-Strong Algorithm</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/digital_synth.html">Digital synth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/digital_synth.html#complete-source-code-example">Complete source code example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/dtmf_generator.html">DTMF generator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#reading-a-standard-dtmf-matrix-keyboard">Reading a standard DTMF matrix keyboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#sine-wave-lookup-table">Sine wave lookup table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#generate-dtmf-tones-using-pwm-atmel-app-note-avr314">Generate DTMF tones using PWM (Atmel app. note AVR314)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/dtmf_generator.html#output-filter-and-amplification">Output filter and amplification</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#improved-audio-quality-dtmf-generation">Improved audio quality DTMF generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#convert-the-digital-values-using-8-bit-dac">Convert the digital values using 8-bit DAC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/dtmf_generator.html#complete-source-code-example">Complete source code example</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/frequency_estimator.html">Frequency estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/induction_motor_control.html">Induction motor control</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/induction_motor_control.html#induction-motor-control-theory">Induction motor control theory</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/induction_motor_control.html#constant-u-f-control">Constant U/f control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/induction_motor_control.html#field-oriented-control">Field oriented control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/induction_motor_control.html#direct-torque-control">Direct torque control</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/induction_motor_control.html#microcontroller-selection">Microcontroller selection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/induction_motor_control.html#high-performance-microcontroller">High performance microcontroller</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/induction_motor_control.html#custom-2-level-three-phase-inverter">Custom 2-level three phase inverter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/induction_motor_control.html#implementation-of-constant-u-f-control">Implementation of constant U/f control</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/lorawan.html">LoRaWan</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/lorawan.html#lora">LoRa</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/lorawan.html#id2">LoRaWan</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phase_displacement.html">Phase displacement</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_displacement.html#instantaneous-magnitude-difference">Instantaneous magnitude difference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_displacement.html#peak-or-zero-crossing-detector">Peak or zero crossing detector</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_displacement.html#discrete-fourier-transform-dft">Discrete fourier transform (DFT)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phase_locked_loop.html">Phase locked loop (PLL)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#phase-detector">Phase detector</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#notch-filter">Notch filter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#experimenting-with-the-phase-detector-alone">Experimenting with the phase detector alone</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#loop-filter-pi-controller">Loop filter (PI controller)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#pi-controller-implementation">PI-controller implementation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#local-oscillator">Local oscillator</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#sine-and-cosine-generation-by-integration">Sine and cosine generation by integration</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#lookup-table">Lookup table</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#cordic">CORDIC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#sine-approximation-by-quadratic-functions">Sine approximation by quadratic functions</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#example-lock-on-a-5-hz-sine-wave-from-a-signal-generator">Example: Lock on a 5 Hz sine wave from a signal generator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#example-lock-on-the-power-grid-waveform-sampled-on-the-adc">Example: Lock on the power grid waveform sampled on the ADC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/phase_locked_loop.html#grid-frequency-synchronization">Grid frequency synchronization</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/phasor_estimation.html">Phasor estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/radio_transmitter.html">Radio transmitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/stepper_motor_control.html">Stepper motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/synchroscope.html">Synchroscope</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/synchroscope.html#theory">Theory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/synchroscope.html#hardware-and-software-implementation">Hardware and software implementation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/synchroscope.html#methods-to-determine-voltage-frequency-and-phase-relation">Methods to determine voltage, frequency and  phase relation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/synchroscope.html#zero-crossing-based-synchroscope">Zero crossing based synchroscope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/synchroscope.html#dft-based-synchroscope">DFT based synchroscope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/synchroscope.html#pll-based-synchroscope">PLL based synchroscope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="texts/Projects/synchroscope.html#least-squares-based-synchroscope">Least squares based synchroscope</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="texts/Projects/synchroscope.html#laboratory-experiment">Laboratory experiment</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="texts/Projects/thyristor_controller.html">Thyristor controller</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">

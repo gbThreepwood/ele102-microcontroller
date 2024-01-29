@@ -19,6 +19,7 @@ Digital inputs have already been covered in detail in a previous lesson. In this
 
 Edge detection
 ===============
+
 When reading a digital input it is often desirable to determine the instant it is changing, and how it is changing. I.e. whether it is a rising, or a falling edge. There are several approaches we can take to solve this problem, but in this section we focus on solutions involving the sampling of the digital input. I.e. we are continuously checking the state of the digital input with a certain time interval. This approach is fine for slowly changing signals such as push buttons. Actually it is not only fine, it is often the recommended way to deal with slow signals.
 
 In order to detect the rising edge of a digital input by the sampling method, we continuously compare the current state of the input, to the state at the previous iteration (the previous time we checked it). If the previous value was *low*, and the current value is *high*, we have a rising edge. The same logic can be applied it the reverse direction to detect the falling edge.
@@ -93,6 +94,7 @@ Imagine that you develop a system that counts how many times a button pressed. I
 Here is the code template:
 
 .. code-block:: c
+    :class: toggle
 
     // define led_pin at pin nr.2;
     // define button_pin at pin nr.11;
@@ -115,6 +117,7 @@ Here is the code template:
 The following code listing is one possible solution:
 
 .. code-block:: c
+    :class: toggle
 
     const uint8_t led_pin = 2;
     const uint8_t button_pin = 11;
@@ -152,6 +155,7 @@ Simple button LED state change
 Maybe we can modify the code such that the LED is not *directly* controlled by the button value but it can be controlled by its *change*. Design a system that changes the LED state in every button press.
 
 .. code-block:: c
+    :class: toggle
 
     // define led_pin at pin nr.2;
     // define button_pin at pin nr.11;
@@ -176,6 +180,7 @@ Maybe we can modify the code such that the LED is not *directly* controlled by t
 Again the following code listing is one possible solution:
 
 .. code-block:: c
+    :class: toggle
 
     const uint8_t led_pin = 2;
     const uint8_t button_pin = 11;
@@ -242,6 +247,7 @@ We have previously used the :code:`delay()` function to perform blocking delays 
 One alternative approach involves the use of the function :code:`millis()`. The function returns the number of milliseconds since the last time the microcontroller was reset. This can be exploited by constantly checking the current value returned from :code:`millis()`, and executing some code only when the returned value has increased by the same amount as our desired delay. When our code executes after the delay, we must also store the current value from :code:`millis()`, so that we again can compare it to future values from :code:`millis()`.
 
 .. code-block:: C
+    :class: toggle
 
     uint16_t delay_time = 1200; // 1200 ms delay
     uint32_t old_millis = 0;
@@ -256,6 +262,7 @@ One alternative approach involves the use of the function :code:`millis()`. The 
 Alternatively you can modify the code to only use a single call to :code:`millis()`. This is slightly better, as there is a risk that the :code:`millis()` call in :code:`old_millis = millis()` returns a slightly larger value than the :code:`millis()` in :code:`if((uint32_t)(millis() - old_millis >= delay_time))`. Hence the timing could be more accurate in the following code: 
 
 .. code-block:: C
+    :class: toggle
 
     uint16_t delay_time = 1200; // 1200 ms delay
     uint32_t old_millis = 0;
@@ -281,11 +288,12 @@ Additionally it is convenient in the case you have multiple section of code whic
 Exercise: Blink two LEDs at different frequencies
 -------------------------------------------------
 
-The following code demonstrates how to blink two LEDs at different frequencies using the :code:`delay()` method. It should be obvious that this code will be difficult to maintain.
+The following code demonstrates how to blink two LEDs at different frequencies using the :code:`delay()` method. It should be obvious that this code will be difficult to maintain. Imagine that you had to add two more LED's, and that they all had to blink at different specific frequencies.
 
 .. literalinclude:: ../../../projects/platformio/timing/delay-blink-two-leds/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
 
 In this exercise a similar program should be designed without the use of :code:`delay()`.
@@ -299,6 +307,7 @@ The following code listing provides one possible solution:
 .. literalinclude:: ../../../projects/platformio/timing/dual-led-blink-millis/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
 
 Exercise: Adjustable blink frequency
@@ -317,6 +326,7 @@ The following code listing provides one possible solution. Notice how the same l
 .. literalinclude:: ../../../projects/platformio/timing/dual-led-blink-millis-pb-control/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
 
 
@@ -328,6 +338,7 @@ Constant frequency
 If constant frequency execution of your code is important, and you are certain that the code will execute in less time than your delay time, the following code can be used:
 
 .. code-block:: c
+    :class: toggle
 
     uint16_t time_interval = 1200; // 1200 ms delay
     uint32_t old_millis = 0;
@@ -343,7 +354,7 @@ If constant frequency execution of your code is important, and you are certain t
         }
     }
 
-The advantage of adding a time interval to :code:`old_millis` instead of updating it with the new millisecond value, is that the former avoid the potential problem that the delay gets off by some milliseconds if a interrupt or some other part of the :code:`loop()` function causes it to execute to late. If the code in the previous section executes two milliseconds too late on a given iteration of the loop, it will never be able to correct for this. Thus if you are implementing a watch or some other application where it is important that (on average) the timing is accurate, you should consider the approach in this section. The only source of error will be the accuracy of the clock source (typically a quarts crystal), which drives the CPU of the microcontroller.
+The advantage of adding a time interval to :code:`old_millis` instead of updating it with the new millisecond value, is that the former avoid the potential problem that the delay gets off by some milliseconds if a interrupt or some other part of the :code:`loop()` function causes it to execute too late. If the code in the previous section executes two milliseconds too late on a given iteration of the loop, it will never be able to correct for this. Thus if you are implementing a watch or some other application where it is important that (on average) the timing is accurate, you should consider the approach in this section. The only source of error will be the accuracy of the clock source (typically a quarts crystal), which drives the CPU of the microcontroller.
 
 The code in the previous section will guarantee that the delay will be at least equal to :code:`time_interval`, but it could be slightly longer.
 
@@ -357,6 +368,7 @@ Reducing the load on the microcontroller
 The CPU in the Atmega328p operates on 8 bit at a time. Hence the 32-bit operations of the previous :code:`millis()` examples requires many operations. If you only only require delays of 1 minute, or less, you can use 16 bit operations:
 
 .. code-block:: c
+   :class: toggle
 
     uint16_t old_millis;
     const uint16_t delay_time = 4000;
@@ -431,9 +443,10 @@ The graph to the right in the following figure illustrates the spurious changes 
 Bounce problem edge detection demonstration
 -------------------------------------------
 
-The following rising and falling edge detection software will clearly demonstrate the bouncing problem if there in fact is a bouncing problem with the mechanical switches. By observing the edge counter in a serial monitor, it will become apparent that it counts more then one event each time a button is pushed.
+The following rising and falling edge detection software will clearly demonstrate the bouncing problem if there in fact is a bouncing problem with the mechanical switches. By observing the edge counter in a serial monitor, it will become apparent that it counts more than one event each time a button is pushed.
 
 .. code-block:: c
+    :class: toggle
 
     #include <Arduino.h>
 
@@ -521,6 +534,7 @@ Note that the variables are declared :code:`static` inside the :code:`loop()` fu
 .. literalinclude:: ../../../projects//switch_debounce/delay_switch_debounce_no_func/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
 
 Switch debounce for the edge detection demo
@@ -531,7 +545,7 @@ The following code listing demonstrates one way to solve the bouncing problem fr
 .. literalinclude:: ../../../projects/platformio/debounce/single-switch-debounce/src/main.cpp
     :language: c
     :linenos:
-
+    :class: toggle
 
 
 Exercise: Push button de-bouncing
@@ -543,9 +557,15 @@ In this exercise you will (hopefully) experience the bouncing problem in practic
 #. Extend the program with the code required to avoid bouncing problems.
 #. Try to press the push button repetitively to make sure that it is not bouncing.
 
+The following code list one possible solution:
+
+.. code-block:: c
+    :class: toggle
+
+    // The solution is not prepared yet.
 
 
-Exercise: Stopwatch
+EXERCISE: Stopwatch
 -------------------
 
 Since we now know some ways of eliminating the glitches (or jitter) on the button, we can design a nice stopwatch timer, where a push button starts and stops the timing. Use the comments in the source code as your guide on how to solve this exercise.
@@ -553,13 +573,14 @@ Since we now know some ways of eliminating the glitches (or jitter) on the butto
 .. literalinclude:: ../../../projects/StopWatch_pseudo/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
-.. todo:: Add solution proposal after the lecture
+The following code list one possible solution:
 
-..
-    .. literalinclude:: ../../../projects/StopWatch/src/main.cpp
+.. literalinclude:: ../../../projects/StopWatch/src/main.cpp
     :language: c
     :linenos:
+    :class: toggle
 
 
 .. note:: Note that this is not necessarily a perfect solution. If you press and release the button so fast that the program cannot catch :code:`digitalRead(button_pin)` line - since the microcontroller reads memory line by line - then you miss a button press. This will likely not be a problem for manual push buttons (unless your microcontroller executes a lot of code between each time it reads the digital input), but it might be a problem if you try to use the stopwatch for timing of something which is faster than a human hand. E.g. if you want to determine the speed of you bicycle, and try to measure the interval between pulses from a sensor on the wheel. The solution for fast signals is to use the *interrupt* system. This will be covered in a future lecture.

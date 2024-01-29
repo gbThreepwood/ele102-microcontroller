@@ -69,32 +69,33 @@ For the microcontroller part of ELE102 you will be needing some hardware, as wel
    Additional material lesson 11 <texts/Lessons-additional/L11_additional.rst>
    Additional material lesson 12 <texts/Lessons-additional/L12_additional.rst>
    Additional material lesson 13 <texts/Lessons-additional/L13_additional.rst>
+   Hands-on Exercises <texts/Lessons-additional/Handson_exercises.rst>
 
+..
+   .. toctree::
+      :maxdepth: 4
+      :caption: Projects:
 
-.. toctree::
-   :maxdepth: 4
-   :caption: Projects:
-
-   Binary counter <texts/Appendices/Additionals.rst>
-   Infrared remote <texts/Projects/ir_communication.rst>
-   Adaptive line enhancer <texts/Projects/adaptive_line_enhancer.rst>
-   Audio processing <texts/Projects/audio_processing.rst>
-   Cool Project: RC Car (Bluetooth or Joystick) <texts/Projects/RC_car.rst>
-   Cool Project: Simple Robot Arm (Bluetooth or Joystick) <texts/Projects/Robotarm.rst>
-   DC motor control <texts/Projects/dc_motor_control.rst>
-   Digital piano <texts/Projects/digital_piano.rst>
-   Digital synth <texts/Projects/digital_synth.rst>
-   DTMF generator <texts/Projects/dtmf_generator.rst>
-   Frequency estimator <texts/Projects/frequency_estimator.rst>
-   Induction motor control <texts/Projects/induction_motor_control.rst>
-   LoRaWan <texts/Projects/lorawan.rst>
-   Phase displacement <texts/Projects/phase_displacement.rst>
-   Phase locked loop (PLL) <texts/Projects/phase_locked_loop.rst>
-   Phasor estimation <texts/Projects/phasor_estimation.rst>
-   Radio transmitter <texts/Projects/radio_transmitter.rst>
-   Stepper motor control <texts/Projects/stepper_motor_control.rst>
-   Synchroscope <texts/Projects/synchroscope.rst>
-   Thyristor controller <texts/Projects/thyristor_controller.rst>
+      Binary counter <texts/Appendices/Additionals.rst>
+      Infrared remote <texts/Projects/ir_communication.rst>
+      Adaptive line enhancer <texts/Projects/adaptive_line_enhancer.rst>
+      Audio processing <texts/Projects/audio_processing.rst>
+      Cool Project: RC Car (Bluetooth or Joystick) <texts/Projects/RC_car.rst>
+      Cool Project: Simple Robot Arm (Bluetooth or Joystick) <texts/Projects/Robotarm.rst>
+      DC motor control <texts/Projects/dc_motor_control.rst>
+      Digital piano <texts/Projects/digital_piano.rst>
+      Digital synth <texts/Projects/digital_synth.rst>
+      DTMF generator <texts/Projects/dtmf_generator.rst>
+      Frequency estimator <texts/Projects/frequency_estimator.rst>
+      Induction motor control <texts/Projects/induction_motor_control.rst>
+      LoRaWan <texts/Projects/lorawan.rst>
+      Phase displacement <texts/Projects/phase_displacement.rst>
+      Phase locked loop (PLL) <texts/Projects/phase_locked_loop.rst>
+      Phasor estimation <texts/Projects/phasor_estimation.rst>
+      Radio transmitter <texts/Projects/radio_transmitter.rst>
+      Stepper motor control <texts/Projects/stepper_motor_control.rst>
+      Synchroscope <texts/Projects/synchroscope.rst>
+      Thyristor controller <texts/Projects/thyristor_controller.rst>
 
 
 .. toctree::

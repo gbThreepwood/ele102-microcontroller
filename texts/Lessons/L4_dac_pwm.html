@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
@@ -39,7 +40,13 @@
     <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L4_dac_pwm';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -190,29 +197,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/Handson_exercises.html">Hands-on Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
 <ul class="nav bd-sidenav">
@@ -414,7 +399,7 @@ document.write(`
                   
   <section id="analog-output-digital-to-analog-conversion">
 <span id="dac-pwm"></span><h1>Analog output (digital to analog conversion)<a class="headerlink" href="#analog-output-digital-to-analog-conversion" title="Link to this heading">#</a></h1>
-<p>Computers work with numbers in a discrete manner, while the “real world” is continuous. If e.g. a computer (such as your Arduino) wants to measure a temperature, and turn on a heater if the temperature is below some threshold, the actions are performed in discrete steps, on discrete pieces of information. First the computer will have to convert the continous reading from a sensor to a digital representation using a finite number of ones and zeros. Only when the conversion is completed will it be possible to continue with the next step of comparing it to some threshold. Hence both the internal representation of the temperature, and all operations performed on this internal representation are of a discrete nature.</p>
+<p>Real world and Arduino world works different. In this world <em>everything</em> you experience are continuous. What you see, what you hear, what you speak, what you taste and smell. However, the Arduino world is discrete. Everything happening are defined with 1s and 0s.</p>
 <figure class="align-center" id="id5">
 <img alt="DAC" src="../../_images/What-is-Analog-to-Digital-Converter.png" />
 <figcaption>
@@ -427,7 +412,7 @@ document.write(`
 <p><span class="caption-text">Source: <a class="reference external" href="https://www.tinkercad.com/things/bHU1CyP8TTu-adc-dac-with-arduino-by-ruzo">ADC DAC in Arduino (by Ruzo)</a></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>In this lecture, we will talk about how to convert something digital (discrete) into something analog (continuous).</p>
+<p>In this lecture, we will talk about how to convert something digital into something analog.</p>
 <section id="digital-to-analog-converter">
 <h2>Digital to analog converter<a class="headerlink" href="#digital-to-analog-converter" title="Link to this heading">#</a></h2>
 <p>A digital to analog converter is a device which converts a digital representation of a signal in to a real physical signal, typically a voltage. The digital representation is just a number, which has discrete steps in it’s value, while the analog signal is capable of continuous variation <a class="footnote-reference brackets" href="#f10" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
@@ -450,19 +435,23 @@ document.write(`
 </section>
 <section id="pulse-width-modulation-pwm">
 <h2>Pulse Width Modulation (PWM)<a class="headerlink" href="#pulse-width-modulation-pwm" title="Link to this heading">#</a></h2>
-<p>Let’s go back to the Arduino world. <strong>There is NO ANALOG OUTPUT in Arduino</strong>. There is however a function called <a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite">analogWrite()</a> which can be used to acheive analog output within some limitations.</p>
+<p>Let’s go back to the Arduino world. <strong>There is NO ANALOG OUTPUT in Arduino</strong>. What? What about <a class="reference external" href="https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite">analogWrite()</a> ?</p>
+<p>We need to talk.</p>
+<p>What is Modulation?</p>
+<p>What is a pulse?</p>
 <figure class="align-center" id="id8">
 <img alt="../../_images/pwm_duty_cycle.png" src="../../_images/pwm_duty_cycle.png" />
 <figcaption>
 <p><span class="caption-text">PWM and duty cycle</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>There are three primary components that define a PWM signal’s behavior:</p>
-<p><strong>Duty cycle:</strong> A duty cycle is the fraction of one period when a system or signal is active. We typically express a duty cycle as a ratio or percentage.</p>
-<p><strong>Amplitude or high-level</strong> The voltage level the signal has when it is active. The passive level is usually zero.</p>
-<p><strong>Frequency:</strong> The rate at which something repeats or occurs over a particular period. In other words, the rate at which a vibration happens that creates a wave, e.g., sound, radio, or light waves, typically calculated per second. A period is the time it takes for a signal to conclude a full ON-OFF cycle, and it the reciprocal of frequency.</p>
+<p>There are two primary components that define a PWM signal’s behavior:</p>
+<p><strong>Duty cycle:</strong> A duty cycle is the fraction of one period when a system or signal is active. We typically express a duty cycle as a ratio or percentage. A period is the time it takes for a signal to conclude a full ON-OFF cycle.</p>
+<p><strong>Frequency:</strong> The rate at which something repeats or occurs over a particular period. In other words, the rate at which a vibration happens that creates a wave, e.g., sound, radio, or light waves, typically calculated per second.</p>
 <div class="math notranslate nohighlight">
-\[Duty Cycle = Pulse Width (sec) \cdot Repetition Frequency (Hz) \cdot 100 = \frac{t_{HIGH}}{t_{HIGH} + t_{LOW}} \cdot 100\%\]</div>
+\[Duty Cycle = Pulse Width (sec) * Repetition Frequency (Hz) * 100\]</div>
+<div class="math notranslate nohighlight">
+\[= \frac{t_{HIGH}}{t_{HIGH} + t_{LOW}} * 100\]</div>
 <p><em>Question:</em> How does the frequecy of the PWM signal affect the produced <em>analog</em> signal?</p>
 <section id="analog-output-by-pwm">
 <h3>Analog output by PWM<a class="headerlink" href="#analog-output-by-pwm" title="Link to this heading">#</a></h3>
@@ -490,21 +479,6 @@ document.write(`
 <p><span class="caption-text">PWM outputs on Arduino and Atmega328</span><a class="headerlink" href="#id10" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>PWM is a complex topic and requires a good understanding of the microcontroller that you are working with. The <code class="code docutils literal notranslate"><span class="pre">analogWrite()</span></code> makes the life easier for you but it is important to know that the PWM produced by this command is not the only PWM type exist. By manipulating the timers and registers in your microcontroller, you can obtain various PWM signals. Two main PWM techniques are:</p>
-<ol class="arabic simple">
-<li><p><strong>Fast PWM:</strong> In the simplest PWM mode, the timer repeatedly counts from 0 to 255. (aka Edge-aligned)</p></li>
-<li><p><strong>Phase-Correct PWM:</strong> In this mode, the timer counts from 0 to 255 and then back down to 0. (aka Center-aligned)</p></li>
-</ol>
-<figure class="align-center" id="id11">
-<img alt="../../_images/pwm_modes.png" src="../../_images/pwm_modes.png" />
-<figcaption>
-<p><span class="caption-text">PWM modes. See more at <a class="reference external" href="http://www.righto.com/2009/07/secrets-of-arduino-pwm.html">secrets of Arduino PWM</a>.</span><a class="headerlink" href="#id11" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>Please see that in fast PWM when the duty cycle changes, the center position of the pulse changes position (therefore the phase changes). With phase correct PWM when the duty cycle changes, the center position of the pulse remains constant (and therefore the phase remains constant). This is particularly important in fine DC-motor speed regulations, sound signal producing etc. where you don’t want sharp edges on your sampled signal. On the other hand, sharp edges are almost a must in servo-motor control.</p>
-</div>
 </section>
 <section id="mapping-signals-with-different-dynamic-range">
 <h3>Mapping signals with different dynamic range<a class="headerlink" href="#mapping-signals-with-different-dynamic-range" title="Link to this heading">#</a></h3>
@@ -527,6 +501,25 @@ document.write(`
 <section id="exercise-adjusting-the-light-intensity-of-led">
 <h3>Exercise: Adjusting the light intensity of LED<a class="headerlink" href="#exercise-adjusting-the-light-intensity-of-led" title="Link to this heading">#</a></h3>
 <a class="reference internal image-reference" href="../../_images/single_led_bb.png"><img alt="Single external LED" class="align-center" src="../../_images/single_led_bb.png" style="width: 438.0px; height: 610.5px;" /></a>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">led_pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">brightness</span><span class="p">;</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">brightness_mapped</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="n">pinMode</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="n">brightness</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">A0</span><span class="p">);</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">brightness</span><span class="p">);</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;--&quot;</span><span class="p">);</span>
+<span class="n">brightness_mapped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">map</span><span class="p">(</span><span class="n">brightness</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1023</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<span class="n">analogWrite</span><span class="p">(</span><span class="n">led_pin</span><span class="p">,</span><span class="w"> </span><span class="n">brightness_mapped</span><span class="p">);</span>
+<span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">brightness_mapped</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>In this exercise we will adjust the light intensity of a single LED by means of PWM.</p>
 <ol class="arabic simple">
 <li><p>Connect a LED in accordance with the figure. If you already have a LED connected, you only have to make sure it is connected to one of the pins which support PWM.</p></li>

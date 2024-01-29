@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
@@ -39,7 +40,13 @@
     <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons/L5_adc';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -190,29 +197,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L11_additional.html">Additional material lesson 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L12_additional.html">Additional material lesson 12</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/L13_additional.html">Additional material lesson 13</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lessons-additional/Handson_exercises.html">Hands-on Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
 <ul class="nav bd-sidenav">
@@ -409,10 +394,7 @@ document.write(`
   <section id="analog-to-digital-conversion-adc">
 <span id="analog-to-digital-conversion"></span><h1>Analog to digital conversion (ADC)<a class="headerlink" href="#analog-to-digital-conversion-adc" title="Link to this heading">#</a></h1>
 <p>In the previous lesson we discussed digital to analog conversion. In this lesson we consider the opposite process, where a analog signal is converted in to a digital representation.</p>
-<p>In order to be prepared for most of the exercises in this lesson, the following connections should be made in advance:</p>
-<figure class="align-center">
-<a class="reference internal image-reference" href="../../_images/arduino_pb_led_pot_tmp36_bb.png"><img alt="Arduino with external LED, push buttons, potentiometer, and TMP32 temperature sensor." src="../../_images/arduino_pb_led_pot_tmp36_bb.png" style="width: 511.5px; height: 661.5px;" /></a>
-</figure>
+<p>In order to be prepared for most of the exercises in this lesson, you can make this circuit ready in advance: <a class="reference internal" href="../Lessons-additional/Handson_exercises.html#common-circuit"><span class="std std-ref">A Common Circuit for Almost All of the Exercises</span></a>.</p>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <p>Analog to digital converters (ADC) and digital to analog converters (DAC) are
@@ -428,7 +410,7 @@ the bridges between digital and analog worlds.</p>
 </ul>
 <section id="analog-to-digital-converter">
 <h3>Analog to digital converter<a class="headerlink" href="#analog-to-digital-converter" title="Link to this heading">#</a></h3>
-<p>An A/D converter (analog to digital converter) is a device that converts a analog signal into an approximate digital representation. It measures the <span class="underlined">ratio</span> of an analog input value to a reference value and express it in a form of digital value. Many different technologies exits for this purpose, where each one has it’s own advantages and disadvantages. The following is a list of the more common types:</p>
+<p>An A/D converter (analog to digital converter) is a device that converts a analog signal into an approximate digital representation. It measures the <a href="#id1"><span class="problematic" id="id2">:underlined:`ratio`</span></a> of an analog input value to a reference value and express it in a form of digital value. Many different technologies exits for this purpose, where each one has it’s own advantages and disadvantages. The following is a list of the more common types:</p>
 <ul class="simple">
 <li><p>Successive Approximation (SAR) ADC.</p></li>
 <li><p>Delta-sigma (ΔΣ) ADC.</p></li>
@@ -523,7 +505,9 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 <p class="admonition-title">Note</p>
 <p>Try to change the program to use <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> instead of <code class="code docutils literal notranslate"><span class="pre">delay()</span></code>.</p>
 </div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id3" title="Link to this code">#</a></div>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Arduino.h&gt;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
@@ -550,6 +534,7 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
 </section>
 <section id="exercise-change-the-unit-of-temperature-measurement">
 <h3>Exercise: Change the unit of temperature measurement<a class="headerlink" href="#exercise-change-the-unit-of-temperature-measurement" title="Link to this heading">#</a></h3>
@@ -567,7 +552,9 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 <figure class="align-center">
 <a class="reference internal image-reference" href="../../_images/arduino_potmeter_bb.png"><img alt="Simple potentiometer circuit with Arduino" src="../../_images/arduino_potmeter_bb.png" style="width: 484.5px; height: 661.5px;" /></a>
 </figure>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example</span><a class="headerlink" href="#id4" title="Link to this code">#</a></div>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -602,6 +589,7 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 
 <span class="p">}</span>
 </pre></div>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -651,9 +639,9 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 </figure>
 <p>The servo motor has three wires: power, ground, and signal. The power wire is typically red, and should be connected to the 5V pin on the Arduino or Genuino board. The ground wire is typically black or brown and should be connected to a ground pin on the board. The signal pin is typically yellow or orange and should be connected to one of the pins which support PWM. Here we use pin 9.</p>
 <p>The potentiometer should be wired so that its two outer pins are connected to power (+5V) and ground, and its middle pin is connected to analog input A0 on the board.</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">Servo control using potentiometer</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Example: servo control using potentiometer</span><a class="headerlink" href="#id5" title="Link to this code">#</a></div>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
 
 <span class="w"> </span><span class="n">Servo</span><span class="w"> </span><span class="n">myservo</span><span class="p">;</span><span class="w">  </span><span class="c1">// create servo object to control a servo</span>
 
@@ -695,9 +683,9 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 <section id="exercise-check-the-potmeter-value-before-commanding-the-servo-motor">
 <h3>Exercise: Check the potmeter value before commanding the servo motor<a class="headerlink" href="#exercise-check-the-potmeter-value-before-commanding-the-servo-motor" title="Link to this heading">#</a></h3>
 <p>The following code example will light up a LED if the commanded value is above 90 degree. In this exercise the example should be expanded with some code which only initiate the movement if the user presses a push button.</p>
-<div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">Controlling LED based on Servo angle</span><a class="headerlink" href="#id2" title="Link to this code">#</a></div>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Example: controlling LED based on Servo angle</span><a class="headerlink" href="#id6" title="Link to this code">#</a></div>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Servo.h&gt;</span><span class="c1">  // add servo library</span>
 
 <span class="w"> </span><span class="n">Servo</span><span class="w"> </span><span class="n">myservo</span><span class="p">;</span><span class="w">  </span><span class="c1">// create servo object to control a servo</span>
 
@@ -733,6 +721,12 @@ end, <span class="math notranslate nohighlight">\(\Delta V_{LSB}\)</span>, is gi
 <li><p>Add, and test the code which is required to detect the rising edge of a push button.</p></li>
 <li><p>Protect the <code class="code docutils literal notranslate"><span class="pre">myservo.write()</span></code> method so that it is only called if the button is pushed.</p></li>
 </ol>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Solution</span><a class="headerlink" href="#id7" title="Link to this code">#</a></div>
+<div class="toggle highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// I am sorry but there is nothing for you here... (yet).</span>
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 </section>

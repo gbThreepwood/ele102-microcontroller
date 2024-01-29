@@ -3,12 +3,7 @@
 *******************************************************
 Analog output (digital to analog conversion)
 *******************************************************
-
-.. Real world and Arduino world works different.
-
-Computers work with numbers in a discrete manner, while the "real world" is continuous. If e.g. a computer (such as your Arduino) wants to measure a temperature, and turn on a heater if the temperature is below some threshold, the actions are performed in discrete steps, on discrete pieces of information. First the computer will have to convert the continous reading from a sensor to a digital representation using a finite number of ones and zeros. Only when the conversion is completed will it be possible to continue with the next step of comparing it to some threshold. Hence both the internal representation of the temperature, and all operations performed on this internal representation are of a discrete nature.
-
-.. In this world *everything* you experience are continuous. What you see, what you hear, what you speak, what you taste and smell. However, the Arduino world is discrete. Everything happening are d.
+Real world and Arduino world works different. In this world *everything* you experience are continuous. What you see, what you hear, what you speak, what you taste and smell. However, the Arduino world is discrete. Everything happening are defined with 1s and 0s.
 
 .. figure:: ../../../external/fig/What-is-Analog-to-Digital-Converter.png
         :alt: DAC
@@ -22,7 +17,7 @@ Computers work with numbers in a discrete manner, while the "real world" is cont
 
         Source: `ADC DAC in Arduino (by Ruzo) <https://www.tinkercad.com/things/bHU1CyP8TTu-adc-dac-with-arduino-by-ruzo>`_
 
-In this lecture, we will talk about how to convert something digital (discrete) into something analog (continuous).
+In this lecture, we will talk about how to convert something digital into something analog.
 
 Digital to analog converter
 =============================
@@ -52,22 +47,28 @@ A digital to analog converter is a device which converts a digital representatio
 Pulse Width Modulation (PWM)
 =============================
 
-Let's go back to the Arduino world. **There is NO ANALOG OUTPUT in Arduino**. There is however a function called `analogWrite() <https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite>`_ which can be used to acheive analog output within some limitations.
+Let's go back to the Arduino world. **There is NO ANALOG OUTPUT in Arduino**. What? What about `analogWrite() <https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite>`_ ?
+
+We need to talk.
+
+What is Modulation?
+
+What is a pulse?
 
 .. figure:: ../../../external/fig/pwm_duty_cycle.png
         :align: center
 
         PWM and duty cycle
 
-There are three primary components that define a PWM signal's behavior:
+There are two primary components that define a PWM signal's behavior:
 
-**Duty cycle:** A duty cycle is the fraction of one period when a system or signal is active. We typically express a duty cycle as a ratio or percentage.
+**Duty cycle:** A duty cycle is the fraction of one period when a system or signal is active. We typically express a duty cycle as a ratio or percentage. A period is the time it takes for a signal to conclude a full ON-OFF cycle.
 
-**Amplitude or high-level** The voltage level the signal has when it is active. The passive level is usually zero.
+**Frequency:** The rate at which something repeats or occurs over a particular period. In other words, the rate at which a vibration happens that creates a wave, e.g., sound, radio, or light waves, typically calculated per second.
 
-**Frequency:** The rate at which something repeats or occurs over a particular period. In other words, the rate at which a vibration happens that creates a wave, e.g., sound, radio, or light waves, typically calculated per second. A period is the time it takes for a signal to conclude a full ON-OFF cycle, and it the reciprocal of frequency.
+.. math:: Duty Cycle = Pulse Width (sec) * Repetition Frequency (Hz) * 100 
 
-.. math:: Duty Cycle = Pulse Width (sec) \cdot Repetition Frequency (Hz) \cdot 100 = \frac{t_{HIGH}}{t_{HIGH} + t_{LOW}} \cdot 100\%
+.. math:: = \frac{t_{HIGH}}{t_{HIGH} + t_{LOW}} * 100
 
 *Question:* How does the frequecy of the PWM signal affect the produced *analog* signal?
 
@@ -110,20 +111,6 @@ The function in the Arduino library used to output a PWM signal is :code:`analog
         PWM outputs on Arduino and Atmega328
 
 
-.. seealso::
-
-    PWM is a complex topic and requires a good understanding of the microcontroller that you are working with. The :code:`analogWrite()` makes the life easier for you but it is important to know that the PWM produced by this command is not the only PWM type exist. By manipulating the timers and registers in your microcontroller, you can obtain various PWM signals. Two main PWM techniques are:
-
-    #. **Fast PWM:** In the simplest PWM mode, the timer repeatedly counts from 0 to 255. (aka Edge-aligned)
-    #. **Phase-Correct PWM:** In this mode, the timer counts from 0 to 255 and then back down to 0. (aka Center-aligned)
-
-    .. figure:: ../../../external/fig/pwm_modes.png
-        :align: center
-
-        PWM modes. See more at `secrets of Arduino PWM <http://www.righto.com/2009/07/secrets-of-arduino-pwm.html>`_.
-    
-    Please see that in fast PWM when the duty cycle changes, the center position of the pulse changes position (therefore the phase changes). With phase correct PWM when the duty cycle changes, the center position of the pulse remains constant (and therefore the phase remains constant). This is particularly important in fine DC-motor speed regulations, sound signal producing etc. where you don't want sharp edges on your sampled signal. On the other hand, sharp edges are almost a must in servo-motor control.
-
 
 Mapping signals with different dynamic range
 --------------------------------------------
@@ -160,6 +147,31 @@ Exercise: Adjusting the light intensity of LED
         :alt: Single external LED
         :scale: 50
         :align: center
+
+..
+    .. literalinclude:: ../../../projects/led_brightness/led_brightness.ino
+
+.. code-block:: c
+    :class: toggle
+    
+    const uint8_t led_pin = 9;
+    uint8_t brightness;
+    uint8_t brightness_mapped;
+
+    void setup() {
+    pinMode(led_pin, OUTPUT);
+    Serial.begin(9600);
+    }
+
+    void loop() {
+    brightness = analogRead(A0);
+    Serial.print(brightness);
+    Serial.print("--");
+    brightness_mapped = map(brightness, 0, 1023, 0, 255);
+    analogWrite(led_pin, brightness_mapped);
+    Serial.print(brightness_mapped);
+    }
+
 
 
 In this exercise we will adjust the light intensity of a single LED by means of PWM.

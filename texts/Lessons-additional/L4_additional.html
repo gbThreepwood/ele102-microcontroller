@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
@@ -39,7 +40,13 @@
     <script src="../../_static/documentation_options.js?v=ae12eeca"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'texts/Lessons-additional/L4_additional';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -190,29 +197,7 @@
 <li class="toctree-l1"><a class="reference internal" href="L11_additional.html">Additional material lesson 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="L12_additional.html">Additional material lesson 12</a></li>
 <li class="toctree-l1"><a class="reference internal" href="L13_additional.html">Additional material lesson 13</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects:</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Appendices/Additionals.html">Binary counter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/ir_communication.html">Infrared remote</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/adaptive_line_enhancer.html">Adaptive line enhancer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/audio_processing.html">Audio processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/RC_car.html">Cool Project: RC Car (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/Robotarm.html">Cool Project: Simple Robot Arm (Bluetooth or Joystick)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dc_motor_control.html">DC motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_piano.html">Digital piano</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/digital_synth.html">Digital synth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/dtmf_generator.html">DTMF generator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/frequency_estimator.html">Frequency estimator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/induction_motor_control.html">Induction motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/lorawan.html">LoRaWan</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_displacement.html">Phase displacement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phase_locked_loop.html">Phase locked loop (PLL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/phasor_estimation.html">Phasor estimation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/radio_transmitter.html">Radio transmitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/stepper_motor_control.html">Stepper motor control</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/synchroscope.html">Synchroscope</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Projects/thyristor_controller.html">Thyristor controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Handson_exercises.html">Hands-on Exercises</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendices:</span></p>
 <ul class="nav bd-sidenav">
@@ -372,6 +357,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-types-of-pwm">Two Types of PWM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-in-c">Functions in C</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-syntax">Function syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-in-arduino">Functions in Arduino</a></li>
@@ -411,6 +397,24 @@ document.write(`
                   
   <section id="additional-material-for-lesson-4">
 <h1>Additional material for lesson 4<a class="headerlink" href="#additional-material-for-lesson-4" title="Link to this heading">#</a></h1>
+<section id="two-types-of-pwm">
+<h2>Two Types of PWM<a class="headerlink" href="#two-types-of-pwm" title="Link to this heading">#</a></h2>
+<p>PWM is a complex topic and requires a good understanding of the microcontroller that you are working with. The <code class="code docutils literal notranslate"><span class="pre">analogWrite()</span></code> makes the life easier for you but it is important to know that the PWM produced by this command is not the only PWM type exist. By manipulating the timers and registers in your microcontroller, you can obtain various PWM signals. Two main PWM techniques are:</p>
+<ol class="arabic simple">
+<li><p><strong>Fast PWM:</strong> In the simplest PWM mode, the timer repeatedly counts from 0 to 255. (aka Edge-aligned)</p></li>
+<li><p><strong>Phase-Correct PWM:</strong> In this mode, the timer counts from 0 to 255 and then back down to 0. (aka Center-aligned)</p></li>
+</ol>
+<figure class="align-default">
+<img alt="../../_images/pwm_modes.png" src="../../_images/pwm_modes.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">align<span class="colon">:</span></dt>
+<dd class="field-odd"><p>center</p>
+</dd>
+</dl>
+<p>PWM modes. See more at <a class="reference external" href="http://www.righto.com/2009/07/secrets-of-arduino-pwm.html">secrets of Arduino PWM</a>.</p>
+<p>Please see that in fast PWM when the duty cycle changes, the center position of the pulse changes position (therefore the phase changes). With phase correct PWM when the duty cycle changes, the center position of the pulse remains constant (and therefore the phase remains constant). This is particularly important in fine DC-motor speed regulations, sound signal producing etc. where you don’t want sharp edges on your sampled signal. On the other hand, sharp edges are almost a must in servo-motor control.</p>
+</section>
 <section id="functions-in-c">
 <h2>Functions in C<a class="headerlink" href="#functions-in-c" title="Link to this heading">#</a></h2>
 <p>A function in C is similar to the function you know from mathematics. It is a grouping of statements to perform a task. Every program will have at least one function, which is the first function to be executed when the program starts. As the program grows in size, splitting the code into different functions makes it easier to manage, and helps you to avoid repeating yourself.</p>
@@ -819,6 +823,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-types-of-pwm">Two Types of PWM</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-in-c">Functions in C</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#function-syntax">Function syntax</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-in-arduino">Functions in Arduino</a></li>

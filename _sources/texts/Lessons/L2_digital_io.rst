@@ -14,7 +14,7 @@ In addition to the microcontroller topics, we also need to cover some general pr
 ..
   .. ref: https://www.allaboutcircuits.com/projects/learn-how-to-use-the-arduinos-digital-i-o/
 
-The digital inputs and outputs (digital I/O) on the Arduino are one of the ways one may connect sensors, actuators, and other ICs to the Arduino. Learning how to use the inputs and outputs will allow you to use the Arduino to do some really useful things, such as reading switch inputs, turning on lights, and controlling relay outputs.
+The digital inputs and outputs (digital I/O) on the Arduino are what allow you to connect sensors, actuators, and other ICs to the Arduino . Learning how to use the inputs and outputs will allow you to use the Arduino to do some really useful things, such as reading switch inputs, lighting indicators, and controlling relay outputs.
 
 Arduino program structure
 =========================
@@ -41,8 +41,8 @@ Lets start by breaking down the different parts of the code.
 
 First you should know that any text which is preceded by two forward slashes :code:`//` is considered a comment, and is ignored. This is one of the two most common ways to add comments to you code, and is a very useful and important part of programming. Document anything which is not obvious in the code.
 
-The first lines of code is the :code:`setup()` function. A function is a group of code under a identifier (the identifier :code:`setup()`). The body of the :code:`setup()` function is delimited by the curly brackets :code:`{`, and :code:`}`. In this function the only statement we see is a call to another function, the :code:`pinMode(LED_BUILTIN, OUTPUT);` function. This function configures the pin which is connected to the build in LED as a output. It is one of the many functions in the Arduino library.
-   
+The first lines of code is the :code:`setup()` function. A function is a group of code under a identifier (the identifier :code:`setup()`). The body of the :code:`setup()` function is delimited by the curly brackets :code:`{`, and :code:`}`. In this function the only statement we see is a call to another function, the :code:`pinMode(LED_BUILTIN, OUTPUT);` function. This function configures the pin which is connected to the build in LED as a output. It is one of the many functions in the Arduino library. 
+
 .. code-block:: c
 
    void setup() {
@@ -114,7 +114,10 @@ Exercise: define a macro
 
 Let's define our own macro definition for our external LED, attached to **pin number 2**. Also, change the blink rate from 1000 milliseconds to half a second.
 
+Solution:
+
 .. code-block:: c
+    :class: toggle
 
     #define MY_EXT_LED 2
     #define BLINK_RATE 500
@@ -131,7 +134,6 @@ Let's define our own macro definition for our external LED, attached to **pin nu
       digitalWrite(MY_EXT_LED, LOW);    // turn the LED off by making the voltage LOW
       delay(BLINK_RATE);                       // wait for a second
     }
-
 
 
 Variable Types
@@ -399,6 +401,7 @@ In this exercise you will try some basic logic operations on two digital inputs 
 Use the following code as a basis for solving the exercise:
 
 .. code-block:: c
+  :class: toggle
 
   #include <Arduino.h>
 
@@ -435,14 +438,13 @@ Use the following code as a basis for solving the exercise:
 #. Add the required code to test the *OR* operation between the two inputs.
 #. As you know form basics of digital electronics, these are the three fundamental logic operations. Try to build the *exclusive OR* using only the three basic operations. 
 #. Try to build the active high SR-latch (Hint: declare the variables :code:`q`, and :code:`q_inv` as global variables, i.e. declare them outside the functions).
+	  
 
-
-.. todo:: Add solution proposal after the lecture
-
-.. The following source code listing depicts one possible solution. Note the commented solutions to the various gates except the final one. You have to uncomment only the solution you would like to test.
+The following source code listing depicts one possible solution. Note the commented solutions to the various gates except the final one. You have to uncomment only the solution you would like to test.
 
   .. literalinclude:: ../../../projects/platformio/dual-digital-input-logic-operations-solution/src/main.cpp
    :language: c
+   :class: toggle
 
 
 ..
@@ -556,6 +558,7 @@ Exercise: Print some numbers
 In this exercise you should expand the following program with the code necessary to print the numbers in the variables to the serial monitor.
 
 .. code-block:: c
+  :class: toggle
 
   #include <Arduino.h>
 
@@ -643,16 +646,17 @@ Exercise: Count to 10
 In this exercise we will modify the hello world example to a counter, which counts to 10 over a interval of 10 seconds, before it resets back to zero. Each count value is to be displayed on the serial monitor.
 
 .. code-block:: c
+  :class: toggle
 
-    void setup() {
-      // initialize serial communication at 9600 bits per second:
-      Serial.begin(9600);
-    }
+  void setup() {
+    // initialize serial communication at 9600 bits per second:
+    Serial.begin(9600);
+  }
 
-    void loop() {
-      // Put your own code here.
-      delay(1000);
-    }
+  void loop() {
+    // Put your own code here.
+   delay(1000);
+  }
 
 
 .. todo:: Add solution proposal after the lecture

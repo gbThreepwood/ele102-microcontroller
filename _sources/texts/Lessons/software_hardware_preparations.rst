@@ -29,6 +29,7 @@ The software is available for most operating systems, including Linux, macOS (OS
 There is also a online web editor, but we do **not** recommend that you use it. You should not have to depend on an Internet connection to be able to do your work.
 
 .. _PlatformIO:
+
 PlatformIO
 ----------
 

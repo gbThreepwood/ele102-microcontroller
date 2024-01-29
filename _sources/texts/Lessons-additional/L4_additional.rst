@@ -2,6 +2,22 @@
 Additional material for lesson 4
 *******************************************************
 
+Two Types of PWM
+======================
+
+PWM is a complex topic and requires a good understanding of the microcontroller that you are working with. The :code:`analogWrite()` makes the life easier for you but it is important to know that the PWM produced by this command is not the only PWM type exist. By manipulating the timers and registers in your microcontroller, you can obtain various PWM signals. Two main PWM techniques are:
+
+#. **Fast PWM:** In the simplest PWM mode, the timer repeatedly counts from 0 to 255. (aka Edge-aligned)
+#. **Phase-Correct PWM:** In this mode, the timer counts from 0 to 255 and then back down to 0. (aka Center-aligned)
+
+.. figure:: ../../../external/fig/pwm_modes.png
+:align: center
+
+PWM modes. See more at `secrets of Arduino PWM <http://www.righto.com/2009/07/secrets-of-arduino-pwm.html>`_.
+
+Please see that in fast PWM when the duty cycle changes, the center position of the pulse changes position (therefore the phase changes). With phase correct PWM when the duty cycle changes, the center position of the pulse remains constant (and therefore the phase remains constant). This is particularly important in fine DC-motor speed regulations, sound signal producing etc. where you don't want sharp edges on your sampled signal. On the other hand, sharp edges are almost a must in servo-motor control.
+
+
 .. role:: ccode(code)
         :language: c
 

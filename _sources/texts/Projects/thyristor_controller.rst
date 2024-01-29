@@ -1,3 +1,5 @@
+:orphan:
+   
 .. _tyristor_controller:
 
 ******************************
