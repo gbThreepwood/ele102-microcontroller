@@ -24,25 +24,54 @@ When reading a digital input it is often desirable to determine the instant it i
 
 In order to detect the rising edge of a digital input by the sampling method, we continuously compare the current state of the input, to the state at the previous iteration (the previous time we checked it). If the previous value was *low*, and the current value is *high*, we have a rising edge. The same logic can be applied it the reverse direction to detect the falling edge.
 
-Let’s think about what happens when you press a button. In this example (and the last) we have a digital pin connected to 5 volts through a tilt sensor. When the system is vertical, two pins are in contact. The 5 volts is applied to the digital pin. However, when you tilt the system, the connection is broken. Therefore, the system is not in *OFF state* but in an *unknown state*. Consider the figure below:
+
+..
+   .. figure:: ../../../external/fig/edgedetection.jpg
+   :align: center
+
+   Source: `programmingelectronics.com <https://www.programmingelectronics.com/tutorial-18-state-change-detection-and-the-modulo-operator-old-version>`_
+
+   
+.. figure:: ../../../external/fig/rising_and_falling_edge.png
+   :align: center
+
+
+
+Edge detection algorithm
+------------------------
+
+The following pseudocode illustrates the typical way one detects a rising edge in software:
+
+.. code-block:: c
+
+    if(button_state != button_previous_state){
+        // Code to execute when the state of the button changes can be placed here
+	
+        if(button_state == PRESSED){
+            // Code to execute on rising edge can be placed here
+	    // I.e. state has both changed and is high, this can
+	    // only happen if the state used to be low, and just
+	    // became high. In other words it must be a rising edge.l
+	}
+    }
+
+
+Understanding Pull-up / Pull-down resistors
+-------------------------------------------
+
+Let’s think about what happens when you press a button.
+
+.. In this example (and the last) we have a digital pin connected to 5 volts through a tilt sensor. When the system is vertical, two pins are in contact. The 5 volts is applied to the digital pin. However, when you tilt the system, the connection is broken. Therefore, the system is not in *OFF state* but in an *unknown state*. Consider the figure below:
 
 .. figure:: ../../../external/fig/switchFailure.png
    :align: center
 
 .. ref: https://www.programmingelectronics.com/tutorial-18-state-change-detection-and-the-modulo-operator-old-version/
 
-.. figure:: ../../../external/fig/edgedetection.jpg
-   :align: center
 
-   Source: `programmingelectronics.com <https://www.programmingelectronics.com/tutorial-18-state-change-detection-and-the-modulo-operator-old-version>`_
+As already discussed in terms of push buttons, when using digital inputs it is often required to add resistors to either pull up, or pull down the potential at the input. This is required because the input impedance of the digital input is very high, and the state may change randomly if it is not forced to a known state. For our convenience the Atmega 328 used in the Arduino UNO has internal pull up resistors that may be enabled or disabled in software, by calling the function :code:`pinMode(A0, INPUT_PULLUP);`. Alternatively you may add external resistors.
 
-
-Understanding Pull-up / Pull-down resistors
--------------------------------------------
-
-As already discussed in terms of push buttons, when using digital inputs it is often required to add resistors to either pull up, or pull down the potential at the input. This is required because the input impedance of the digital input is very high, and the state may change randomly if it is not forced to a known state. For our convenience the Atmega 328 used in the Arduino UNO has internal pull up resistors that may be enabled or disabled in software. Alternatively you may add external resistors.
-
-The size of the resistors is not critical, but it should not be selected on random either. A to small resistor may cause excessive current, while a to large resistor will defeat the purpose of trying to pull towards a given potential. I.e. the resistor value should be far away from the value of the input impedance. In practice a 10k resistor is often used. 
+The size of the resistors is not critical, but it should not be selected on random either. A to small resistor may cause excessive current, while a to large resistor will defeat the purpose of trying to pull towards a given potential. I.e. the resistor value should be far away from the value of the input impedance. In practice a 10k resistor is often used, but both 5k and 50k will also work.
 
 .. The analog pins also have pull-up resistors, which work identically to pull-up resistors on the digital pins. They are enabled by issuing a command such as :code:`pinMode(A0, INPUT_PULLUP);  // set pull-up on analog pin 0`
 
@@ -71,17 +100,7 @@ It is very important to realize that the default state of a digital input depend
 
 It is not important which of the two you choose, because it is easy to invert the state in software. But it is important to realize the difference, in order to know when you have to invert it in software.
 
-
-
-Edge detection algorithm
-------------------------
-
-.. todo:: Describe a typicall edge detection algorithm
-
-.. Hands-on Exercises
-.. ====================
-.. Time to use expand the knowledge by doing!
-
+   
 Simple button press counter
 ----------------------------
 

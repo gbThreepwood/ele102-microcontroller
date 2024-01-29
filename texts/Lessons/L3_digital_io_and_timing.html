@@ -359,8 +359,8 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-digital-inputs">Using digital inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection">Edge detection</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-algorithm">Edge detection algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-press-counter">Simple button press counter</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-led-state-change">Simple button LED state change</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-and-falling-edge-detection">Exercise: Rising and falling edge detection</a></li>
@@ -406,24 +406,37 @@ document.write(`
 <h2>Edge detection<a class="headerlink" href="#edge-detection" title="Link to this heading">#</a></h2>
 <p>When reading a digital input it is often desirable to determine the instant it is changing, and how it is changing. I.e. whether it is a rising, or a falling edge. There are several approaches we can take to solve this problem, but in this section we focus on solutions involving the sampling of the digital input. I.e. we are continuously checking the state of the digital input with a certain time interval. This approach is fine for slowly changing signals such as push buttons. Actually it is not only fine, it is often the recommended way to deal with slow signals.</p>
 <p>In order to detect the rising edge of a digital input by the sampling method, we continuously compare the current state of the input, to the state at the previous iteration (the previous time we checked it). If the previous value was <em>low</em>, and the current value is <em>high</em>, we have a rising edge. The same logic can be applied it the reverse direction to detect the falling edge.</p>
-<p>Let’s think about what happens when you press a button. In this example (and the last) we have a digital pin connected to 5 volts through a tilt sensor. When the system is vertical, two pins are in contact. The 5 volts is applied to the digital pin. However, when you tilt the system, the connection is broken. Therefore, the system is not in <em>OFF state</em> but in an <em>unknown state</em>. Consider the figure below:</p>
+<figure class="align-center">
+<img alt="../../_images/rising_and_falling_edge.png" src="../../_images/rising_and_falling_edge.png" />
+</figure>
+<section id="edge-detection-algorithm">
+<h3>Edge detection algorithm<a class="headerlink" href="#edge-detection-algorithm" title="Link to this heading">#</a></h3>
+<p>The following pseudocode illustrates the typical way one detects a rising edge in software:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="p">(</span><span class="n">button_state</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">button_previous_state</span><span class="p">){</span>
+<span class="w">    </span><span class="c1">// Code to execute when the state of the button changes can be placed here</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">button_state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PRESSED</span><span class="p">){</span>
+<span class="w">        </span><span class="c1">// Code to execute on rising edge can be placed here</span>
+<span class="w">        </span><span class="c1">// I.e. state has both changed and is high, this can</span>
+<span class="w">        </span><span class="c1">// only happen if the state used to be low, and just</span>
+<span class="w">        </span><span class="c1">// became high. In other words it must be a rising edge.l</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="understanding-pull-up-pull-down-resistors">
+<h3>Understanding Pull-up / Pull-down resistors<a class="headerlink" href="#understanding-pull-up-pull-down-resistors" title="Link to this heading">#</a></h3>
+<p>Let’s think about what happens when you press a button.</p>
 <figure class="align-center">
 <img alt="../../_images/switchFailure.png" src="../../_images/switchFailure.png" />
 </figure>
-<figure class="align-center" id="id5">
-<img alt="../../_images/edgedetection.jpg" src="../../_images/edgedetection.jpg" />
-<figcaption>
-<p><span class="caption-text">Source: <a class="reference external" href="https://www.programmingelectronics.com/tutorial-18-state-change-detection-and-the-modulo-operator-old-version">programmingelectronics.com</a></span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<section id="understanding-pull-up-pull-down-resistors">
-<h3>Understanding Pull-up / Pull-down resistors<a class="headerlink" href="#understanding-pull-up-pull-down-resistors" title="Link to this heading">#</a></h3>
-<p>As already discussed in terms of push buttons, when using digital inputs it is often required to add resistors to either pull up, or pull down the potential at the input. This is required because the input impedance of the digital input is very high, and the state may change randomly if it is not forced to a known state. For our convenience the Atmega 328 used in the Arduino UNO has internal pull up resistors that may be enabled or disabled in software. Alternatively you may add external resistors.</p>
-<p>The size of the resistors is not critical, but it should not be selected on random either. A to small resistor may cause excessive current, while a to large resistor will defeat the purpose of trying to pull towards a given potential. I.e. the resistor value should be far away from the value of the input impedance. In practice a 10k resistor is often used.</p>
-<figure class="align-center" id="id6">
+<p>As already discussed in terms of push buttons, when using digital inputs it is often required to add resistors to either pull up, or pull down the potential at the input. This is required because the input impedance of the digital input is very high, and the state may change randomly if it is not forced to a known state. For our convenience the Atmega 328 used in the Arduino UNO has internal pull up resistors that may be enabled or disabled in software, by calling the function <code class="code docutils literal notranslate"><span class="pre">pinMode(A0,</span> <span class="pre">INPUT_PULLUP);</span></code>. Alternatively you may add external resistors.</p>
+<p>The size of the resistors is not critical, but it should not be selected on random either. A to small resistor may cause excessive current, while a to large resistor will defeat the purpose of trying to pull towards a given potential. I.e. the resistor value should be far away from the value of the input impedance. In practice a 10k resistor is often used, but both 5k and 50k will also work.</p>
+<figure class="align-center" id="id4">
 <img alt="Arduino with pull-up, and pull-down resistors on push buttons" src="../../_images/Pull-up-and-Pull-down-Resistor.png" />
 <figcaption>
-<p><span class="caption-text">Source: <a class="reference external" href="https://circuitdigest.com/tutorial/pull-up-and-pull-down-resistor">circuitdigest.com</a></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-text">Source: <a class="reference external" href="https://circuitdigest.com/tutorial/pull-up-and-pull-down-resistor">circuitdigest.com</a></span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The following figure depicts the connection of two push buttons to the Arduino. For the leftmost button the resistor in the figure pulls the input low, and the push button is connected in such a way that it can pull it up. For the button to the right the configuration is opposite.</p>
@@ -432,13 +445,6 @@ document.write(`
 </figure>
 <p>It is very important to realize that the default state of a digital input depends on whether the input is pulled up, or pulled down. If the input is pulled down by a resistor, and the push button pulls it up, then a push on the button will make the input logical <strong>HIGH</strong>. If on the other hand the input is pulled up by a resistor, and a push on the button pulls it down, pushing the button will make the input logical <strong>LOW</strong></p>
 <p>It is not important which of the two you choose, because it is easy to invert the state in software. But it is important to realize the difference, in order to know when you have to invert it in software.</p>
-</section>
-<section id="edge-detection-algorithm">
-<h3>Edge detection algorithm<a class="headerlink" href="#edge-detection-algorithm" title="Link to this heading">#</a></h3>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Describe a typicall edge detection algorithm</p>
-</div>
 </section>
 <section id="simple-button-press-counter">
 <h3>Simple button press counter<a class="headerlink" href="#simple-button-press-counter" title="Link to this heading">#</a></h3>
@@ -599,7 +605,7 @@ document.write(`
 </pre></div>
 </div>
 <p>Additionally it is convenient in the case you have multiple section of code which use the result returned from <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> to compute different delay intervals.</p>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Blink without delay example</p>
 </div>
@@ -831,7 +837,7 @@ document.write(`
 </div>
 <p>The advantage of adding a time interval to <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> instead of updating it with the new millisecond value, is that the former avoid the potential problem that the delay gets off by some milliseconds if a interrupt or some other part of the <code class="code docutils literal notranslate"><span class="pre">loop()</span></code> function causes it to execute too late. If the code in the previous section executes two milliseconds too late on a given iteration of the loop, it will never be able to correct for this. Thus if you are implementing a watch or some other application where it is important that (on average) the timing is accurate, you should consider the approach in this section. The only source of error will be the accuracy of the clock source (typically a quarts crystal), which drives the CPU of the microcontroller.</p>
 <p>The code in the previous section will guarantee that the delay will be at least equal to <code class="code docutils literal notranslate"><span class="pre">time_interval</span></code>, but it could be slightly longer.</p>
-<div class="admonition-todo admonition" id="id3">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>More detailed explanation is needed</p>
 </div>
@@ -874,7 +880,7 @@ document.write(`
 </pre></div>
 </div>
 <p>The subtraction is evaluated before the comparison. Hence we compare the value in <code class="code docutils literal notranslate"><span class="pre">millis()</span> <span class="pre">-</span> <span class="pre">old_millis</span></code>, with the value in <code class="code docutils literal notranslate"><span class="pre">delay_time</span></code>. Since <code class="code docutils literal notranslate"><span class="pre">millis()</span></code> returns a unsigned value, and <code class="code docutils literal notranslate"><span class="pre">old_millis</span></code> is declared to be unsigned, the result from the subtraction can not become negative.</p>
-<div class="admonition-todo admonition" id="id4">
+<div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>Add a more detailed explanation. Including explanation of modular arithmetic</p>
 </div>
@@ -886,10 +892,10 @@ document.write(`
 <h2>Switch bouncing<a class="headerlink" href="#switch-bouncing" title="Link to this heading">#</a></h2>
 <p>A mechanical switch will often generate spurious open/close transitions in a short period after it has been activated. It is a risk that these spurious transitions are interpreted as multiple signals from the switch. In order to avoid these problems some form of debounce remedy should be applied. This could be a hardware solution, a software solution or a combination of the two.</p>
 <p>The graph to the right in the following figure illustrates the spurious changes in voltage level at the node between the resistor and the switch.</p>
-<figure class="align-center" id="id7">
+<figure class="align-center" id="id5">
 <img alt="Switch bounce" src="../../_images/switch_bounce.png" />
 <figcaption>
-<p><span class="caption-text">Source: <a class="reference external" href="https://www.best-microcontroller-projects.com/easy_switch_debounce.html">https://www.best-microcontroller-projects.com/easy_switch_debounce.html</a></span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.best-microcontroller-projects.com/easy_switch_debounce.html">https://www.best-microcontroller-projects.com/easy_switch_debounce.html</a></span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <section id="bounce-problem-edge-detection-demonstration">
@@ -948,10 +954,10 @@ document.write(`
 <section id="hardware-debounce-methods">
 <h3>Hardware debounce methods<a class="headerlink" href="#hardware-debounce-methods" title="Link to this heading">#</a></h3>
 <p>Hardware solutions include analog filters using resistors and capacitors, or digital circuits as illustrated in the following figure:</p>
-<figure class="align-center" id="id8">
+<figure class="align-center" id="id6">
 <img alt="../../_images/Shift-register_and_a_nand_gate_as_a_debouncer.png" src="../../_images/Shift-register_and_a_nand_gate_as_a_debouncer.png" />
 <figcaption>
-<p><span class="caption-text">Source: <a class="reference external" href="https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/">https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/</a></span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+<p><span class="caption-text">Source: <a class="reference external" href="https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/">https://www.e-tinkers.com/2021/05/the-simplest-button-debounce-solution/</a></span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The button state is <em>clocked</em> in to the d flip-flops, and only when all the flip-flops have registered the same state the output will change. This solution is typically found in programmable logic, but it is rather expensive to realise by using discrete components.</p>
@@ -1265,8 +1271,8 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-digital-inputs">Using digital inputs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection">Edge detection</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-detection-algorithm">Edge detection algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-pull-up-pull-down-resistors">Understanding Pull-up / Pull-down resistors</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-press-counter">Simple button press counter</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-button-led-state-change">Simple button LED state change</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-rising-and-falling-edge-detection">Exercise: Rising and falling edge detection</a></li>
